@@ -1,6 +1,6 @@
 package com.restaurant.reservationreview.util.converter;
 
-import br.com.gramado.parkingapp.dto.Dto;
+import com.restaurant.reservationreview.dto.Dto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;

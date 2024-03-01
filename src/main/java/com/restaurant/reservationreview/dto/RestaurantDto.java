@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class RestaurantDto extends br.com.gramado.parkingapp.dto.Dto {
+public class RestaurantDto extends Dto {
 
     @NotBlank(message = "O campo Nome é obrigatório")
     @Schema(example = "Restaurante Comida Gostosa é aqui")
@@ -30,7 +30,8 @@ public class RestaurantDto extends br.com.gramado.parkingapp.dto.Dto {
 
     private Integer averageRating;
 
-    @NotBlank(message = "O campo Quantidade de Mesas é obrigatório")
+    /*@NotBlank(message = "O campo Quantidade de Mesas é obrigatório")
+     */
     @Schema(example = "50 / 40 / 30")
     private Integer manytables;
 }

@@ -1,4 +1,4 @@
-package br.com.gramado.parkingapp.dto;
+package com.restaurant.reservationreview.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

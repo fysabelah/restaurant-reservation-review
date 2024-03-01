@@ -2,7 +2,6 @@ package com.restaurant.reservationreview.util.converter;
 
 import com.restaurant.reservationreview.dto.RestaurantDto;
 import com.restaurant.reservationreview.model.Restaurant;
-import com.restaurant.reservationreview.util.exception.ValidationsException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,7 +24,7 @@ public class RestaurantConverter implements Converter<Restaurant, RestaurantDto>
     }
 
     @Override
-    public Restaurant convert(RestaurantDto dto) throws ValidationsException {
+    public Restaurant convert(RestaurantDto dto) {
 
         Restaurant restaurant = new Restaurant();
 

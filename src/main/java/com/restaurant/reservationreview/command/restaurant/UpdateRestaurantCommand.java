@@ -19,7 +19,6 @@ public class UpdateRestaurantCommand {
     private RestaurantConverter converter;
 
     public RestaurantDto execute(RestaurantDto restaurantDto) throws NotFoundException {
-
         Optional<Restaurant> saved = this.service.findById(restaurantDto.getId());
 
         if (saved.isEmpty()){
@@ -27,6 +26,7 @@ public class UpdateRestaurantCommand {
         }
 
         Restaurant restaurant = saved.get();
+
         restaurant.setName(restaurantDto.getName());
         restaurant.setLocation(restaurantDto.getLocation());
         restaurant.setCuisineType(restaurantDto.getCuisineType());
