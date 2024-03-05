@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.config;
+package com.restaurant.reservationreview.util.configs.documentation;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

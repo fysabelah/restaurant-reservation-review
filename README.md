@@ -4,7 +4,7 @@ Projeto desenvolvido como meio de avaliação do módulo. O sistema consiste em 
 
 Dentre os requisitos, temos:
 * Restaurantes podem registrar informações a seu respeito, como, localização, tipo de cozinha, horário de funcionamento, capacidade e nome;
-* Usuário podem registrar reserva;
+* Usuários podem registrar reserva;
 * Restaurantes podem alterar o estado da reserva;
 * Usuários podem deixar avaliações sobre a experiência no restaurante.
 
@@ -29,12 +29,29 @@ Na raiz do projeto, crie o arquivo .env com as chaves abaixo. Os valores adicion
 
     # API
     MONGODB_PORT=27017
-    MONGODB_SERVER=mongodb para rodar no docker e localhost para rodar localmente
+
+Há três application.properties. Um para desenvolvimento (application-dev.properties) e outro para produção (application-prod.properties). Este são controlados a partir da propriedade `spring.profiles.active` no arquivo application.properties.
+Para desenvolvimento, sugiro uso do perfil `dev`. Já para deploy deve ser utilizado o perfil `prod`.
+
+    DICA: A principal diferença esta no host do Mongo. Enquanto no perfil dev está localhost, em prod está mongodb que é o nome do serviço no docker. O banco também é alterado de acordo com o perfil.
 
 ### Como rodar
 
-A aplicação faz uso do MongoDB, para não ser necessário configurar, foi criado ao arquivo compose. Para executá-lo, rode o comando abaixo no diretório do projeto.
+A aplicação faz uso do MongoDB, para não ser necessário configurar, foi criado ao arquivo compose. Aqui temos três possibilidades:
 
-    docker compose up
+1. Criar todas as imagens através do comando `docker compose up` e depois,
+   * Parar o container referente a API
+   * Setar `spring.profiles.active` para `dev`.
+   * Executar a aplicação a partir da IDE.
+2. Criar os container referente apenas o MongoDB e MongoExpress,
+   * Comentar a parte referente a criação de imagem/container da API e executar o comando `docker compose up`.
+   * Setar `spring.profiles.active` para `dev`.
+   * Executar a aplicação a partir da IDE.
+3. Executar tudo em container.
+    * Neste caso, ao setar `spring.profiles.active` para `dev` será necessário alterar a propriedade `spring.data.mongodb.host` para `mongodb`. Já ao setar para `prod`, não será necessário alterações.
+      * No entanto, ao executar neste formato, qualquer alteração de código será necessário a recriação da imagem.
 
-A interface pode ser acessada através de [http://localhost:27018](http://localhost:27018).
+### Link
+Considerando que tudo deu certo, será possível acessar os _links_ abaixo.
+ * [Swagger](http://localhost:8080/doc-app-restaurant.html)
+ * [Interface Web para MongoDB](http://localhost:27018)

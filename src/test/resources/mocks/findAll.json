@@ -1,0 +1,42 @@
+[
+  {
+    "name": "George",
+    "score": 8,
+    "comment": "Comida muita boa",
+    "zoneId": "America/Sao_Paulo",
+    "date": "2024-03-07T12:13:05.525443977"
+  },
+  {
+    "name": "Isabela",
+    "score": 5,
+    "comment": "Nada muito a destacar",
+    "zoneId": "America/Sao_Paulo",
+    "date": "2024-03-07T12:13:05.525443977"
+  },
+  {
+    "name": "João",
+    "score": 4,
+    "comment": "Passei mal no dia seguinte! Pode não ser relacionado, mas não foi uma boa experiência",
+    "zoneId": "America/Sao_Paulo",
+    "date": "2024-03-07T12:13:05.525443977"
+  },
+  {
+    "name": "Maria",
+    "score": 10,
+    "comment": "Perfeitaaaa",
+    "zoneId": "America/Sao_Paulo",
+    "date": "2024-03-07T12:13:05.525443977"
+  },
+  {
+    "name": "Cristina",
+    "score": 7,
+    "zoneId": "America/Sao_Paulo",
+    "date": "2024-03-07T12:13:05.525443977"
+  },
+  {
+    "name": "Zezim",
+    "score": 6,
+    "zoneId": "America/Sao_Paulo",
+    "date": "2024-03-07T12:13:05.525443977"
+  }
+]
