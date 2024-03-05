@@ -27,6 +27,10 @@ Na raiz do projeto, crie o arquivo .env com as chaves abaixo. Os valores adicion
     ME_CONFIG_BASICAUTH_USERNAME=usuario_interface_mongo
     ME_CONFIG_BASICAUTH_PASSWORD=senha_interface_mongo
 
+    # API
+    MONGODB_PORT=27017
+    MONGODB_SERVER=mongodb para rodar no docker e localhost para rodar localmente
+
 ### Como rodar
 
 A aplicação faz uso do MongoDB, para não ser necessário configurar, foi criado ao arquivo compose. Para executá-lo, rode o comando abaixo no diretório do projeto.

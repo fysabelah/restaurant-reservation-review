@@ -1,0 +1,26 @@
+#
+# Build stage
+#
+FROM maven:3.9.6-amazoncorretto-17 AS build
+
+WORKDIR /reservation-review
+
+COPY src /reservation-review/src
+COPY pom.xml /reservation-review/pom.xml
+COPY src/main/resources/application.properties /reservation-review/application.properties
+
+RUN mvn -f /reservation-review/pom.xml clean package -DskipTests
+
+#
+# Package stage
+#
+FROM amazoncorretto:17-alpine-jdk
+
+WORKDIR /reservation-review
+
+COPY --from=build /reservation-review/target/*.jar /reservation-review/reservation-review-app.jar
+COPY --from=build /reservation-review/application.properties /reservation-review/application.properties
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","reservation-review-app.jar"]
