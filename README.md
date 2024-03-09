@@ -29,9 +29,10 @@ Na raiz do projeto, crie o arquivo .env com as chaves abaixo. Os valores adicion
 
     # API
     MONGODB_PORT=27017
+    PROFILE=prod
 
 Há três application.properties. Um para desenvolvimento (application-dev.properties) e outro para produção (application-prod.properties). Este são controlados a partir da propriedade `spring.profiles.active` no arquivo application.properties.
-Para desenvolvimento, sugiro uso do perfil `dev`. Já para deploy deve ser utilizado o perfil `prod`.
+Set a variável PROFILE, no arquivo .env conforme preferir. Para desenvolvimento, sugiro uso do perfil `dev`. Já para deploy deve ser utilizado o perfil `prod`.
 
     DICA: A principal diferença esta no host do Mongo. Enquanto no perfil dev está localhost, em prod está mongodb que é o nome do serviço no docker. O banco também é alterado de acordo com o perfil.
 
