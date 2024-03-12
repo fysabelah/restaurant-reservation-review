@@ -12,9 +12,9 @@ public interface RestaurantServiceInterface {
 
     Restaurant update(Restaurant restaurant);
 
-    public Optional<Restaurant> findById(String restaurantId);
+    Optional<Restaurant> findById(String restaurantId);
 
-    public Optional<Restaurant> findByName(String restaurantName);
+    Optional<Restaurant> findByName(String restaurantName);
 
     Page<Restaurant> findAll(Pagination pagination);
 }

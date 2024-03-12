@@ -2,7 +2,6 @@ package com.restaurant.reservationreview.util.converter;
 
 import com.restaurant.reservationreview.util.dto.RestaurantBusinessHoursDto;
 import com.restaurant.reservationreview.model.documents.RestaurantBusinessHours;
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;

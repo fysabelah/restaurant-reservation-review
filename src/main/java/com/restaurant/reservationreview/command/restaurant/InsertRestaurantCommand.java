@@ -23,14 +23,11 @@ public class InsertRestaurantCommand {
     public RestaurantDto execute(RestaurantDto restaurantDto) throws ValidationsException {
         Restaurant restaurant = this.converter.convert(restaurantDto);
 
-        /*
         Optional<Restaurant> saved = this.service.findByName(restaurant.getName());
 
         if (saved.isPresent()){
             throw new ValidationsException("Restaurant com nome " + saved.get().getName() +  " já cadastrado no código " + saved.get().getId());
         }
-
-         */
 
         restaurant = this.service.insert(restaurant);
 
