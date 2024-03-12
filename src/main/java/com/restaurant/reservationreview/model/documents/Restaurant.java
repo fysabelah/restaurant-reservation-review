@@ -1,12 +1,13 @@
-package com.restaurant.reservationreview.model;
+package com.restaurant.reservationreview.model.documents;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.List;
 
-@Document
+@Document(collection = "restaurant")
 @Data
 public class Restaurant implements Serializable {
     @Id
@@ -22,6 +23,8 @@ public class Restaurant implements Serializable {
 
     private Integer averageRating;
 
-    private Integer manytables;
+    private Integer quantityTables;
+
+    private List<RestaurantBusinessHours> businessHours;
 
 }

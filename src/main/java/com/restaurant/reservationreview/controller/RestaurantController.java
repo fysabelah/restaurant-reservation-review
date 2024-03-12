@@ -4,7 +4,7 @@ import com.restaurant.reservationreview.command.restaurant.FindAllRestaurantComm
 import com.restaurant.reservationreview.command.restaurant.FindRestaurantByIdCommand;
 import com.restaurant.reservationreview.command.restaurant.InsertRestaurantCommand;
 import com.restaurant.reservationreview.command.restaurant.UpdateRestaurantCommand;
-import com.restaurant.reservationreview.dto.RestaurantDto;
+import com.restaurant.reservationreview.util.dto.RestaurantDto;
 import com.restaurant.reservationreview.util.exception.NotFoundException;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
@@ -50,7 +50,7 @@ public class RestaurantController {
         return ResponseEntity.ok(this.findRestaurantById.execute(idRestaurant));
     }
 
-    @Operation(summary="Incluir um restaurante")
+    @Operation(summary="Incluir informações de um restaurante")
     @PostMapping
     public ResponseEntity<RestaurantDto>  insert(@RequestBody RestaurantDto restaurantDto) throws ValidationsException {
         RestaurantDto restaurantDtoSaved = this.insertCommand.execute(restaurantDto);

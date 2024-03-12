@@ -1,7 +1,7 @@
-package com.restaurant.reservationreview.service;
+package com.restaurant.reservationreview.controller.service;
 
-import com.restaurant.reservationreview.model.Restaurant;
-import com.restaurant.reservationreview.repository.RestaurantRepository;
+import com.restaurant.reservationreview.model.documents.Restaurant;
+import com.restaurant.reservationreview.model.repository.RestaurantRepository;
 import com.restaurant.reservationreview.util.pagination.Pagination;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class RestaurantServiceService implements RestaurantServiceInterface {
+public class RestaurantService implements RestaurantServiceInterface {
 
     private static final String SORT = "id";
 
@@ -32,14 +32,15 @@ public class RestaurantServiceService implements RestaurantServiceInterface {
 
     @Override
     public Optional<Restaurant> findById(String idRestaurant) {
+
         return this.restaurantRepository.findById(idRestaurant);
+
     }
 
     @Override
     public Optional<Restaurant> findByName(String restaurantName) {
 
         return this.restaurantRepository.findByNameEquals( restaurantName);
-
 
     }
 

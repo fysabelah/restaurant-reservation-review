@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.dto;
+package com.restaurant.reservationreview.util.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

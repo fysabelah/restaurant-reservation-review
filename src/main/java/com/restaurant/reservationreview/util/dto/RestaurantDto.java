@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.dto;
+package com.restaurant.reservationreview.util.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,8 +32,10 @@ public class RestaurantDto extends Dto {
 
     private Integer averageRating;
 
-    /*@NotBlank(message = "O campo Quantidade de Mesas é obrigatório")
-     */
+    @NotBlank(message = "O campo Quantidade de Mesas é obrigatório")
     @Schema(example = "50 / 40 / 30")
-    private Integer manytables;
+    private Integer quantitytables;
+
+    private List<RestaurantBusinessHoursDto> businessHoursDto;
+
 }

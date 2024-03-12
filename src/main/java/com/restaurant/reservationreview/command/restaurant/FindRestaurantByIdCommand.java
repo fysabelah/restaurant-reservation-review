@@ -1,8 +1,8 @@
 package com.restaurant.reservationreview.command.restaurant;
 
-import com.restaurant.reservationreview.dto.RestaurantDto;
-import com.restaurant.reservationreview.model.Restaurant;
-import com.restaurant.reservationreview.service.RestaurantServiceInterface;
+import com.restaurant.reservationreview.util.dto.RestaurantDto;
+import com.restaurant.reservationreview.model.documents.Restaurant;
+import com.restaurant.reservationreview.controller.service.RestaurantServiceInterface;
 import com.restaurant.reservationreview.util.converter.RestaurantConverter;
 import com.restaurant.reservationreview.util.exception.NotFoundException;
 import jakarta.annotation.Resource;
