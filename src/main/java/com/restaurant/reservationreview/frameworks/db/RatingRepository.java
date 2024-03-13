@@ -1,6 +1,6 @@
-package com.restaurant.reservationreview.model.repository;
+package com.restaurant.reservationreview.frameworks.db;
 
-import com.restaurant.reservationreview.model.documents.Rating;
+import com.restaurant.reservationreview.entities.Rating;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

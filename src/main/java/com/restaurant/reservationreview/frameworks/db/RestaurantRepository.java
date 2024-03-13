@@ -1,6 +1,6 @@
-package com.restaurant.reservationreview.model.repository;
+package com.restaurant.reservationreview.frameworks.db;
 
-import com.restaurant.reservationreview.model.documents.Restaurant;
+import com.restaurant.reservationreview.entities.Restaurant;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

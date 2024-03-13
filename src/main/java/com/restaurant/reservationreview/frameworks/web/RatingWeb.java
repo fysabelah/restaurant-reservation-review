@@ -1,7 +1,7 @@
-package com.restaurant.reservationreview.controller;
+package com.restaurant.reservationreview.frameworks.web;
 
-import com.restaurant.reservationreview.controller.service.RatingService;
-import com.restaurant.reservationreview.util.dto.RatingDto;
+import com.restaurant.reservationreview.interfaceadapters.controllers.RatingController;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RatingDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;
@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/rating")
 @Tag(name = "Avaliação", description = "Metódos avaliação")
-public class RatingController {
+public class RatingWeb {
 
     @Resource
-    private RatingService service;
+    private RatingController controller;
 
     @PostMapping(value = "/{restaurant}")
     public ResponseEntity<RatingDto> insert(@Valid @RequestBody RatingDto dto, @PathVariable String restaurant) throws ValidationsException {
-        return ResponseEntity.ok(service.insert(restaurant, dto));
+        return ResponseEntity.ok(controller.insert(restaurant, dto));
     }
 
     @GetMapping(value = "/restaurant/{restaurant}")
@@ -31,17 +31,17 @@ public class RatingController {
                                                             @PathVariable String restaurant) throws ValidationsException {
         Pagination page = new Pagination(initialPage, pageSize);
 
-        return ResponseEntity.ok(service.findAll(page, restaurant));
+        return ResponseEntity.ok(controller.findAll(page, restaurant));
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<RatingDto> findById(@PathVariable String id) throws ValidationsException {
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(controller.findById(id));
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<RatingDto> delete(@PathVariable String id) throws ValidationsException {
-        service.delete(id);
+        controller.delete(id);
 
         return ResponseEntity.noContent().build();
     }
@@ -50,6 +50,6 @@ public class RatingController {
     public ResponseEntity<RatingDto> update(@PathVariable String id,
                                             @RequestParam(required = false) Integer score,
                                             @RequestBody String comment) throws ValidationsException {
-        return ResponseEntity.ok(service.update(id, score, comment));
+        return ResponseEntity.ok(controller.update(id, score, comment));
     }
 }
