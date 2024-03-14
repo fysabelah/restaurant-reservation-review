@@ -1,9 +1,9 @@
 package com.restaurant.reservationreview.controller.service;
 
-import com.restaurant.reservationreview.model.documents.Restaurant;
+import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
 import com.restaurant.reservationreview.model.repository.RestaurantRepository;
 import com.restaurant.reservationreview.util.converter.RestaurantConverter;
-import com.restaurant.reservationreview.util.dto.RestaurantDto;
+import com.restaurant.reservationreview.util.dto.restaurant.RestaurantDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;

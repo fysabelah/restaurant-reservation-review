@@ -1,6 +1,7 @@
-package com.restaurant.reservationreview.util.dto;
+package com.restaurant.reservationreview.util.dto.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.restaurant.reservationreview.util.dto.Dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

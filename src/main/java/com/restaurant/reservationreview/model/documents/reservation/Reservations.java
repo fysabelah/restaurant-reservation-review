@@ -1,5 +1,7 @@
-package com.restaurant.reservationreview.model.documents;
+package com.restaurant.reservationreview.model.documents.reservation;
 
+import com.restaurant.reservationreview.model.documents.Person;
+import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Reservation implements Serializable {
+public class Reservations implements Serializable {
 
     @Id
     private String id;

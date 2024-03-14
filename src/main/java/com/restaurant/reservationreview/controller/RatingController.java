@@ -1,7 +1,7 @@
 package com.restaurant.reservationreview.controller;
 
 import com.restaurant.reservationreview.controller.service.RatingService;
-import com.restaurant.reservationreview.util.dto.RatingDto;
+import com.restaurant.reservationreview.util.dto.restaurant.RatingDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;

@@ -1,7 +1,8 @@
-package com.restaurant.reservationreview.util.dto;
+package com.restaurant.reservationreview.util.dto.reservation;
 
 import com.restaurant.reservationreview.model.documents.Person;
-import com.restaurant.reservationreview.model.documents.Restaurant;
+import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
+import com.restaurant.reservationreview.util.dto.Dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

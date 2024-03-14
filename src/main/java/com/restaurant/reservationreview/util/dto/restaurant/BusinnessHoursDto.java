@@ -1,5 +1,6 @@
-package com.restaurant.reservationreview.model.documents;
+package com.restaurant.reservationreview.util.dto.restaurant;
 
+import com.restaurant.reservationreview.util.dto.Dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BusinnessHours implements Serializable {
+public class BusinnessHoursDto extends Dto implements Serializable {
 
     private DayOfWeek dayOfWeek;
 
@@ -20,7 +21,7 @@ public class BusinnessHours implements Serializable {
 
     private LocalTime finish;
 
-    private List<ReservationHours> reservationHours;
+    private List<ReservationHoursDto> reservationHoursDto;
 
     private boolean available;
 

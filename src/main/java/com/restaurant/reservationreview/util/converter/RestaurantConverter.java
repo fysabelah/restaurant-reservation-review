@@ -1,10 +1,7 @@
 package com.restaurant.reservationreview.util.converter;
 
-import com.restaurant.reservationreview.model.documents.BusinnessHours;
-import com.restaurant.reservationreview.model.documents.Restaurant;
-import com.restaurant.reservationreview.util.dto.BusinnessHoursDto;
-import com.restaurant.reservationreview.util.dto.RestaurantDto;
-import com.restaurant.reservationreview.util.exception.ValidationsException;
+import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
+import com.restaurant.reservationreview.util.dto.restaurant.RestaurantDto;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 

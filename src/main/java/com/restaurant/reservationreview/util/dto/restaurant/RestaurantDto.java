@@ -1,5 +1,6 @@
-package com.restaurant.reservationreview.util.dto;
+package com.restaurant.reservationreview.util.dto.restaurant;
 
+import com.restaurant.reservationreview.util.dto.Dto;
 import com.restaurant.reservationreview.util.enums.FoodType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

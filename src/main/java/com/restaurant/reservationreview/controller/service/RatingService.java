@@ -1,11 +1,11 @@
 package com.restaurant.reservationreview.controller.service;
 
-import com.restaurant.reservationreview.model.documents.Rating;
+import com.restaurant.reservationreview.model.documents.restaurant.Rating;
 import com.restaurant.reservationreview.model.repository.RatingRepository;
 import com.restaurant.reservationreview.util.configs.time.TimeUtils;
 import com.restaurant.reservationreview.util.converter.RatingConverter;
-import com.restaurant.reservationreview.util.dto.RatingDto;
-import com.restaurant.reservationreview.util.dto.RestaurantDto;
+import com.restaurant.reservationreview.util.dto.restaurant.RatingDto;
+import com.restaurant.reservationreview.util.dto.restaurant.RestaurantDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;

@@ -1,10 +1,8 @@
 package com.restaurant.reservationreview.util.converter;
 
-import com.restaurant.reservationreview.model.documents.BusinnessHours;
-import com.restaurant.reservationreview.util.dto.BusinnessHoursDto;
+import com.restaurant.reservationreview.model.documents.restaurant.BusinnessHours;
+import com.restaurant.reservationreview.util.dto.restaurant.BusinnessHoursDto;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class BusinessHoursConverter implements Converter<BusinnessHours, BusinnessHoursDto> {
