@@ -1,20 +1,16 @@
 package com.restaurant.reservationreview.controller.service;
 
-import com.restaurant.reservationreview.helper.DateAvailabilityHelper;
-import com.restaurant.reservationreview.model.documents.Reservation;
-import com.restaurant.reservationreview.model.documents.Restaurant;
+import com.restaurant.reservationreview.helper.DateAndHourAvailabilityHelper;
+import com.restaurant.reservationreview.model.documents.reservation.Reservations;
+import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
 import com.restaurant.reservationreview.model.repository.ReservationRepository;
 import com.restaurant.reservationreview.model.repository.RestaurantRepository;
 import com.restaurant.reservationreview.util.converter.RestaurantConverter;
-import com.restaurant.reservationreview.util.dto.ReservationDto;
+import com.restaurant.reservationreview.util.dto.reservation.ReservationDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
-import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +18,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class ReservationService {
 
     private final MongoTemplate mongoTemplate;
@@ -37,7 +34,7 @@ public class ReservationService {
     @Resource
     private ReservationRepository reservationRepository;
 
-    private DateAvailabilityHelper dateAvailabilityHelper;
+    private DateAndHourAvailabilityHelper dateAvailabilityHelper;
 
     public ReservationService(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
@@ -49,9 +46,9 @@ public class ReservationService {
         Restaurant restaurant = getRestaurant(restaurantId);
         LocalDateTime startDate = LocalDate.now().plusDays(PLUS_DAYS_ONE).atStartOfDay();
         LocalDateTime finishDate = LocalDate.now().plusDays(PLUS_THIRTY_ONE_DAYS).atStartOfDay();
-        List<Reservation> reservations = getReservationsByRestaurantAndDateNextThirtyDays(restaurantId, startDate, finishDate);
+        List<Reservations> reservations = getReservationsByRestaurantAndDateNextThirtyDays(restaurantId, startDate, finishDate);
 
-        List<LocalDate> availableDates = dateAvailabilityHelper.checkDateAvailability(restaurant, reservations, table);
+//        List<LocalDate> availableDates = dateAvailabilityHelper.checkDateAvailability(restaurant, reservations, table);
 
         // buscar em reservations pelo restaurante entre hoje +1 e hoje + 30
 
