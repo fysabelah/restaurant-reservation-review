@@ -3,6 +3,7 @@ package com.restaurant.reservationreview.controller;
 import com.restaurant.reservationreview.controller.service.ReservationControlService;
 import com.restaurant.reservationreview.controller.service.ReservationService;
 import com.restaurant.reservationreview.util.dto.reservation.ReservationDto;
+import com.restaurant.reservationreview.util.dto.restaurant.ReservationHoursDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -32,12 +33,12 @@ public class ReservationController {
     }
 
     @GetMapping(value="/available-hours")
-    public ResponseEntity<List<LocalTime>> availableHours(@RequestParam("table") Integer table, @RequestParam("data") Date date, @Valid @RequestBody ReservationDto dto) throws ValidationsException {
-        return ResponseEntity.ok(reservationControlService.availableHours(dto, table, date));
+    public ResponseEntity<List<LocalTime>> availableHours(@RequestParam("table") Integer table, @RequestParam("data") LocalDate date, @Valid @RequestBody ReservationDto dto) throws ValidationsException {
+        return ResponseEntity.ok(reservationControlService.checkAvailableHours(dto, table, date));
     }
 
     @PostMapping(value="/schedule")
-    public ResponseEntity<ReservationDto> schedule(@RequestParam("table") Integer table, @RequestParam("data") Date date, @RequestParam("hour") LocalTime hour, @Valid @RequestBody ReservationDto dto) throws ValidationsException {
+    public ResponseEntity<ReservationDto> schedule(@RequestParam("table") Integer table, @RequestParam("data") LocalDate date, @RequestParam("hour") LocalTime hour, @Valid @RequestBody ReservationDto dto) throws ValidationsException {
         return ResponseEntity.ok(reservationControlService.schedule(table, date, hour, dto));
     }
 

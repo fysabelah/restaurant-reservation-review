@@ -1,8 +1,7 @@
 package com.restaurant.reservationreview.controller.service;
 
-import com.restaurant.reservationreview.helper.DateAvailabilityHelper;
+import com.restaurant.reservationreview.helper.DateAndHourAvailabilityHelper;
 import com.restaurant.reservationreview.model.documents.reservation.ReservationControl;
-import com.restaurant.reservationreview.model.documents.reservation.Reservations;
 import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
 import com.restaurant.reservationreview.model.repository.ReservationControlRepository;
 import com.restaurant.reservationreview.model.repository.ReservationRepository;
@@ -14,11 +13,14 @@ import jakarta.annotation.Resource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 @Service
 public class ReservationControlService {
@@ -41,7 +43,7 @@ public class ReservationControlService {
     @Resource
     private ReservationRepository reservationRepository;
 
-    private DateAvailabilityHelper dateAvailabilityHelper;
+    private DateAndHourAvailabilityHelper dateAndHourAvailabilityHelper;
 
     public ReservationControlService(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
@@ -53,20 +55,43 @@ public class ReservationControlService {
         Restaurant restaurant = getRestaurant(restaurantId);
         LocalDateTime startDate = LocalDate.now().plusDays(PLUS_ONE_DAY).atStartOfDay();
         LocalDateTime finishDate = LocalDate.now().plusDays(PLUS_RESERVATION_DAYS).atStartOfDay();
-        List<ReservationControl> reservations = getReservationsByRestaurantAndDateNextThirtyDays(restaurantId, startDate, finishDate);
+        Optional<List<ReservationControl>> reservations = getReservationsByRestaurantAndDateNextDays(restaurantId, startDate, finishDate);
 
-        List<LocalDate> availableDates = dateAvailabilityHelper.checkDateAvailability(restaurant, reservations, table);
+        if (!reservations.isEmpty()) {
 
-        // buscar em reservations pelo restaurante entre hoje +1 e hoje + 30
+            List<LocalDate> availableDates = dateAndHourAvailabilityHelper.checkDateAvailability(restaurant, reservations.get(), table);
 
-        return availableDates;
+            return availableDates;
+
+        }else{
+            return dateAndHourAvailabilityHelper.nextDaysList();
+        }
+
     }
 
-    public List<LocalTime> availableHours(ReservationDto dto, Integer table, Date date) throws ValidationsException {
-        return null;
+    public List<LocalTime> checkAvailableHours(ReservationDto dto, Integer table, LocalDate date) throws ValidationsException {
+
+        String restaurantId = dto.getRestaurant().getId();
+        Restaurant restaurant = getRestaurant(restaurantId);
+        Integer dayOfYear = date.getDayOfYear();
+        Integer year = date.getYear();
+        LocalDateTime startDate = LocalDate.ofYearDay(year, dayOfYear).atStartOfDay();
+        LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(PLUS_ONE_DAY).atStartOfDay();
+        DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
+        Optional<List<ReservationControl>> reservations = getReservationsByDate(restaurantId, startDate, finishDate);
+
+        if (!reservations.isEmpty()) {
+
+            List<LocalTime> availableHours = dateAndHourAvailabilityHelper.checkAvailableHours(restaurant, reservations.get(), weekDayEnum, table);
+
+            return availableHours;
+
+        }else{
+            return dateAndHourAvailabilityHelper.checkAvailableHoursByDayOfWeek(restaurant, weekDayEnum);
+        }
     }
 
-    public ReservationDto schedule(Integer table, Date date, LocalTime hour, ReservationDto dto) throws ValidationsException {
+    public ReservationDto schedule(Integer table, LocalDate date, LocalTime hour, ReservationDto dto) throws ValidationsException {
 
         Restaurant restaurant = getRestaurant(dto.getRestaurant().getId());
 
@@ -92,7 +117,7 @@ public class ReservationControlService {
                 .orElseThrow(() -> new ValidationsException("0001", "Restaurante n\u00E3o encontrado", id));
     }
 
-    private List<ReservationControl> getReservationsByRestaurantAndDateNextThirtyDays(String id, LocalDateTime start, LocalDateTime finish) throws ValidationsException {
+    private Optional<List<ReservationControl>> getReservationsByRestaurantAndDateNextDays(String id, LocalDateTime start, LocalDateTime finish) throws ValidationsException {
 
         return reservationControlRepository.findAvailableReservationDates(id, start, finish);
 
@@ -116,7 +141,12 @@ public class ReservationControlService {
 
     }
 
+    private Optional<List<ReservationControl>> getReservationsByDate(String id, LocalDateTime start, LocalDateTime finish) throws ValidationsException {
+
+        return reservationControlRepository.findReservationsByDate(id, start, finish);
+
+    }
+
 
 }
 
-}

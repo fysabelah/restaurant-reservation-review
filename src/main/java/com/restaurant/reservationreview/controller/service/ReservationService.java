@@ -1,6 +1,6 @@
 package com.restaurant.reservationreview.controller.service;
 
-import com.restaurant.reservationreview.helper.DateAvailabilityHelper;
+import com.restaurant.reservationreview.helper.DateAndHourAvailabilityHelper;
 import com.restaurant.reservationreview.model.documents.reservation.Reservations;
 import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
 import com.restaurant.reservationreview.model.repository.ReservationRepository;
@@ -34,7 +34,7 @@ public class ReservationService {
     @Resource
     private ReservationRepository reservationRepository;
 
-    private DateAvailabilityHelper dateAvailabilityHelper;
+    private DateAndHourAvailabilityHelper dateAvailabilityHelper;
 
     public ReservationService(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
