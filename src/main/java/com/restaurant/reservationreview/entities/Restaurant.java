@@ -1,39 +1,34 @@
-package com.restaurant.reservationreview.entities;
+package com.restaurant.reservationreview.model.documents.restaurant;
 
-import com.restaurant.reservationreview.util.enums.FoodType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.restaurant.reservationreview.util.enums.FoodType;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Document(collection = "restaurants")
+@Document("restaurants")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Restaurant implements Serializable {
+
     @Id
     private String id;
 
     private String name;
 
-    private String location;
+    private Adress adress;
+
+    private List<BusinnessHours> businnessHours;
 
     private FoodType foodType;
 
-    private Boolean active;
+    private Integer capacity;
 
-    private Integer averageRating;
-
-    private Integer quantityTables;
-
-    private List<RestaurantBusinessHours> businessHours;
-
-    public Restaurant(String id) {
+    public Restaurant(String id, List<BusinnessHours> collect, FoodType foodType, Integer capacity) {
     }
 }

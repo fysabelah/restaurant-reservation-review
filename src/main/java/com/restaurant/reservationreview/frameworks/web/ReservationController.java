@@ -3,7 +3,6 @@ package com.restaurant.reservationreview.controller;
 import com.restaurant.reservationreview.controller.service.ReservationControlService;
 import com.restaurant.reservationreview.controller.service.ReservationService;
 import com.restaurant.reservationreview.util.dto.reservation.ReservationDto;
-import com.restaurant.reservationreview.util.dto.restaurant.ReservationHoursDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController

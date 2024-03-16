@@ -1,19 +1,22 @@
 package com.restaurant.reservationreview.helper;
 
 import com.restaurant.reservationreview.model.documents.reservation.ReservationControl;
+import com.restaurant.reservationreview.model.documents.reservation.Reservation;
 import com.restaurant.reservationreview.model.documents.restaurant.BusinnessHours;
 import com.restaurant.reservationreview.model.documents.restaurant.ReservationHours;
 import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
+import com.restaurant.reservationreview.util.dto.reservation.ReservationDto;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DateAndHourAvailabilityHelper {
+public class ReservationHelper {
 
     private final static Integer PLUS_RESERVATION_DAYS = 30;
 
@@ -144,5 +147,84 @@ public class DateAndHourAvailabilityHelper {
 //        return false;
 
     }
+
+    public ReservationControl newReservationControl(Restaurant restaurant, LocalDateTime dateAndHour, LocalTime hour, DayOfWeek weekDayEnum, Integer table) {
+
+        Integer capacity = getCapacityByHour(restaurant, weekDayEnum, hour);
+
+        boolean available = false;
+
+        if(capacity > table){
+            available = true;
+        }
+
+//      atribui os valores para o controle de reservas para a data e hora recebidas
+        ReservationControl newReservationControl = new ReservationControl();
+
+        newReservationControl.setRestaurant(restaurant);
+        newReservationControl.setDateAndTime(dateAndHour);
+        newReservationControl.setDayOfWeek(weekDayEnum);
+        newReservationControl.setTotalReservations(table);
+        newReservationControl.setCapacity(capacity);
+        newReservationControl.setAvailable(available);
+
+        return newReservationControl;
+    }
+
+    public ReservationControl updateReservationControl(ReservationControl reservationControl, Integer table) {
+
+        boolean available = false;
+
+        Integer capacity = reservationControl.getCapacity();
+        Integer totalReservations = reservationControl.getTotalReservations();
+        Integer newTotalReservations = totalReservations + table;
+
+        if(capacity > newTotalReservations){
+            available = true;
+        }
+
+//      atribui os valores para o controle de reservas para a data e hora recebidas
+        ReservationControl updateReservationControl = reservationControl;
+
+        updateReservationControl.setTotalReservations(newTotalReservations);
+        updateReservationControl.setAvailable(available);
+
+        return updateReservationControl;
+    }
+
+    private Integer getCapacityByHour(Restaurant restaurant, DayOfWeek dayOfWeek, LocalTime hour) {
+
+        List<BusinnessHours> businnessHours = restaurant.getBusinnessHours();
+        Integer tableAmountAvaliable = null;
+
+        for (BusinnessHours business : businnessHours) {
+            if (business.getDayOfWeek() == dayOfWeek) {
+                List<ReservationHours> reservationHours = business.getReservationHours();
+                for (ReservationHours reservationHours1 : reservationHours) {
+                    if(reservationHours1.getHour() == hour);
+                        tableAmountAvaliable = reservationHours1.getTableAmountAvailable();
+                }
+            }
+        }
+
+        return tableAmountAvaliable;
+
+    }
+
+    public Reservation newReservation(ReservationDto dto) {
+
+        Reservation newReservation = new Reservation();
+
+//      atribui os valores para o controle de reservas para a data e hora recebidas
+
+        newReservation.setRestaurant(dto.getRestaurant());
+        newReservation.setPerson(dto.getPerson());
+        newReservation.setDateAndTime(dto.getDateAndTime());
+        newReservation.setDayOfWeek(dto.getDayOfWeek());
+        newReservation.setReservationAmount(dto.getReservationAmount());
+
+        return newReservation;
+    }
+
 
 }
