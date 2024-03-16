@@ -24,4 +24,6 @@ public class RestaurantDto extends Dto {
     @Schema(example = "30")
     private Integer capacity;
 
+    public RestaurantDto(String id, List<BusinnessHoursDto> collect, FoodType foodType, Integer capacity) {
+    }
 }

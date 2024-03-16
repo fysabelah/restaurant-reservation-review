@@ -1,8 +1,9 @@
 package com.restaurant.reservationreview.util.dto.reservation;
 
-import com.restaurant.reservationreview.model.documents.Person;
-import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
 import com.restaurant.reservationreview.util.dto.Dto;
+import com.restaurant.reservationreview.util.dto.PersonDto;
+import com.restaurant.reservationreview.util.dto.restaurant.RestaurantDto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,11 +15,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class ReservationDto extends Dto implements Serializable {
 
-    Restaurant restaurant;
+    RestaurantDto restaurantDto;
 
-    private Person person;
+    private PersonDto personDto;
 
     private LocalDateTime dateAndTime;
 

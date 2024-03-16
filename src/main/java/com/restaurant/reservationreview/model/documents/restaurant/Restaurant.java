@@ -29,4 +29,6 @@ public class Restaurant implements Serializable {
 
     private Integer capacity;
 
+    public Restaurant(String id, List<BusinnessHours> collect, FoodType foodType, Integer capacity) {
+    }
 }

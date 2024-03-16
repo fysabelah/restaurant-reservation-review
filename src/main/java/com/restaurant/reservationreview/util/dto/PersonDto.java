@@ -2,6 +2,7 @@ package com.restaurant.reservationreview.util.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 @JsonIgnoreProperties({"id"})
 public class PersonDto extends Dto implements Serializable {
 

@@ -18,4 +18,11 @@ public interface ReservationControlRepository extends MongoRepository<Rating, St
     @Query(value="{$and: [{'Restaurant.id':{$eq:?0}},{'dateAndTime':{$gte:?1}},{'dateAndTime':{$lte:?2}},{'available':{$eq:true}}]}",sort="{'dateAndTime':1}")
     Optional<List<ReservationControl>> findReservationsByDate(String id, LocalDateTime start, LocalDateTime finish);
 
+    @Query(value="{$and: [{'Restaurant.id':{$eq:?0}},{'dateAndTime':{$eq:?1}}")
+    Optional<ReservationControl> findReservationsByDateAndHour(String id, LocalDateTime dateAndHour);
+
+    void insert(ReservationControl reservationControl);
+
+    void update(ReservationControl reservationControl);
+
 }
