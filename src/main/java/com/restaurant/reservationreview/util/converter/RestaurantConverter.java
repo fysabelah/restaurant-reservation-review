@@ -25,7 +25,7 @@ public class RestaurantConverter implements Converter<Restaurant, RestaurantDto>
                         .map(business -> businessHoursConverter.convert(business))
                         .collect(Collectors.toList()),
                 document.getFoodType(),
-                document.getTableAmount()
+                document.getCapacity()
         );
     }
 
@@ -36,9 +36,8 @@ public class RestaurantConverter implements Converter<Restaurant, RestaurantDto>
                         .stream()
                         .map(business -> businessHoursConverter.convert(business))
                         .collect(Collectors.toList()),
-//                businessHoursConverter.convert(dto.getBusinnessHoursDto()),
                 dto.getFoodType(),
-                dto.getTableAmount()
+                dto.getCapacity()
         );
     }
 
