@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface RatingRepository extends MongoRepository<Rating, String> {
 
     Page<Rating> findAllByRestaurantId(String restaurant, Pageable page);
+
 }
