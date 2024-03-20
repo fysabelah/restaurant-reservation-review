@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
 
       - name: Create ENV file
-        run: echo -e "MONGODB_USERNAME=restaurantreservation95\nMONGODB_PASSWORD=57MSMMkBrEOLprP0\nPROFILE=prod\nMONGO_INITDB_ROOT_USERNAME=admin\nMONGO_INITDB_ROOT_PASSWORD=secret\nME_CONFIG_BASICAUTH_USERNAME=admin\nME_CONFIG_BASICAUTH_PASSWORD=secret\nMONGODB_PORT=27017" >> .env
+        run: echo -e "MONGODB_USERNAME=restaurantreservation95\nMONGODB_PASSWORD=57MSMMkBrEOLprP0\nPROFILE=prod\nMONGO_INITDB_ROOT_USERNAME=admin\nMONGO_INITDB_ROOT_PASSWORD=secret\nMONGODB_PORT=27017" >> .env
 
       - name: Build docker
         run: docker-compose -f compose-prod.yaml build

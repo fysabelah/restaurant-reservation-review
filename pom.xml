@@ -71,13 +71,7 @@
 			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>com.azure</groupId>
-			<artifactId>azure-spring-data-cosmos</artifactId>
-			<version>LATEST</version>
-		</dependency>
-
+		
 	</dependencies>
 
 	<build>
