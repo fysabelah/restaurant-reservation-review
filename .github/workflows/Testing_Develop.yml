@@ -1,0 +1,31 @@
+name: Testing project - tech-challenger-3
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java version
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Create ENV file
+        run: echo -e "MONGODB_USERNAME=restaurantreservation95\nMONGODB_PASSWORD=57MSMMkBrEOLprP0\nPROFILE=prod\nMONGO_INITDB_ROOT_USERNAME=admin\nMONGO_INITDB_ROOT_PASSWORD=secret\nMONGODB_PORT=27017" >> .env
+
+      - name: Build docker
+        run: docker-compose -f compose-prod.yaml build
+
+      - name: runing docker
+        run: docker-compose -f compose-prod.yaml up -d
+
+      - name: Testing project
+        run: mvn test
