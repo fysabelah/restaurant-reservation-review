@@ -4,11 +4,13 @@ import com.restaurant.reservationreview.model.documents.reservation.ReservationC
 import com.restaurant.reservationreview.model.documents.restaurant.Rating;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface ReservationControlRepository extends MongoRepository<Rating, String> {
 
 //    @Query("{ 'restaurant.$id': ?0, 'dateAndTime': { $gte: ?1, $lte: ?2 }, 'available': true }")
