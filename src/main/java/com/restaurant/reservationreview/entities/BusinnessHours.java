@@ -1,5 +1,6 @@
 package com.restaurant.reservationreview.model.documents;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class BusinnessHours implements Serializable {
 
     private DayOfWeek dayOfWeek;

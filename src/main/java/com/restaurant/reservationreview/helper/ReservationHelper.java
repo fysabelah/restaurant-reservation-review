@@ -5,7 +5,9 @@ import com.restaurant.reservationreview.model.documents.reservation.Reservation;
 import com.restaurant.reservationreview.model.documents.restaurant.BusinnessHours;
 import com.restaurant.reservationreview.model.documents.restaurant.ReservationHours;
 import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
+import com.restaurant.reservationreview.util.converter.PersonConverter;
 import com.restaurant.reservationreview.util.dto.reservation.ReservationDto;
+import jakarta.annotation.Resource;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -18,6 +20,8 @@ import java.util.Locale;
 
 public class ReservationHelper {
 
+    @Resource
+    private PersonConverter personConverter;
     private final static Integer PLUS_RESERVATION_DAYS = 30;
 
     private final static Integer PLUS_ONE_DAY = 1;
@@ -211,17 +215,17 @@ public class ReservationHelper {
 
     }
 
-    public Reservation newReservation(ReservationDto dto) {
+    public Reservation newReservation(Restaurant restaurant, Integer table, LocalDateTime dateAndHour, DayOfWeek weekDayEnum, ReservationDto dto) {
 
         Reservation newReservation = new Reservation();
 
 //      atribui os valores para o controle de reservas para a data e hora recebidas
 
-        newReservation.setRestaurant(dto.getRestaurant());
-        newReservation.setPerson(dto.getPerson());
-        newReservation.setDateAndTime(dto.getDateAndTime());
-        newReservation.setDayOfWeek(dto.getDayOfWeek());
-        newReservation.setReservationAmount(dto.getReservationAmount());
+        newReservation.setRestaurant(restaurant);
+        newReservation.setPerson(personConverter.convert(dto.getPersonDto()));
+        newReservation.setDateAndTime(dateAndHour);
+        newReservation.setDayOfWeek(weekDayEnum);
+        newReservation.setReservationAmount(table);
 
         return newReservation;
     }

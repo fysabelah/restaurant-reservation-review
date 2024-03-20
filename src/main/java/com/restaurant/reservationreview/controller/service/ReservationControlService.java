@@ -123,7 +123,7 @@ public class ReservationControlService {
         }
 
 //      atribui os valores da nova reserva para salvar
-        Reservation reservation = reservationHelper.newReservation(dto);
+        Reservation reservation = reservationHelper.newReservation(restaurant, table, dateAndHour, weekDayEnum, dto);
 
         return reservationConverter.convert(reservationRepository.insert(reservation));
 
@@ -138,24 +138,6 @@ public class ReservationControlService {
 
         return reservationControlRepository.findAvailableReservationDates(id, start, finish);
 
-//        TypedAggregation<Reservation> aggregation = Aggregation.newAggregation(Reservation.class,
-//                Aggregation.match(Criteria.where("Restaurant.id").is(id)
-//                        .and("date").gte(start).lte(finish)));
-//
-//        AggregationResults<Reservation> result = mongoTemplate.aggregate(aggregation, Reservation.class);
-//        return result.getMappedResults();
-
-
-//        AggregationOperation match = Aggregation.match(
-//        Criteria.where("Restaurant.id").is(id)
-//                .and("data").gte(start).lte(finish)
-//        );
-//
-//        Aggregation aggregation = Aggregation.newAggregation(match);
-//
-//        // Executar a agregação
-//        return mongoTemplate.aggregate(aggregation, "Reservation", Reservation.class).getMappedResults();
-
     }
 
     private Optional<List<ReservationControl>> getReservationsByDate(String id, LocalDateTime start, LocalDateTime finish) {
@@ -169,7 +151,6 @@ public class ReservationControlService {
         return reservationControlRepository.findReservationsByDateAndHour(id, dateAndHour);
 
     }
-
 
 }
 

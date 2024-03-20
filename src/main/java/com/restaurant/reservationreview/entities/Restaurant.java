@@ -1,5 +1,6 @@
 package com.restaurant.reservationreview.model.documents.restaurant;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.List;
 @Document("restaurants")
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Restaurant implements Serializable {
 
@@ -29,6 +31,4 @@ public class Restaurant implements Serializable {
 
     private Integer capacity;
 
-    public Restaurant(String id, List<BusinnessHours> collect, FoodType foodType, Integer capacity) {
-    }
 }
