@@ -17,13 +17,11 @@ public class PersonConverter implements Converter<Person, PersonDto>  {
 
     @Override
     public Person convert(PersonDto dto) {
-        Person person = new Person();
+        return new Person(
+        dto.getName(),
+        dto.getEmail(),
+        dto.getPhone());
 
-        person.setName(dto.getName());
-        person.setEmail(dto.getEmail());
-        person.setPhone(dto.getPhone());
-
-        return person;
     }
 
 }
