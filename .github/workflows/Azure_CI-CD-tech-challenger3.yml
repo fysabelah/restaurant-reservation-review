@@ -52,7 +52,6 @@ jobs:
       
       - name: Copy dependences
         run: mvn dependency:copy-dependencies
-
       - name: Build with Maven
         run: mvn clean install
 
