@@ -10,11 +10,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @JsonIgnoreProperties(value = {"date"}, allowGetters = true)
-public class RatingDto extends Dto {
+public class RatingDto extends Dto implements Serializable {
 
     @NotEmpty
     @Schema(example = "George")

@@ -15,10 +15,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
 public class ReservationDto extends Dto implements Serializable {
 
-    RestaurantDto restaurantDto;
+    private RestaurantDto restaurantDto;
 
     private PersonDto personDto;
 
@@ -28,4 +27,20 @@ public class ReservationDto extends Dto implements Serializable {
 
     private Integer reservationAmount;
 
+    public ReservationDto(String id, RestaurantDto restaurantDto, PersonDto personDto, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount) {
+        super(id);
+        this.restaurantDto = restaurantDto;
+        this.personDto = personDto;
+        this.dateAndTime = dateAndTime;
+        this.dayOfWeek = dayOfWeek;
+        this.reservationAmount = reservationAmount;
+    }
+
+    public ReservationDto(RestaurantDto restaurantDto, PersonDto personDto, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount) {
+        this.restaurantDto = restaurantDto;
+        this.personDto = personDto;
+        this.dateAndTime = dateAndTime;
+        this.dayOfWeek = dayOfWeek;
+        this.reservationAmount = reservationAmount;
+    }
 }
