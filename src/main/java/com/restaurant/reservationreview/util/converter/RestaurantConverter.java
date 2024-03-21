@@ -16,10 +16,15 @@ public class RestaurantConverter implements Converter<Restaurant, RestaurantDto>
     @Resource
     private BusinessHoursConverter businessHoursConverter;
 
+    @Resource
+    private AdressConverter adressConverter;
     @Override
     public RestaurantDto convert(Restaurant document) {
 
-        return new RestaurantDto(document.getId(),
+        return new RestaurantDto(
+                document.getId(),
+                document.getName(),
+                adressConverter.convert(document.getAdress()),
                 document.getBusinnessHours()
                         .stream()
                         .map(business -> businessHoursConverter.convert(business))
@@ -32,9 +37,11 @@ public class RestaurantConverter implements Converter<Restaurant, RestaurantDto>
     @Override
     public Restaurant convert(RestaurantDto dto) {
         return new Restaurant(dto.getId(),
+                dto.getName(),
+                adressConverter.convert(dto.getAdressDto()),
                 dto.getBusinnessHoursDto()
                         .stream()
-                        .map(business -> businessHoursConverter.convert(business))
+                        .map(businessDto -> businessHoursConverter.convert(businessDto))
                         .collect(Collectors.toList()),
                 dto.getFoodType(),
                 dto.getCapacity()
