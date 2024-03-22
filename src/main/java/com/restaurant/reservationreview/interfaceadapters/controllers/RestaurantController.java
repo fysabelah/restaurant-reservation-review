@@ -13,8 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class RestaurantController {
 
@@ -58,13 +56,6 @@ public class RestaurantController {
 
         restaurant = this.restaurantGateway.update(restaurant);
 
-        return this.converter.convert(restaurant);
-    }
-
-
-
-    public RestaurantDto findByName(String restaurantName) throws ValidationsException {
-        Restaurant restaurant = this.restaurantGateway.findByName(restaurantName);
         return this.converter.convert(restaurant);
     }
 }
