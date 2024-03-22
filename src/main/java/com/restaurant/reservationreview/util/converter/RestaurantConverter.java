@@ -26,7 +26,7 @@ public class RestaurantConverter implements Converter<Restaurant, RestaurantDto>
         dto.setAverageRating(document.getAverageRating());
         dto.setQuantitytables(document.getQuantityTables());
 
-        List<RestaurantBusinessHoursDto> BusinessHours= this.restaurantBusinessHoursConverter.convertEntity(document.getBusinessHours());
+        List<RestaurantBusinessHoursDto> BusinessHours= this.restaurantBusinessHoursConverter.convertDocuments(document.getBusinessHours());
         dto.setBusinessHoursDto(BusinessHours);
 
         return dto;

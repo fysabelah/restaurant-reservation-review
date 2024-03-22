@@ -17,19 +17,19 @@ public interface Converter<T extends Serializable, D extends Dto> {
 
     T convert(D dto) throws ValidationsException;
 
-    default PagedResponse<D> convertEntities(Page<T> page) {
+    default PagedResponse<D> convertDocuments(Page<T> page) {
         PagedResponse<D> paged = new PagedResponse<>();
 
         paged.setPage(new Pagination(page.getNumber(), page.getSize(), page.getTotalPages()));
 
-        List<D> dada = convertEntity(page.get().toList());
+        List<D> dada = convertDocuments(page.get().toList());
 
         paged.setData(dada);
 
         return paged;
     }
 
-    default List<D> convertEntity(List<T> entity) {
+    default List<D> convertDocuments(List<T> entity) {
         if (entity == null) {
             return Collections.emptyList();
         }
