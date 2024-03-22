@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.util.dto;
+package com.restaurant.reservationreview.interfaceadapters.presenters.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
