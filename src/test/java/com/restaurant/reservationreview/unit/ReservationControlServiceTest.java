@@ -1,17 +1,15 @@
 package com.restaurant.reservationreview.unit;
 
 import com.restaurant.reservationreview.TestUtils;
-import com.restaurant.reservationreview.controller.service.ReservationControlService;
+import com.restaurant.reservationreview.interfaceadapters.gateways.ReservationControlGateway;
 import com.restaurant.reservationreview.helper.ReservationHelper;
-import com.restaurant.reservationreview.model.documents.reservation.ReservationControl;
-import com.restaurant.reservationreview.model.documents.restaurant.Adress;
-import com.restaurant.reservationreview.model.documents.restaurant.BusinnessHours;
-import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
-import com.restaurant.reservationreview.util.dto.reservation.ReservationDto;
-import com.restaurant.reservationreview.util.dto.restaurant.AdressDto;
-import com.restaurant.reservationreview.util.dto.restaurant.BusinnessHoursDto;
-import com.restaurant.reservationreview.util.dto.restaurant.ReservationHoursDto;
-import com.restaurant.reservationreview.util.dto.restaurant.RestaurantDto;
+import com.restaurant.reservationreview.entities.ReservationControl;
+import com.restaurant.reservationreview.entities.Restaurant;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.AdressDto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.BusinnessHoursDto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationHoursDto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;
 import com.restaurant.reservationreview.util.enums.FoodType;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
@@ -30,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ReservationControlServiceTest extends TestUtils {
 
     @Resource
-    private ReservationControlService reservationControlService;
+    private ReservationControlGateway reservationControlGateway;
     private static final String RESTAURANT_ID = "NEW_RESTAURANT_ID";
     private static final String RESTAURANT_NAME = "NEW_RESTAURANT";
     private static final String RESTAURANT_ADRESS_STREET = "AV 5";
@@ -44,8 +42,8 @@ class ReservationControlServiceTest extends TestUtils {
     private static final Integer TABLE_AMOUNT_AVAILABLE = 8;
 
     @Test
-    public void test_no_reservations_available_dates() throws ValidationsException {
-        // Arrange
+    public void shouldReturnNoReservationsAvailableDates() throws ValidationsException {
+
         ReservationDto dto = new ReservationDto();
         dto.setRestaurantDto(newRestaurantDto());
         Integer table = 1;
@@ -57,10 +55,8 @@ class ReservationControlServiceTest extends TestUtils {
         ReservationHelper reservationHelper = Mockito.mock(ReservationHelper.class);
         Mockito.when(reservationHelper.checkDateAvailability(Mockito.any(Restaurant.class), Mockito.anyList(), Mockito.anyInt())).thenReturn(new ArrayList<>());
 
-        reservationControlService.setReservationHelper(reservationHelper);
-
         // Act
-        List<LocalDate> availableDates = service.checkAvailableDates(dto, table);
+        List<LocalDate> availableDates = reservationControlGateway.checkAvailableDates(dto, table);
 
         // Assert
         assertEquals(0, availableDates.size());

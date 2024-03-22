@@ -1,13 +1,14 @@
 package com.restaurant.reservationreview.helper;
 
-import com.restaurant.reservationreview.model.documents.reservation.ReservationControl;
-import com.restaurant.reservationreview.model.documents.reservation.Reservation;
-import com.restaurant.reservationreview.model.documents.restaurant.BusinnessHours;
-import com.restaurant.reservationreview.model.documents.restaurant.ReservationHours;
-import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
-import com.restaurant.reservationreview.util.converter.PersonConverter;
-import com.restaurant.reservationreview.util.dto.reservation.ReservationDto;
+import com.restaurant.reservationreview.entities.ReservationControl;
+import com.restaurant.reservationreview.entities.Reservation;
+import com.restaurant.reservationreview.entities.BusinnessHours;
+import com.restaurant.reservationreview.entities.ReservationHours;
+import com.restaurant.reservationreview.entities.Restaurant;
+import com.restaurant.reservationreview.interfaceadapters.presenters.PersonPresenter;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -18,10 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@Component
 public class ReservationHelper {
 
     @Resource
-    private PersonConverter personConverter;
+    private PersonPresenter personPresenter;
     private final static Integer PLUS_RESERVATION_DAYS = 30;
 
     private final static Integer PLUS_ONE_DAY = 1;
@@ -222,7 +224,7 @@ public class ReservationHelper {
 //      atribui os valores para o controle de reservas para a data e hora recebidas
 
         newReservation.setRestaurant(restaurant);
-        newReservation.setPerson(personConverter.convert(dto.getPersonDto()));
+        newReservation.setPerson(personPresenter.convert(dto.getPersonDto()));
         newReservation.setDateAndTime(dateAndHour);
         newReservation.setDayOfWeek(weekDayEnum);
         newReservation.setReservationAmount(table);

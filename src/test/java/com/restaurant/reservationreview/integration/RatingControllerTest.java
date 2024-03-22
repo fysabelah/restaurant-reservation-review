@@ -2,13 +2,13 @@ package com.restaurant.reservationreview.integration;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.restaurant.reservationreview.TestUtils;
-import com.restaurant.reservationreview.model.documents.restaurant.Rating;
-import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
-import com.restaurant.reservationreview.model.repository.RatingRepository;
-import com.restaurant.reservationreview.model.repository.RestaurantRepository;
+import com.restaurant.reservationreview.entities.Rating;
+import com.restaurant.reservationreview.entities.Restaurant;
+import com.restaurant.reservationreview.framework.db.RatingRepository;
+import com.restaurant.reservationreview.framework.db.RestaurantRepository;
 import com.restaurant.reservationreview.util.MessageUtil;
 import com.restaurant.reservationreview.util.configs.time.TimeUtils;
-import com.restaurant.reservationreview.util.dto.restaurant.RatingDto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RatingDto;
 import com.restaurant.reservationreview.util.exception.StandardError;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import org.junit.jupiter.api.AfterEach;
