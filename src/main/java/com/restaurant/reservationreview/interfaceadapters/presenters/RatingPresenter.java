@@ -1,17 +1,17 @@
-package com.restaurant.reservationreview.util.converter;
+package com.restaurant.reservationreview.interfaceadapters.presenters;
 
-import com.restaurant.reservationreview.model.documents.Rating;
+import com.restaurant.reservationreview.entities.Rating;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RatingDto;
 import com.restaurant.reservationreview.util.configs.time.TimeUtils;
-import com.restaurant.reservationreview.util.dto.RatingDto;
-import com.restaurant.reservationreview.util.dto.RestaurantDto;
+import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RatingConverter implements Converter<Rating, RatingDto> {
+public class RatingPresenter implements Presenter<Rating, RatingDto> {
 
     @Resource
-    private RestaurantConverter restaurantConverter;
+    private RestaurantPresenter restaurantConverter;
 
     @Override
     public RatingDto convert(Rating document) {
@@ -23,7 +23,7 @@ public class RatingConverter implements Converter<Rating, RatingDto> {
     }
 
     @Override
-    public Rating convert(RatingDto dto) {
+    public Rating convert(RatingDto dto) throws ValidationsException {
         Rating rating = new Rating();
 
         rating.setId(dto.getId());
@@ -35,14 +35,6 @@ public class RatingConverter implements Converter<Rating, RatingDto> {
         if (dto.getDate() != null) {
             rating.setDate(TimeUtils.getDate(dto.getDate()));
         }
-
-        return rating;
-    }
-
-    public Rating convert(RatingDto dto, RestaurantDto restaurantDto) {
-        Rating rating = convert(dto);
-
-        rating.setRestaurant(restaurantConverter.convert(restaurantDto));
 
         return rating;
     }

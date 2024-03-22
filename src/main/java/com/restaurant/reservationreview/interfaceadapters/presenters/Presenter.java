@@ -1,6 +1,7 @@
-package com.restaurant.reservationreview.util.converter;
+package com.restaurant.reservationreview.interfaceadapters.presenters;
 
-import com.restaurant.reservationreview.util.dto.Dto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.Dto;
+import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;
 import org.springframework.data.domain.Page;
@@ -10,11 +11,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public interface Converter<T extends Serializable, D extends Dto> {
+public interface Presenter<T extends Serializable, D extends Dto> {
 
     D convert(T document);
 
-    T convert(D dto);
+    T convert(D dto) throws ValidationsException;
 
     default PagedResponse<D> convertDocuments(Page<T> page) {
         PagedResponse<D> paged = new PagedResponse<>();
@@ -43,7 +44,13 @@ public interface Converter<T extends Serializable, D extends Dto> {
 
         List<T> documents = new ArrayList<>();
 
-        dtos.forEach(item -> documents.add(convert(item)));
+        dtos.forEach(item -> {
+            try {
+                documents.add(convert(item));
+            } catch (ValidationsException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         return documents;
     }

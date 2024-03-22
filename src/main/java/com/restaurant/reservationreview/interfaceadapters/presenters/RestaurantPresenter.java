@@ -1,11 +1,11 @@
-package com.restaurant.reservationreview.util.converter;
+package com.restaurant.reservationreview.interfaceadapters.presenters;
 
-import com.restaurant.reservationreview.model.documents.Restaurant;
-import com.restaurant.reservationreview.util.dto.RestaurantDto;
+import com.restaurant.reservationreview.entities.Restaurant;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RestaurantConverter implements Converter<Restaurant, RestaurantDto> {
+public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto> {
 
     @Override
     public RestaurantDto convert(Restaurant document) {

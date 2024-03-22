@@ -1,6 +1,6 @@
 package com.restaurant.reservationreview.util.pagination;
 
-import com.restaurant.reservationreview.util.dto.Dto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.Dto;
 import lombok.Getter;
 import lombok.Setter;
 
