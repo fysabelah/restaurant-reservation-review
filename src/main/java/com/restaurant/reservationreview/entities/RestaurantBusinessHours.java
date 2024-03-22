@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.model.documents;
+package com.restaurant.reservationreview.entities;
 
 import lombok.Data;
 

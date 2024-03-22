@@ -1,6 +1,6 @@
 package com.restaurant.reservationreview.util.converter;
 
-import com.restaurant.reservationreview.util.dto.Dto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.Dto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;

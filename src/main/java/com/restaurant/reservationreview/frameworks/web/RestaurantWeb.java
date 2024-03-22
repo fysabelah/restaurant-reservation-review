@@ -1,8 +1,7 @@
-package com.restaurant.reservationreview.controller;
+package com.restaurant.reservationreview.frameworks.web;
 
-import com.restaurant.reservationreview.controller.service.RestaurantService;
-import com.restaurant.reservationreview.util.dto.RestaurantDto;
-import com.restaurant.reservationreview.util.exception.NotFoundException;
+import com.restaurant.reservationreview.interfaceadapters.controllers.RestaurantController;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;
@@ -18,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/restaurant")
 @Tag(name="Restaurant", description = "Exibe os métodos para consultar e incluir informações de um restaurante")
 
-public class RestaurantController {
+public class RestaurantWeb {
     @Resource
-    private RestaurantService restaurantService;
+    private RestaurantController restaurantController;
 
     @Operation(summary = "Consultar todos os restaurantes")
     @GetMapping
@@ -29,29 +28,35 @@ public class RestaurantController {
 
         Pagination page = new Pagination(initialPage, pageSize);
 
-        return ResponseEntity.ok(this.restaurantService.findAll(page));
+        return ResponseEntity.ok(this.restaurantController.findAll(page));
     }
 
     @Operation(summary = "Consultar um restaurante por código")
     @GetMapping(value = "/{restaurant}")
-    public ResponseEntity<RestaurantDto> findById( @Parameter(description = "Informe the ID to a Restaurant", example = "RestauranteXPTO")
-                                                       @PathVariable String idRestaurant) throws NotFoundException {
-        return ResponseEntity.ok(this.restaurantService.findById(idRestaurant));
+    public ResponseEntity<RestaurantDto> findById(@Parameter(description = "Informe o ID do restaurante", example = "65fda06d0f8a6b46cd1b2eba")
+                                                      @RequestParam(required = true) String idRestaurant) throws ValidationsException {
+
+        return ResponseEntity.ok(this.restaurantController.findById(idRestaurant));
+
     }
 
     @Operation(summary="Incluir informações de um restaurante")
     @PostMapping
     public ResponseEntity<RestaurantDto>  insert(@RequestBody RestaurantDto restaurantDto) throws ValidationsException {
-        RestaurantDto restaurantDtoSaved = this.restaurantService.insert(restaurantDto);
+
+        RestaurantDto restaurantDtoSaved = this.restaurantController.insert(restaurantDto);
         return ResponseEntity.ok(restaurantDtoSaved);
+
     }
 
     @Operation(summary = "Atualizar informações de um restaurante")
     @PutMapping
-    public ResponseEntity<RestaurantDto> update(@Valid @RequestBody RestaurantDto restaurantDto) throws NotFoundException {
-        RestaurantDto restaurantDtoUpdated = this.restaurantService.update(restaurantDto);
+    public ResponseEntity<RestaurantDto> update(@Valid @RequestBody RestaurantDto restaurantDto) throws ValidationsException {
+
+        RestaurantDto restaurantDtoUpdated = this.restaurantController.update(restaurantDto);
 
         return ResponseEntity.ok(restaurantDtoUpdated);
+
     }
 
 }

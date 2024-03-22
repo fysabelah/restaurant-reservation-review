@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.util.dto;
+package com.restaurant.reservationreview.interfaceadapters.presenters.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;

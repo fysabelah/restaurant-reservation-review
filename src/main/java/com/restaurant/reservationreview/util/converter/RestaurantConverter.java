@@ -1,9 +1,9 @@
 package com.restaurant.reservationreview.util.converter;
 
-import com.restaurant.reservationreview.model.documents.RestaurantBusinessHours;
-import com.restaurant.reservationreview.util.dto.RestaurantBusinessHoursDto;
-import com.restaurant.reservationreview.util.dto.RestaurantDto;
-import com.restaurant.reservationreview.model.documents.Restaurant;
+import com.restaurant.reservationreview.entities.RestaurantBusinessHours;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantBusinessHoursDto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;
+import com.restaurant.reservationreview.entities.Restaurant;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -21,10 +21,10 @@ public class RestaurantConverter implements Converter<Restaurant, RestaurantDto>
         dto.setId(document.getId());
         dto.setName(document.getName());
         dto.setLocation(document.getLocation());
-        dto.setCuisineType(document.getCuisineType());
+        dto.setFoodType(document.getFoodType());
         dto.setActive(document.getActive());
         dto.setAverageRating(document.getAverageRating());
-        dto.setQuantitytables(document.getQuantityTables());
+        dto.setQuantityTables(document.getQuantityTables());
 
         List<RestaurantBusinessHoursDto> BusinessHours= this.restaurantBusinessHoursConverter.convertDocuments(document.getBusinessHours());
         dto.setBusinessHoursDto(BusinessHours);
@@ -41,10 +41,10 @@ public class RestaurantConverter implements Converter<Restaurant, RestaurantDto>
         restaurant.setId(dto.getId());
         restaurant.setName(dto.getName());
         restaurant.setLocation(dto.getLocation());
-        restaurant.setCuisineType(dto.getCuisineType());
+        restaurant.setFoodType(dto.getFoodType());
         restaurant.setActive(dto.getActive());
         restaurant.setAverageRating(dto.getAverageRating());
-        restaurant.setQuantityTables(dto.getQuantitytables());
+        restaurant.setQuantityTables(dto.getQuantityTables());
 
         List<RestaurantBusinessHours> businessHours =this.restaurantBusinessHoursConverter.convertDto(dto.getBusinessHoursDto());
         restaurant.setBusinessHours(businessHours);
