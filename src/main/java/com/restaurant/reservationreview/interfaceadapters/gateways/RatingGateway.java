@@ -2,6 +2,7 @@ package com.restaurant.reservationreview.interfaceadapters.gateways;
 
 import com.restaurant.reservationreview.entities.Rating;
 import com.restaurant.reservationreview.framework.db.RatingRepository;
+import com.restaurant.reservationreview.interfaceadapters.presenters.RestaurantPresenter;
 import com.restaurant.reservationreview.util.configs.time.TimeUtils;
 import com.restaurant.reservationreview.interfaceadapters.presenters.RatingPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RatingDto;
@@ -25,10 +26,13 @@ public class RatingGateway {
     private RestaurantGateway restaurantService;
 
     @Resource
+    private RestaurantPresenter restaurantPresenter;
+
+    @Resource
     private RatingPresenter ratingPresenter;
 
     public RatingDto insert(String restaurant, RatingDto dto) throws ValidationsException {
-        RestaurantDto restaurantDto = restaurantService.findById(restaurant);
+        RestaurantDto restaurantDto = restaurantPresenter.convert(restaurantService.findById(restaurant));
 
         Rating rating = ratingPresenter.convert(dto, restaurantDto);
         rating.setDate(TimeUtils.now());

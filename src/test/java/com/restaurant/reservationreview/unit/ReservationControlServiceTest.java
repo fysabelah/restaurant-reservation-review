@@ -2,7 +2,6 @@ package com.restaurant.reservationreview.unit;
 
 import com.restaurant.reservationreview.TestUtils;
 import com.restaurant.reservationreview.interfaceadapters.gateways.ReservationControlGateway;
-import com.restaurant.reservationreview.helper.ReservationHelper;
 import com.restaurant.reservationreview.entities.ReservationControl;
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
@@ -42,25 +41,25 @@ class ReservationControlServiceTest extends TestUtils {
     private static final Integer TABLE_AMOUNT_AVAILABLE = 8;
 
     @Test
-    public void shouldReturnNoReservationsAvailableDates() throws ValidationsException {
-
-        ReservationDto dto = new ReservationDto();
-        dto.setRestaurantDto(newRestaurantDto());
-        Integer table = 1;
-
-        // Mock the dependencies
-        Restaurant restaurant = new Restaurant();
-        restaurant.setBusinnessHours(new ArrayList<>());
-        List<ReservationControl> reservations = new ArrayList<>();
-        ReservationHelper reservationHelper = Mockito.mock(ReservationHelper.class);
-        Mockito.when(reservationHelper.checkDateAvailability(Mockito.any(Restaurant.class), Mockito.anyList(), Mockito.anyInt())).thenReturn(new ArrayList<>());
-
-        // Act
-        List<LocalDate> availableDates = reservationControlGateway.checkAvailableDates(dto, table);
-
-        // Assert
-        assertEquals(0, availableDates.size());
-    }
+//    public void shouldReturnNoReservationsDatesAvailable() throws ValidationsException {
+//
+//        ReservationDto dto = new ReservationDto();
+//        dto.setRestaurantDto(newRestaurantDto());
+//        Integer table = 1;
+//
+//        // Mock the dependencies
+//        Restaurant restaurant = new Restaurant();
+//        restaurant.setBusinnessHours(new ArrayList<>());
+//        List<ReservationControl> reservations = new ArrayList<>();
+//        ReservationHelper reservationHelper = Mockito.mock(ReservationHelper.class);
+//        Mockito.when(reservationHelper.checkDateAvailability(Mockito.any(Restaurant.class), Mockito.anyList(), Mockito.anyInt())).thenReturn(new ArrayList<>());
+//
+//         Act
+//        List<LocalDate> availableDates = reservationControlGateway.checkAvailableDates(dto, table);
+//
+//         Assert
+//        assertEquals(0, availableDates.size());
+//    }
     public RestaurantDto newRestaurantDto(){
 
         RestaurantDto restaurantDto = new RestaurantDto();

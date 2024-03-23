@@ -1,7 +1,8 @@
 package com.restaurant.reservationreview.interfaceadapters.presenters.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.validation.constraints.NotBlank;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +17,16 @@ import java.io.Serializable;
 @JsonIgnoreProperties({"id"})
 public class PersonDto extends Dto implements Serializable {
 
-    @NotBlank(message = "É preciso informar um nome para contato!")
+    @NotEmpty
+    @Schema(example = "George")
     private String name;
 
-    @NotBlank(message = "É preciso informar um e-mail para contato!")
+    @NotEmpty
+    @Schema(example = "george@mail.com.br")
     private String email;
 
-    @NotBlank(message = "É preciso informar um telefone para contato!")
+    @NotEmpty
+    @Schema(example = "11980809090")
     private String phone;
 
 }
