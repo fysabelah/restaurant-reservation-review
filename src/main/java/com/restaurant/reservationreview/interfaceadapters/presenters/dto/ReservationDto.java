@@ -1,9 +1,7 @@
-package com.restaurant.reservationreview.util.dto.reservation;
+package com.restaurant.reservationreview.interfaceadapters.presenters.dto;
 
-import com.restaurant.reservationreview.util.dto.Dto;
-import com.restaurant.reservationreview.util.dto.PersonDto;
-import com.restaurant.reservationreview.util.dto.restaurant.RestaurantDto;
-import lombok.AllArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

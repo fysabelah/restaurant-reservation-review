@@ -9,5 +9,5 @@ public interface RestaurantRepository extends MongoRepository<Restaurant, String
     Optional<Restaurant> findByNameEquals(String restaurantName);
 
     Optional<Restaurant> findById( String idRestaurante);
-    
+
 }

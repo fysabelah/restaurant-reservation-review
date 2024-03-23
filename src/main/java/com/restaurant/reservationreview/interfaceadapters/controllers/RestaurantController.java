@@ -1,3 +1,4 @@
+
 package com.restaurant.reservationreview.interfaceadapters.controllers;
 
 import com.restaurant.reservationreview.entities.Restaurant;
@@ -49,10 +50,9 @@ public class RestaurantController {
         Restaurant restaurant = this.restaurantGateway.findById(restaurantDto.getId());
 
         restaurant.setName(restaurantDto.getName());
-        restaurant.setLocation(restaurantDto.getLocation());
+//        restaurant.setAdress(restaurantDto.getAdressDto());
         restaurant.setFoodType(restaurantDto.getFoodType());
-        restaurant.setActive(restaurantDto.getActive());
-        restaurant.setQuantityTables(restaurantDto.getQuantityTables());
+        restaurant.setCapacity(restaurantDto.getCapacity());
 
         restaurant = this.restaurantGateway.update(restaurant);
 
