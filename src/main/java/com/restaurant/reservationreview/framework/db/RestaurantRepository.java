@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.frameworks.db;
+package com.restaurant.reservationreview.framework.db;
 
 import com.restaurant.reservationreview.entities.Restaurant;
 import org.springframework.data.mongodb.repository.MongoRepository;
