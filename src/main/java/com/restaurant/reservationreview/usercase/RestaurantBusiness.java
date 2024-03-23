@@ -1,29 +1,29 @@
 package com.restaurant.reservationreview.usercase;
 
 import com.restaurant.reservationreview.entities.Restaurant;
+import com.restaurant.reservationreview.framework.db.RestaurantRepository;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class RestaurantBusiness {
 
-    public void create(Restaurant restaurantNomeDuplicado) throws ValidationsException {
-        if (restaurantNomeDuplicado != null) {
-            throw new ValidationsException("0200");
+    @Resource
+    RestaurantRepository repository;
+
+    public Restaurant create( Restaurant restaurant) throws ValidationsException{
+        Optional<Restaurant> restaurantSaved = this.repository.findByNameEquals(restaurant.getName());
+
+        if ( restaurantSaved.isPresent() ){
+            throw new ValidationsException("0105");
         }
+
+        return  restaurant;
     }
 
-    public void update(Restaurant restaurant, Restaurant converted, Restaurant restaurantWithTheSameName) throws ValidationsException {
-        if (restaurantWithTheSameName != null && restaurant.getId().compareTo(restaurantWithTheSameName.getId()) != 0) {
-            throw new ValidationsException("0200");
-        }
 
-        // atribuímos no restaurante atual as novas informações
-        restaurant.setName(converted.getName());
-        restaurant.setLocation(converted.getLocation());
-        restaurant.setFoodType(converted.getFoodType());
-        restaurant.setActive(converted.isActive());
-        restaurant.setQuantityTables(converted.getQuantityTables());
-        restaurant.setBusinessHours(converted.getBusinessHours());
-    }
+
 }

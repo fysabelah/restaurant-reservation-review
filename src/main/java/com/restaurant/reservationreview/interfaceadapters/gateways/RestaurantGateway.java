@@ -1,8 +1,8 @@
 package com.restaurant.reservationreview.interfaceadapters.gateways;
 
 import com.restaurant.reservationreview.entities.Restaurant;
-import com.restaurant.reservationreview.frameworks.db.RestaurantRepository;
-import com.restaurant.reservationreview.util.enums.FoodType;
+import com.restaurant.reservationreview.framework.db.RestaurantRepository;
+import com.restaurant.reservationreview.usercase.RestaurantBusiness;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
@@ -15,36 +15,37 @@ public class RestaurantGateway {
     @Resource
     private RestaurantRepository repository;
 
-    public Restaurant insert(Restaurant restaurant) {
-        return this.repository.insert(restaurant);
+    @Resource
+    private RestaurantBusiness business;
+
+    public Restaurant insert(Restaurant restaurant) throws ValidationsException {
+        restaurant = this.business.create(restaurant);
+
+        return repository.insert(restaurant);
     }
 
-    public Page<Restaurant> findAll(Pageable pageable) {
-        return this.repository.findAll(pageable);
+
+    public Page<Restaurant> findAll(Pageable pageable){
+        return repository.findAll(pageable);
     }
 
-    public Page<Restaurant> findAll(FoodType foodType, String location, Pageable pageable) {
-        return this.repository.findAllByFoodTypeAndLocationLike(foodType, location, pageable);
-    }
-
-    public Page<Restaurant> findAll(FoodType foodType, Pageable pageable) {
-        return this.repository.findAllByFoodType(foodType, pageable);
-    }
-
-    public Page<Restaurant> findAll(String location, Pageable pageable) {
-        return this.repository.findAllByLocationLike(location, pageable);
-    }
 
     public Restaurant findById(String id) throws ValidationsException {
-        return this.repository.findById(id)
-                .orElseThrow(() -> new ValidationsException("0001", "Restaurant", id));
+        return repository.findById(id)
+                .orElseThrow(() -> new ValidationsException("0001", "restaurante", id));
     }
 
-    public Restaurant findByName(String nameRestaurant) {
-        return this.repository.findByNameEquals(nameRestaurant);
+
+    public Restaurant findByName(String name) throws ValidationsException{
+        return repository.findByNameEquals(name)
+                .orElseThrow(() -> new ValidationsException("0001", "restaurante", name));
+    }
+
+    public void delete(Restaurant restaurant) {
+        repository.delete(restaurant);
     }
 
     public Restaurant update(Restaurant restaurant) {
-        return this.repository.save(restaurant);
+        return repository.save(restaurant);
     }
 }
