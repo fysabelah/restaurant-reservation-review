@@ -52,15 +52,17 @@ public class ReservationController {
         LocalDateTime startDate = LocalDate.now().plusDays(PLUS_ONE_DAY).atStartOfDay();
         LocalDateTime finishDate = LocalDate.now().plusDays(PLUS_RESERVATION_DAYS).atStartOfDay();
 
-        Optional<List<ReservationControl>> reservations = reservationControlGateway.getReservationsByRestaurantAndDateNextDays(restaurantId, startDate, finishDate);
+//      ajustar para consultar com o formato de datetime 2024-03-25T20:00:00.000+00:00
+//      ou para salvar no formado 2024-03-24T00:00
+        Optional<List<ReservationControl>> reservations = reservationControlGateway.findReservationsByRestaurantAndDateNextDays(restaurantId, startDate, finishDate);
 
-        if (reservations.isPresent()) {
+        if (reservations.get().isEmpty()) {
 
-            dates = reservationControlBusiness.checkDateAvailability(restaurant, reservations.get(), table);
+            dates = reservationControlBusiness.nextDaysList();
 
         }else{
 
-            dates = reservationControlBusiness.nextDaysList();
+            dates = reservationControlBusiness.checkDateAvailability(restaurant, reservations.get(), table);
 
         }
 
@@ -79,15 +81,15 @@ public class ReservationController {
         LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(PLUS_ONE_DAY).atStartOfDay();
         DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
 
-        Optional<List<ReservationControl>> reservations = reservationControlGateway.getReservationsByDate(restaurantId, startDate, finishDate);
+        Optional<List<ReservationControl>> reservations = reservationControlGateway.findReservationsByDate(restaurantId, startDate, finishDate);
 
-        if (reservations.isPresent()) {
+        if (reservations.get().isEmpty()) {
 
-            availableHours = reservationControlBusiness.checkAvailableHours(restaurant, reservations.get(), weekDayEnum, table);
+            availableHours =  reservationControlBusiness.checkAvailableHoursByDayOfWeek(restaurant, weekDayEnum);
 
         }else{
 
-            availableHours =  reservationControlBusiness.checkAvailableHoursByDayOfWeek(restaurant, weekDayEnum);
+            availableHours = reservationControlBusiness.checkAvailableHours(restaurant, reservations.get(), weekDayEnum, table);
 
         }
 
@@ -112,19 +114,19 @@ public class ReservationController {
         LocalDateTime dateAndHour = LocalDate.ofYearDay(year, dayOfYear).atStartOfDay().plusHours(hours).plusMinutes(minutes);
         DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
 
-        Optional<ReservationControl> reservationControl = reservationControlGateway.getReservationsByDateAndHour(restaurantId, dateAndHour);
+        Optional<ReservationControl> reservationControl = reservationControlGateway.findReservationsByDateAndHour(restaurantId, dateAndHour);
 
         ReservationControl saveReservationControl;
 
-        if (reservationControl.isPresent()) {
-
-            saveReservationControl = reservationControlBusiness.updateReservationControl(reservationControl.get(), table);
-            reservationControlGateway.save(saveReservationControl);
-
-        }else{
+        if (reservationControl.isEmpty()) {
 
             saveReservationControl = reservationControlBusiness.newReservationControl(restaurant, dateAndHour, hour, weekDayEnum, table);
             reservationControlGateway.insert(saveReservationControl);
+
+        }else{
+
+            saveReservationControl = reservationControlBusiness.updateReservationControl(reservationControl.get(), table);
+            reservationControlGateway.save(saveReservationControl);
 
         }
 

@@ -1,13 +1,12 @@
-package com.restaurant.reservationreview.model.repository;
+package com.restaurant.reservationreview.framework.db;
 
-import com.restaurant.reservationreview.model.documents.reservation.Reservation;
-import com.restaurant.reservationreview.model.documents.restaurant.Rating;
+import com.restaurant.reservationreview.entities.Reservation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReservationRepository extends MongoRepository<Rating, String> {
+public interface ReservationRepository extends MongoRepository<Reservation, String> {
 
     @Query(value="{'Reservation.Person.email':{$eq:?0}}")
     Reservation findByEmail(String email);

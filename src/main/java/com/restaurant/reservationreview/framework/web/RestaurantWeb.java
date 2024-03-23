@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.frameworks.web;
+package com.restaurant.reservationreview.framework.web;
 
 import com.restaurant.reservationreview.interfaceadapters.controllers.RestaurantController;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;

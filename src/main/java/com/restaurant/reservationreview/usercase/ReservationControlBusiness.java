@@ -27,7 +27,7 @@ public class ReservationControlBusiness {
 
     public List<LocalDate> checkDateAvailability(Restaurant restaurant, List<ReservationControl> reservations, Integer table) {
 
-        if (!reservations.isEmpty()) {
+//        if (!reservations.isEmpty()) {
 
             List<LocalDate> nextThirtyDays = nextDaysList();
             List<LocalDate> datesWithAvailability = new ArrayList<>();
@@ -45,11 +45,11 @@ public class ReservationControlBusiness {
 
             return datesWithAvailability;
 
-        }else{
-
-            return nextDaysList();
-
-        }
+//        }else{
+//
+//            return nextDaysList();
+//
+//        }
 
     }
 
@@ -70,11 +70,14 @@ public class ReservationControlBusiness {
 
     public List<LocalDate> nextDaysList() {
 
+//      ajustar para retornar apenas datas de businesshours
+
         List<LocalDate> nextThirtyDays = new ArrayList<>();
 
         LocalDate tomorrow = LocalDate.now().plusDays(PLUS_ONE_DAY);
 
         for (int i = 0; i <= PLUS_RESERVATION_DAYS; i++) {
+
             nextThirtyDays.add(tomorrow.plusDays(i));
         }
 
@@ -207,7 +210,7 @@ public class ReservationControlBusiness {
     private Integer getCapacityByHour(Restaurant restaurant, DayOfWeek dayOfWeek, LocalTime hour) {
 
         List<BusinnessHours> businnessHours = restaurant.getBusinnessHours();
-        Integer tableAmountAvaliable = null;
+        Integer tableAmountAvaliable = 0;
 
         for (BusinnessHours business : businnessHours) {
             if (business.getDayOfWeek() == dayOfWeek) {
