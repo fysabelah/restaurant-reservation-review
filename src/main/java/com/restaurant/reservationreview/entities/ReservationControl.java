@@ -35,4 +35,6 @@ public class ReservationControl implements Serializable {
 
     private boolean available;
 
+    public ReservationControl(String id, String restaurantId, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer totalReservations, Integer capacity, boolean available) {
+    }
 }

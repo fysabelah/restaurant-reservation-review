@@ -17,6 +17,8 @@ public class Adress implements Serializable {
 
     private String adressNumber;
 
+    private String complement;
+
     private String city;
 
     private String state;

@@ -23,7 +23,7 @@ public class RatingPresenter implements Presenter<Rating, RatingDto> {
     }
 
     @Override
-    public Rating convert(RatingDto dto) {
+    public Rating convert(RatingDto dto) throws ValidationsException {
         Rating rating = new Rating();
 
         rating.setId(dto.getId());

@@ -25,6 +25,10 @@ public class AdressDto extends Dto implements Serializable {
     @Schema(example = "2041")
     private String adressNumber;
 
+    @NotBlank(message = "O complemento é obrigatório")
+    @Schema(example = "Térreo Prédio Santander")
+    private String complement;
+
     @NotBlank(message = "A cidade é obrigatória")
     @Schema(example = "São Paulo")
     private String city;

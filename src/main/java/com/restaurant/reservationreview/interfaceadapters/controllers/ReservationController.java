@@ -7,18 +7,16 @@ import com.restaurant.reservationreview.interfaceadapters.gateways.ReservationCo
 import com.restaurant.reservationreview.interfaceadapters.gateways.ReservationGateway;
 import com.restaurant.reservationreview.interfaceadapters.gateways.RestaurantGateway;
 import com.restaurant.reservationreview.interfaceadapters.presenters.ReservationPresenter;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
 import com.restaurant.reservationreview.usercase.ReservationControlBusiness;
-import com.restaurant.reservationreview.util.MessageUtil;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -36,13 +34,6 @@ public class ReservationController {
     private final static Integer PLUS_ONE_DAY = 1;
 
     private final static Integer PLUS_RESERVATION_DAYS = 30;
-
-    private final MongoTemplate mongoTemplate;
-
-    @Autowired
-    public ReservationController(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
 
     @Resource
     private RestaurantGateway restaurantGateway;
@@ -110,7 +101,7 @@ public class ReservationController {
 
     }
 
-    public ReservationDto schedule(String restaurantId, Integer table, LocalDate date, LocalTime hour, ReservationDto dto) throws ValidationsException {
+    public ReservationDto schedule(String restaurantId, Integer table, LocalDate date, LocalTime hour, PersonDto dto) throws ValidationsException {
 
         Restaurant restaurant = restaurantGateway.findById(restaurantId);
 
@@ -171,25 +162,6 @@ public class ReservationController {
 
         reservationControlGateway.save(updateReservationControl);
 
-    }
-
-    public PagedResponse<ReservationDto> findAll(Pagination page, String restaurant) throws ValidationsException {
-        validateId(restaurant);
-
-        restaurantGateway.findById(restaurant);
-
-        Pageable pageable = PageRequest.of(page.getPage(), page.getPageSize());
-
-        Page<Reservation> reservation = reservationGateway.findAll(restaurant, pageable);
-
-        return reservationPresenter.convertDocuments(reservation);
-
-    }
-
-    private static void validateId(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException(MessageUtil.getMessage("0002"));
-        }
     }
 
 }

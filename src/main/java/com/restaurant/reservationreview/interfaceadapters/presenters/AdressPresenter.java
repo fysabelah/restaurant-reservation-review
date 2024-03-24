@@ -13,6 +13,7 @@ public class AdressPresenter implements Presenter<Adress, AdressDto> {
         return new AdressDto(
                 document.getStreet(),
                 document.getAdressNumber(),
+                document.getComplement(),
                 document.getCity(),
                 document.getState()
         );
@@ -24,6 +25,7 @@ public class AdressPresenter implements Presenter<Adress, AdressDto> {
         return new Adress(
                 dto.getStreet(),
                 dto.getAdressNumber(),
+                dto.getComplement(),
                 dto.getCity(),
                 dto.getState()
         );

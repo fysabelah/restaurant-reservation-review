@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+
 @Repository
 public interface ReservationRepository extends MongoRepository<Reservation, String> {
 
@@ -16,6 +18,6 @@ public interface ReservationRepository extends MongoRepository<Reservation, Stri
     Reservation insert(Reservation reservation);
 
     @Query(value="{ 'restaurant':{ $eq:?0 } }")
-    Page<Reservation> findAllByRestaurantId(String restaurant, Pageable page);
+    Page<Reservation> findAllReservationsByRestaurantAndDateBetween(String restaurant, LocalDateTime start, LocalDateTime finish, Pageable page);
 
 }

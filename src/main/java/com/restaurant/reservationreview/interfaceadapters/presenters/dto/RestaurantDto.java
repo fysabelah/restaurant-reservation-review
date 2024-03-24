@@ -16,7 +16,7 @@ import java.util.List;
 public class RestaurantDto extends Dto implements Serializable {
 
     @NotEmpty
-    @Schema(example = "Paparoto")
+    @Schema(example = "Paparoto Cucina")
     private String name;
 
     private AdressDto adressDto;
@@ -31,13 +31,17 @@ public class RestaurantDto extends Dto implements Serializable {
     @Schema(example = "30")
     private Integer capacity;
 
-    public RestaurantDto(String id, String name, AdressDto adressDto, List<BusinnessHoursDto> businnessHoursDto, FoodType foodType, Integer capacity) {
+
+    private Integer averageRating;
+
+    public RestaurantDto(String id, String name, AdressDto adressDto, List<BusinnessHoursDto> businnessHoursDto, FoodType foodType, Integer capacity, Integer averageRating) {
         super(id);
         this.name = name;
         this.adressDto = adressDto;
         this.businnessHoursDto = businnessHoursDto;
         this.foodType = foodType;
         this.capacity = capacity;
+        this.averageRating = averageRating;
     }
 
     public RestaurantDto(String name, AdressDto adressDto, List<BusinnessHoursDto> businnessHoursDto, FoodType foodType, Integer capacity) {
@@ -47,4 +51,5 @@ public class RestaurantDto extends Dto implements Serializable {
         this.foodType = foodType;
         this.capacity = capacity;
     }
+
 }
