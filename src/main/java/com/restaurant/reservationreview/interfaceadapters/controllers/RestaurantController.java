@@ -3,6 +3,7 @@ package com.restaurant.reservationreview.interfaceadapters.controllers;
 
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.interfaceadapters.gateways.RestaurantGateway;
+import com.restaurant.reservationreview.interfaceadapters.presenters.AdressPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.RestaurantPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
@@ -21,14 +22,19 @@ public class RestaurantController {
     private RestaurantGateway restaurantGateway;
 
     @Resource
-    private RestaurantPresenter converter;
+    private RestaurantPresenter restaurantPresenter;
+
+    @Resource
+    private AdressPresenter adressPresenter;
+
+
 
     public RestaurantDto insert(RestaurantDto restaurantDto) throws ValidationsException {
-        Restaurant restaurant = this.converter.convert(restaurantDto);
+        Restaurant restaurant = this.restaurantPresenter.convert(restaurantDto);
 
         restaurant = this.restaurantGateway.insert(restaurant);
 
-        return this.converter.convert(restaurant);
+        return this.restaurantPresenter.convert(restaurant);
     }
 
     public PagedResponse<RestaurantDto> findAll(Pagination pagination) {
@@ -37,25 +43,25 @@ public class RestaurantController {
 
         Page<Restaurant> restaurants = this.restaurantGateway.findAll(pageable);
 
-        return this.converter.convertDocuments(restaurants);
+        return this.restaurantPresenter.convertDocuments(restaurants);
 
     }
 
     public RestaurantDto findById(String idRestaurant) throws ValidationsException {
         Restaurant restaurant = this.restaurantGateway.findById(idRestaurant);
-        return this.converter.convert(restaurant);
+        return this.restaurantPresenter.convert(restaurant);
     }
 
     public RestaurantDto update(RestaurantDto restaurantDto) throws ValidationsException {
         Restaurant restaurant = this.restaurantGateway.findById(restaurantDto.getId());
 
         restaurant.setName(restaurantDto.getName());
-//        restaurant.setAdress(restaurantDto.getAdressDto());
+        restaurant.setAdress(adressPresenter.convet(restaurantDto.getAdressDto()));
         restaurant.setFoodType(restaurantDto.getFoodType());
         restaurant.setCapacity(restaurantDto.getCapacity());
 
         restaurant = this.restaurantGateway.update(restaurant);
 
-        return this.converter.convert(restaurant);
+        return this.restaurantPresenter.convert(restaurant);
     }
 }
