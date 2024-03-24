@@ -1,14 +1,14 @@
-package com.restaurant.reservationreview.framework.web;
+package com.restaurant.reservationreview.frameworks.web;
 
 import com.restaurant.reservationreview.interfaceadapters.controllers.ReservationController;
-import com.restaurant.reservationreview.interfaceadapters.gateways.ReservationControlGateway;
-import com.restaurant.reservationreview.interfaceadapters.gateways.ReservationGateway;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
+import com.restaurant.reservationreview.util.pagination.PagedResponse;
+import com.restaurant.reservationreview.util.pagination.Pagination;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +24,6 @@ public class ReservationWeb {
 
     @Resource
     private ReservationController reservationController;
-
-    @Resource
-    private ReservationGateway reservationGateway;
-
-    @Resource
-    private ReservationControlGateway reservationControlGateway;
 
     @GetMapping(value="/available-dates/{restaurantId}")
     public ResponseEntity<List<LocalDate>> availableDates(@PathVariable String restaurantId,
@@ -54,8 +48,24 @@ public class ReservationWeb {
         return ResponseEntity.ok(reservationController.schedule(restaurantId, table, date, parsedHour, dto));
     }
 
-    @GetMapping(value="/reservationSearch")
-    public ResponseEntity<ReservationDto> findByEmail(@Valid @RequestBody ReservationDto dto) throws ValidationsException {
-        return ResponseEntity.ok(reservationController.findByEmail(dto));
+    @GetMapping(value="/findReservation")
+    public ResponseEntity<ReservationDto> findByEmail(@RequestParam("email") String email) throws ValidationsException {
+        return ResponseEntity.ok(reservationController.findByEmail(email));
     }
+
+    @DeleteMapping(value="/reservationCancelation")
+    public ResponseEntity<ReservationDto> reservationCancelation(@RequestParam("reservationId") String id) throws ValidationsException {
+        reservationController.reservationCancelation(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/restaurant/{restaurant}")
+    public ResponseEntity<PagedResponse<ReservationDto>> findAll(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
+                                                            @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage,
+                                                            @PathVariable String restaurant) throws ValidationsException {
+        Pagination page = new Pagination(initialPage, pageSize);
+
+        return ResponseEntity.ok(reservationController.findAll(page, restaurant));
+    }
+
 }

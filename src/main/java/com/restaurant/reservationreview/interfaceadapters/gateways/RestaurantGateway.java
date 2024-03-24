@@ -1,7 +1,7 @@
 package com.restaurant.reservationreview.interfaceadapters.gateways;
 
 import com.restaurant.reservationreview.entities.Restaurant;
-import com.restaurant.reservationreview.framework.db.RestaurantRepository;
+import com.restaurant.reservationreview.frameworks.db.RestaurantRepository;
 import com.restaurant.reservationreview.usercase.RestaurantBusiness;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;

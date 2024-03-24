@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.framework.db;
+package com.restaurant.reservationreview.frameworks.db;
 
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.util.enums.FoodType;
