@@ -22,9 +22,9 @@ public interface Presenter<T extends Serializable, D extends Dto> {
 
         paged.setPage(new Pagination(page.getNumber(), page.getSize(), page.getTotalPages()));
 
-        List<D> dada = convertDocuments(page.get().toList());
+        List<D> data = convertDocuments(page.get().toList());
 
-        paged.setData(dada);
+        paged.setData(data);
 
         return paged;
     }

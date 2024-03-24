@@ -44,7 +44,12 @@ class RatingBusinessTest extends TestUtils {
         rating.setDate(TimeUtils.now());
         rating.setZoneId(TimeUtils.getZoneId());
         rating.setComment("Eu sou um comentário");
-        rating.setRestaurant(new Restaurant(RESTAURANT_ID));
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(RESTAURANT_ID);
+
+        rating.setRestaurant(restaurant);
+
         return rating;
     }
 

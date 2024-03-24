@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.restaurant.reservationreview.TestUtils;
 import com.restaurant.reservationreview.entities.Rating;
 import com.restaurant.reservationreview.entities.Restaurant;
-import com.restaurant.reservationreview.frameworks.db.RatingRepository;
+import com.restaurant.reservationreview.frameworks.db.rating.RatingRepository;
 import com.restaurant.reservationreview.frameworks.db.RestaurantRepository;
 import com.restaurant.reservationreview.util.MessageUtil;
 import com.restaurant.reservationreview.util.configs.time.TimeUtils;

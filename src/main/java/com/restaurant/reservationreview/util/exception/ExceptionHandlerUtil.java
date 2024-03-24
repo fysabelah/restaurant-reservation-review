@@ -50,4 +50,16 @@ public class ExceptionHandlerUtil {
 
         return ResponseEntity.status(status).body(error);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError> illegalArgumentError(ValidationsException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        StandardError error = new StandardError(status.value(),
+                "",
+                e.getMessage(),
+                request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
 }

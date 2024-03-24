@@ -15,36 +15,35 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/restaurant")
-@Tag(name="Restaurant", description = "Exibe os métodos para consultar e incluir informações de um restaurante")
-
+@Tag(name = "Restaurante", description = "Exibe os métodos para consultar e incluir informações de um restaurante")
 public class RestaurantWeb {
+
     @Resource
-    private RestaurantController restaurantController;
+    private RestaurantController controller;
 
     @Operation(summary = "Consultar todos os restaurantes")
     @GetMapping
-    public ResponseEntity<PagedResponse<RestaurantDto>> findAll(    @Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
-                                                                    @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage) {
+    public ResponseEntity<PagedResponse<RestaurantDto>> findAll(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
+                                                                @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage) {
 
         Pagination page = new Pagination(initialPage, pageSize);
 
-        return ResponseEntity.ok(this.restaurantController.findAll(page));
+        return ResponseEntity.ok(this.controller.findAll(page));
     }
 
     @Operation(summary = "Consultar um restaurante por código")
     @GetMapping(value = "/{restaurant}")
     public ResponseEntity<RestaurantDto> findById(@Parameter(description = "Informe o ID do restaurante", example = "65fda06d0f8a6b46cd1b2eba")
-                                                      @RequestParam(required = true) String idRestaurant) throws ValidationsException {
+                                                  @PathVariable String restaurant) throws ValidationsException {
 
-        return ResponseEntity.ok(this.restaurantController.findById(idRestaurant));
-
+        return ResponseEntity.ok(this.controller.findById(restaurant));
     }
 
-    @Operation(summary="Incluir informações de um restaurante")
+    @Operation(summary = "Incluir informações de um restaurante")
     @PostMapping
-    public ResponseEntity<RestaurantDto>  insert(@RequestBody RestaurantDto restaurantDto) throws ValidationsException {
+    public ResponseEntity<RestaurantDto> insert(@RequestBody RestaurantDto restaurantDto) throws ValidationsException {
+        RestaurantDto restaurantDtoSaved = this.controller.insert(restaurantDto);
 
-        RestaurantDto restaurantDtoSaved = this.restaurantController.insert(restaurantDto);
         return ResponseEntity.ok(restaurantDtoSaved);
 
     }
@@ -53,10 +52,16 @@ public class RestaurantWeb {
     @PutMapping
     public ResponseEntity<RestaurantDto> update(@Valid @RequestBody RestaurantDto restaurantDto) throws ValidationsException {
 
-        RestaurantDto restaurantDtoUpdated = this.restaurantController.update(restaurantDto);
+        RestaurantDto restaurantDtoUpdated = this.controller.update(restaurantDto);
 
         return ResponseEntity.ok(restaurantDtoUpdated);
-
     }
 
+    @Operation(summary = "Deletar restaurante ou desabilitar reservas")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> disable(@PathVariable String id) throws ValidationsException {
+        controller.disable(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
