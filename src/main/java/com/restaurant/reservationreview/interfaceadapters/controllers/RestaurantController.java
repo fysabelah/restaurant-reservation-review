@@ -45,16 +45,10 @@ public class RestaurantController {
         return this.converter.convert(restaurant);
     }
 
-    public RestaurantDto update(RestaurantDto restaurantDto) throws ValidationsException {
-        Restaurant restaurant = this.restaurantGateway.findById(restaurantDto.getId());
+    public RestaurantDto update(String idRestaurant, RestaurantDto restaurantDto) throws ValidationsException {
+        Restaurant restaurant = this.converter.convert(restaurantDto);
 
-        restaurant.setName(restaurantDto.getName());
-        restaurant.setLocation(restaurantDto.getLocation());
-        restaurant.setFoodType(restaurantDto.getFoodType());
-        restaurant.setActive(restaurantDto.getActive());
-        restaurant.setQuantityTables(restaurantDto.getQuantityTables());
-
-        restaurant = this.restaurantGateway.update(restaurant);
+        restaurant = this.restaurantGateway.update(idRestaurant, restaurant);
 
         return this.converter.convert(restaurant);
     }

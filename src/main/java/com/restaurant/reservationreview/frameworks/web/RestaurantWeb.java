@@ -32,9 +32,9 @@ public class RestaurantWeb {
     }
 
     @Operation(summary = "Consultar um restaurante por código")
-    @GetMapping(value = "/{restaurant}")
+    @GetMapping(value = "/{idRestaurant}")
     public ResponseEntity<RestaurantDto> findById(@Parameter(description = "Informe o ID do restaurante", example = "65fda06d0f8a6b46cd1b2eba")
-                                                  @RequestParam(required = true) String idRestaurant) throws ValidationsException {
+                                                      @PathVariable String idRestaurant) throws ValidationsException {
 
         return ResponseEntity.ok(this.restaurantController.findById(idRestaurant));
 
@@ -50,10 +50,11 @@ public class RestaurantWeb {
     }
 
     @Operation(summary = "Atualizar informações de um restaurante")
-    @PutMapping
-    public ResponseEntity<RestaurantDto> update(@Valid @RequestBody RestaurantDto restaurantDto) throws ValidationsException {
+    @PutMapping(value = "/{idRestaurant}")
+    public ResponseEntity<RestaurantDto> update(@PathVariable String idRestaurant,
+                                                @RequestBody RestaurantDto restaurantDto) throws ValidationsException {
 
-        RestaurantDto restaurantDtoUpdated = this.restaurantController.update(restaurantDto);
+        RestaurantDto restaurantDtoUpdated = this.restaurantController.update(idRestaurant, restaurantDto);
 
         return ResponseEntity.ok(restaurantDtoUpdated);
 
