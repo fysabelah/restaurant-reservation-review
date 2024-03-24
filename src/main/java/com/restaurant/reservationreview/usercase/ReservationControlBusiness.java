@@ -1,9 +1,10 @@
 package com.restaurant.reservationreview.usercase;
 
 import com.restaurant.reservationreview.entities.*;
-import com.restaurant.reservationreview.interfaceadapters.presenters.BusinessHoursPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.PersonPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
+import com.restaurant.reservationreview.util.MessageUtil;
+import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +24,6 @@ public class ReservationControlBusiness {
     private PersonPresenter personPresenter;
 
     private final static Integer PLUS_RESERVATION_DAYS = 30;
-
-    private final static Integer PLUS_ONE_DAY = 1;
 
     public List<LocalDate> checkDateAvailability(Restaurant restaurant, List<ReservationControl> reservations, Integer table) {
 
@@ -154,8 +153,6 @@ public class ReservationControlBusiness {
                         return true;
                     }
                 }
-            }else{
-                return true;
             }
         }
 
@@ -167,11 +164,7 @@ public class ReservationControlBusiness {
 
         Integer capacity = getCapacityByHour(restaurant, weekDayEnum, hour);
 
-        boolean available = false;
-
-        if(capacity > table){
-            available = true;
-        }
+        boolean available = capacity > table;
 
         ReservationControl newReservationControl = new ReservationControl();
 
@@ -183,6 +176,14 @@ public class ReservationControlBusiness {
         newReservationControl.setAvailable(available);
 
         return newReservationControl;
+    }
+
+    public static void checkReservationAvailability(ReservationControl reservationControl) throws ValidationsException {
+
+        if(!reservationControl.isAvailable()){
+                throw new IllegalArgumentException(MessageUtil.getMessage("0105"));
+        }
+
     }
 
     public ReservationControl updateReservationControlByNewReservation(ReservationControl reservationControl, Integer table) {
@@ -230,8 +231,8 @@ public class ReservationControlBusiness {
             if (business.getDayOfWeek() == dayOfWeek) {
                 List<ReservationHours> reservationHours = business.getReservationHours();
                 for (ReservationHours reservationHours1 : reservationHours) {
-                    if(reservationHours1.getHour() == hour);
-                    tableAmountAvaliable = reservationHours1.getTableAmountAvailable();
+                    if(reservationHours1.getHour() == hour)
+                        tableAmountAvaliable = reservationHours1.getTableAmountAvailable();
                 }
             }
         }

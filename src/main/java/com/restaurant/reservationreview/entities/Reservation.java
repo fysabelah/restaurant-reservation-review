@@ -35,4 +35,6 @@ public class Reservation implements Serializable {
 
     private Integer reservationAmount;
 
+    public Reservation(String id, Person convert, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount) {
+    }
 }
