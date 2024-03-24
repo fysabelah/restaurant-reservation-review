@@ -2,8 +2,8 @@ package com.restaurant.reservationreview.interfaceadapters.controllers;
 
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.interfaceadapters.gateways.RestaurantGateway;
+import com.restaurant.reservationreview.interfaceadapters.presenters.RestaurantPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;
-import com.restaurant.reservationreview.util.converter.RestaurantConverter;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;
@@ -20,7 +20,7 @@ public class RestaurantController {
     private RestaurantGateway restaurantGateway;
 
     @Resource
-    private RestaurantConverter converter;
+    private RestaurantPresenter converter;
 
     public RestaurantDto insert(RestaurantDto restaurantDto) throws ValidationsException {
         Restaurant restaurant = this.converter.convert(restaurantDto);
