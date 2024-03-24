@@ -1,9 +1,9 @@
 package com.restaurant.reservationreview.interfaceadapters.presenters;
 
 import com.restaurant.reservationreview.entities.Rating;
-import com.restaurant.reservationreview.util.configs.time.TimeUtils;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RatingDto;
-import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;
+import com.restaurant.reservationreview.util.configs.time.TimeUtils;
+import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class RatingPresenter implements Presenter<Rating, RatingDto> {
 
     @Resource
-    private RestaurantPresenter restaurantPresenter;
+    private RestaurantPresenter restaurantConverter;
 
     @Override
     public RatingDto convert(Rating document) {
@@ -35,14 +35,6 @@ public class RatingPresenter implements Presenter<Rating, RatingDto> {
         if (dto.getDate() != null) {
             rating.setDate(TimeUtils.getDate(dto.getDate()));
         }
-
-        return rating;
-    }
-
-    public Rating convert(RatingDto dto, RestaurantDto restaurantDto) {
-        Rating rating = convert(dto);
-
-        rating.setRestaurant(restaurantPresenter.convert(restaurantDto));
 
         return rating;
     }

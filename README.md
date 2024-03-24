@@ -1,4 +1,4 @@
-# Sistema de reserva e avaliação de restaurantes - Desafio Tech Challenge - Módulo 3 
+# Sistema de reserva e avaliação de restaurantes - Desafio Tech Challenge - Módulo 3
 
 Projeto desenvolvido como meio de avaliação do módulo. O sistema consiste em uma API REST, onde os restaurantes podem se cadastrar e os usuário podem registrar suas reservas e deixar avaliações.
 
@@ -10,10 +10,10 @@ Dentre os requisitos, temos:
 
 ## Desenvolvedores
 
- - [Aydan Amorim](https://github.com/AydanAmorim)
- - [Danilo Faccio](https://github.com/DFaccio)
- - [Erick Ribeiro](https://github.com/erickmatheusribeiro)
- - [Isabela França](https://github.com/fysabelah)
+- [Aydan Amorim](https://github.com/AydanAmorim)
+- [Danilo Faccio](https://github.com/DFaccio)
+- [Erick Ribeiro](https://github.com/erickmatheusribeiro)
+- [Isabela França](https://github.com/fysabelah)
 
 ## Configurações
 
@@ -49,10 +49,10 @@ A aplicação faz uso do MongoDB, para não ser necessário configurar, foi cria
    * Setar `spring.profiles.active` para `dev`.
    * Executar a aplicação a partir da IDE.
 3. Executar tudo em container.
-    * Neste caso, ao setar `spring.profiles.active` para `dev` será necessário alterar a propriedade `spring.data.mongodb.host` para `mongodb`. Já ao setar para `prod`, não será necessário alterações.
+   * Neste caso, ao setar `spring.profiles.active` para `dev` será necessário alterar a propriedade `spring.data.mongodb.host` para `mongodb`. Já ao setar para `prod`, não será necessário alterações.
       * No entanto, ao executar neste formato, qualquer alteração de código será necessário a recriação da imagem.
 
 ### Link
 Considerando que tudo deu certo, será possível acessar os _links_ abaixo.
- * [Swagger](http://localhost:8080/doc-app-restaurant.html)
- * [Interface Web para MongoDB](http://localhost:27018)
+* [Swagger](http://localhost:8080/doc-app-restaurant.html)
+* [Interface Web para MongoDB](http://localhost:27018)

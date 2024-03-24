@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.framework.db;
+package com.restaurant.reservationreview.frameworks.db;
 
 import com.restaurant.reservationreview.entities.Rating;
 import org.springframework.data.domain.Page;
