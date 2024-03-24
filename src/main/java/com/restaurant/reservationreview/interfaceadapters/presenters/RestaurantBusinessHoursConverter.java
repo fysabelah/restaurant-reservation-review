@@ -1,17 +1,17 @@
-package com.restaurant.reservationreview.util.converter;
+package com.restaurant.reservationreview.interfaceadapters.presenters;
 
-import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantBusinessHoursDto;
 import com.restaurant.reservationreview.entities.RestaurantBusinessHours;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantBusinessHoursDto;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class RestaurantBusinessHoursConverter implements Converter<RestaurantBusinessHours, RestaurantBusinessHoursDto> {
+public class RestaurantBusinessHoursConverter implements Presenter<RestaurantBusinessHours, RestaurantBusinessHoursDto> {
 
     @Override
-    public RestaurantBusinessHoursDto convert(RestaurantBusinessHours document){
+    public RestaurantBusinessHoursDto convert(RestaurantBusinessHours document) {
 
         RestaurantBusinessHoursDto dto = new RestaurantBusinessHoursDto();
 
@@ -23,7 +23,7 @@ public class RestaurantBusinessHoursConverter implements Converter<RestaurantBus
     }
 
     @Override
-    public RestaurantBusinessHours convert(RestaurantBusinessHoursDto dto){
+    public RestaurantBusinessHours convert(RestaurantBusinessHoursDto dto) {
         RestaurantBusinessHours restaurantBusinessHours = new RestaurantBusinessHours();
 
         restaurantBusinessHours.setDayOfWeek(dto.getDayOfWeek());
