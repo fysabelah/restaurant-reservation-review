@@ -24,9 +24,9 @@ public class ReservationGateway {
 
         return reservationRepository.insert(reservation);
     }
-    public Reservation findByEmail(String email) throws ValidationsException{
+    public Page<Reservation> findAllByEmail(String email, Pageable pageable) throws ValidationsException{
 
-        return reservationRepository.findByEmail(email);
+        return reservationRepository.findAllByEmail(email, pageable);
 
     }
     public List<Reservation> findAll() throws ValidationsException{

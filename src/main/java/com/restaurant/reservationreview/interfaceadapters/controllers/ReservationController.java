@@ -14,17 +14,11 @@ import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;
 import jakarta.annotation.Resource;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.aggregation.MatchOperation;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -35,8 +29,6 @@ import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 @Component
 public class ReservationController {
@@ -91,35 +83,6 @@ public class ReservationController {
 
     }
 
-//      deletar esse método
-    private Query reservarionControlList(String id, LocalDateTime start, LocalDateTime finish){
-
-        Query query = new Query();
-        query.addCriteria(
-                Criteria.where("restaurant.$id").is(id)
-                        .and("dateAndTime").gte(start).lte(finish)
-        );
-        return query;
-
-    }
-
-//      deletar esse método
-    private AggregationResults<ReservationControl> reservarionControlAggregation(String id, LocalDateTime start, LocalDateTime finish){
-
-        MatchOperation matchStage = Aggregation.match(
-                Criteria.where("restaurant").is(new ObjectId(id))
-                        .and("dateAndTime").gte(start).lte(finish)
-        );
-
-        Aggregation aggregation = newAggregation(matchStage);
-
-        AggregationResults<ReservationControl> reservations = mongoTemplate.aggregate(
-                aggregation, "reservationControl", ReservationControl.class);
-
-        return reservations;
-
-    }
-
     public List<LocalTime> checkAvailableHours(String restaurantId, Integer table, LocalDate date) throws ValidationsException {
 
         Restaurant restaurant = restaurantGateway.findById(restaurantId);
@@ -169,6 +132,8 @@ public class ReservationController {
 
         }else{
 
+            reservationControlBusiness.checkReservationAvailability(reservationControl.get());
+
             saveReservationControl = reservationControlBusiness.updateReservationControlByNewReservation(reservationControl.get(), table);
             reservationControlGateway.save(saveReservationControl);
 
@@ -180,11 +145,13 @@ public class ReservationController {
 
     }
 
-    public ReservationDto findByEmail(String email) throws ValidationsException{
+    public PagedResponse<ReservationDto> findByEmail(String email, Pagination page) throws ValidationsException{
 
-        Reservation reservation = reservationGateway.findByEmail(email);
+        Pageable pageable = PageRequest.of(page.getPage(), page.getPageSize());
 
-        return reservationPresenter.convert(reservation);
+        Page<Reservation> reservation = reservationGateway.findAllByEmail(email, pageable);
+
+        return reservationPresenter.convertDocuments(reservation);
 
     }
 

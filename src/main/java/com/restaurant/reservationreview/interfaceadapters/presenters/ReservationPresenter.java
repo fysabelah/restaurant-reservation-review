@@ -5,6 +5,8 @@ import com.restaurant.reservationreview.interfaceadapters.presenters.dto.Reserva
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ReservationPresenter implements Presenter<Reservation, ReservationDto> {
 
@@ -18,7 +20,6 @@ public class ReservationPresenter implements Presenter<Reservation, ReservationD
     public ReservationDto convert(Reservation document) {
         return new ReservationDto(
                 document.getId(),
-                restaurantPresenter.convert(document.getRestaurant()),
                 personPresenter.convert(document.getPerson()),
                 document.getDateAndTime(),
                 document.getDayOfWeek(),
@@ -29,7 +30,6 @@ public class ReservationPresenter implements Presenter<Reservation, ReservationD
     public Reservation convert(ReservationDto dto) {
         return new Reservation(
                 dto.getId(),
-                restaurantPresenter.convert(dto.getRestaurantDto()),
                 personPresenter.convert(dto.getPersonDto()),
                 dto.getDateAndTime(),
                 dto.getDayOfWeek(),
