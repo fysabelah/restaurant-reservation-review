@@ -5,13 +5,8 @@ import com.restaurant.reservationreview.interfaceadapters.presenters.dto.Reserva
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class ReservationPresenter implements Presenter<Reservation, ReservationDto> {
-
-    @Resource
-    private RestaurantPresenter restaurantPresenter;
 
     @Resource
     private PersonPresenter personPresenter;

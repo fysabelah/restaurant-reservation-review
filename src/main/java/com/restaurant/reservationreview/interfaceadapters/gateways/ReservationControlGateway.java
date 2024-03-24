@@ -49,10 +49,4 @@ public class ReservationControlGateway {
 
     }
 
-//    public void update(ReservationControl updateReservationControl) {
-//
-//        reservationControlRepository.update(updateReservationControl);
-//
-//    }
 }
-

@@ -1,11 +1,11 @@
-package com.restaurant.reservationreview.util.converter;
+package com.restaurant.reservationreview.interfaceadapters.presenters;
 
-import com.restaurant.reservationreview.model.documents.restaurant.ReservationHours;
-import com.restaurant.reservationreview.util.dto.restaurant.ReservationHoursDto;
+import com.restaurant.reservationreview.entities.ReservationHours;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationHoursDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ReservationHoursConverter implements Converter<ReservationHours, ReservationHoursDto> {
+public class ReservationHoursPresenter implements Presenter<ReservationHours, ReservationHoursDto> {
 
     @Override
     public ReservationHoursDto convert(ReservationHours document){

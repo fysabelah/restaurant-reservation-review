@@ -1,13 +1,11 @@
-package com.restaurant.reservationreview.util.converter;
+package com.restaurant.reservationreview.interfaceadapters.presenters;
 
-import com.restaurant.reservationreview.model.documents.restaurant.Adress;
-import com.restaurant.reservationreview.model.documents.restaurant.BusinnessHours;
-import com.restaurant.reservationreview.util.dto.restaurant.AdressDto;
-import com.restaurant.reservationreview.util.dto.restaurant.BusinnessHoursDto;
+import com.restaurant.reservationreview.entities.Adress;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.AdressDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdressConverter implements Converter<Adress, AdressDto> {
+public class AdressPresenter implements Presenter<Adress, AdressDto> {
 
     @Override
     public AdressDto convert(Adress document){

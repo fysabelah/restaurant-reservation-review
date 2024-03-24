@@ -12,8 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ReservationControlRepository extends MongoRepository<ReservationControl, String> {
 
-//    @Query("{'restaurant.$id': ?0, 'dateAndTime': {$gte: ?1, $lte: ?2}}")
-//    @Query(value="{ 'restaurant.$id': ?0, 'dateAndTime': { $gte: { $date: ?1 }, $lte: { $date: ?2 } } }")
     @Query(value="{ $and: [ {'restaurant':{ $eq:?0 } } , { 'dateAndTime': { $gte: { $date: ?1 }, $lte: { $date: ?2 } } } ] }",sort="{'dateAndTime':1}")
     Optional<List<ReservationControl>> findByRestaurantIdAndDateAndTimeBetween(String id, LocalDateTime start, LocalDateTime finish);
 

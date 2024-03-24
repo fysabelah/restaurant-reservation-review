@@ -50,8 +50,8 @@ public class ReservationWeb {
 
     @GetMapping(value="/findReservation")
     public ResponseEntity<PagedResponse<ReservationDto>> findByEmail(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
-                                                            @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage,
-                                                            @RequestParam("email") String email) throws ValidationsException {
+                                                                     @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage,
+                                                                     @RequestParam("email") String email) throws ValidationsException {
         Pagination page = new Pagination(initialPage, pageSize);
         return ResponseEntity.ok(reservationController.findByEmail(email, page));
     }
@@ -64,8 +64,8 @@ public class ReservationWeb {
 
     @GetMapping(value = "/restaurant/{restaurant}")
     public ResponseEntity<PagedResponse<ReservationDto>> findAll(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
-                                                            @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage,
-                                                            @PathVariable String restaurant) throws ValidationsException {
+                                                                 @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage,
+                                                                 @PathVariable String restaurant) throws ValidationsException {
         Pagination page = new Pagination(initialPage, pageSize);
 
         return ResponseEntity.ok(reservationController.findAll(page, restaurant));
