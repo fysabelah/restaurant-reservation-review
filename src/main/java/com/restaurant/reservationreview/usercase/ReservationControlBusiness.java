@@ -181,7 +181,7 @@ public class ReservationControlBusiness {
     public static void checkReservationAvailability(ReservationControl reservationControl) throws ValidationsException {
 
         if(!reservationControl.isAvailable()){
-            throw new IllegalArgumentException(MessageUtil.getMessage("0105"));
+            throw new IllegalArgumentException(MessageUtil.getMessage("0106"));
         }
 
     }
