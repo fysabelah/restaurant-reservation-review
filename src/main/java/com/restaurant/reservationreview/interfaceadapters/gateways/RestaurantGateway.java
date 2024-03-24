@@ -2,7 +2,6 @@ package com.restaurant.reservationreview.interfaceadapters.gateways;
 
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.frameworks.db.RestaurantRepository;
-import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantBusinessHoursDto;
 import com.restaurant.reservationreview.usercase.RestaurantBusiness;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
