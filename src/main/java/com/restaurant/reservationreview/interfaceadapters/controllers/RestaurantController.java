@@ -56,7 +56,7 @@ public class RestaurantController {
         Restaurant restaurant = this.restaurantGateway.findById(restaurantDto.getId());
 
         restaurant.setName(restaurantDto.getName());
-        restaurant.setAdress(adressPresenter.convet(restaurantDto.getAdressDto()));
+        restaurant.setAdress(adressPresenter.convert(restaurantDto.getAdressDto()));
         restaurant.setFoodType(restaurantDto.getFoodType());
         restaurant.setCapacity(restaurantDto.getCapacity());
 
