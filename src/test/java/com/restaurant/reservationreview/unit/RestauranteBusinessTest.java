@@ -15,7 +15,7 @@ import java.util.Random;
 
 class RestauranteBusinessTest extends TestUtils {
     @Test
-    void testCreateRestaurant() throws ValidationsException{
+    void testCreateRestaurant(){
         String IdNew = new Random().toString();
         LocalTime testStartTime = LocalTime.of(17,0,0);
         LocalTime testFinishTime = LocalTime.of(23,59,0);
