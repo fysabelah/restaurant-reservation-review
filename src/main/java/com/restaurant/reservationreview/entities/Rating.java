@@ -1,6 +1,5 @@
 package com.restaurant.reservationreview.entities;
 
-import com.restaurant.reservationreview.util.exception.ValidationsException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,20 +34,4 @@ public class Rating implements Serializable {
     private Restaurant restaurant;
 
     private ZoneId zoneId;
-
-    public void setName(String name) throws ValidationsException {
-        if (name == null || name.trim().isEmpty()) {
-            throw new ValidationsException("0101");
-        }
-
-        this.name = name;
-    }
-
-    public void setScore(Integer score) throws ValidationsException {
-        if (score < 0) {
-            throw new ValidationsException("0102");
-        }
-
-        this.score = score;
-    }
 }

@@ -24,7 +24,7 @@ public class ReservationHoursDto extends Dto implements Serializable {
     private LocalTime hour;
 
     @NotBlank(message = "O campo quantidade de mesas disponíveis é obrigatório")
-    @Schema(example = "1")
+    @Schema(example = "10")
     private Integer tableAmountAvailable;
 
 }

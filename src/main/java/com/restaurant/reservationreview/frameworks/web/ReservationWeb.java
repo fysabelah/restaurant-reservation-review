@@ -1,6 +1,7 @@
 package com.restaurant.reservationreview.frameworks.web;
 
 import com.restaurant.reservationreview.interfaceadapters.controllers.ReservationController;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/reservation")
-@Tag(name = "Reserva", description = "Controle de reservas")
+@Tag(name = "Reserva", description = "Cria, cancela e procura por reservas")
 public class ReservationWeb {
 
     @Resource
@@ -43,15 +44,16 @@ public class ReservationWeb {
                                                    @RequestParam("table") Integer table,
                                                    @RequestParam("data") LocalDate date,
                                                    @RequestParam("hour") String hour,
-                                                   @Valid @RequestBody ReservationDto dto) throws ValidationsException {
+                                                   @Valid @RequestBody PersonDto dto) throws ValidationsException {
         LocalTime parsedHour = LocalTime.parse(hour, DateTimeFormatter.ofPattern("HH:mm"));
         return ResponseEntity.ok(reservationController.schedule(restaurantId, table, date, parsedHour, dto));
     }
 
-    @GetMapping(value="/findReservation")
-    public ResponseEntity<PagedResponse<ReservationDto>> findByEmail(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
-                                                                     @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage,
-                                                                     @RequestParam("email") String email) throws ValidationsException {
+    @GetMapping(value="/findReservations")
+    public ResponseEntity<PagedResponse<ReservationDto>> findByEmail(
+            @RequestParam("email") String email,
+            @Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
+            @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage) throws ValidationsException {
         Pagination page = new Pagination(initialPage, pageSize);
         return ResponseEntity.ok(reservationController.findByEmail(email, page));
     }
@@ -60,15 +62,6 @@ public class ReservationWeb {
     public ResponseEntity<ReservationDto> reservationCancelation(@RequestParam("reservationId") String id) throws ValidationsException {
         reservationController.reservationCancelation(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping(value = "/restaurant/{restaurant}")
-    public ResponseEntity<PagedResponse<ReservationDto>> findAll(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
-                                                                 @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage,
-                                                                 @PathVariable String restaurant) throws ValidationsException {
-        Pagination page = new Pagination(initialPage, pageSize);
-
-        return ResponseEntity.ok(reservationController.findAll(page, restaurant));
     }
 
 }

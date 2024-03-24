@@ -2,7 +2,7 @@ package com.restaurant.reservationreview.usercase;
 
 import com.restaurant.reservationreview.entities.*;
 import com.restaurant.reservationreview.interfaceadapters.presenters.PersonPresenter;
-import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
 import com.restaurant.reservationreview.util.MessageUtil;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
@@ -241,12 +241,12 @@ public class ReservationControlBusiness {
 
     }
 
-    public Reservation newReservation(Restaurant restaurant, Integer table, LocalDateTime dateAndHour, DayOfWeek weekDayEnum, ReservationDto dto) {
+    public Reservation newReservation(Restaurant restaurant, Integer table, LocalDateTime dateAndHour, DayOfWeek weekDayEnum, PersonDto dto) {
 
         Reservation newReservation = new Reservation();
 
         newReservation.setRestaurant(restaurant);
-        newReservation.setPerson(personPresenter.convert(dto.getPersonDto()));
+        newReservation.setPerson(personPresenter.convert(dto));
         newReservation.setDateAndTime(dateAndHour);
         newReservation.setDayOfWeek(weekDayEnum);
         newReservation.setReservationAmount(table);

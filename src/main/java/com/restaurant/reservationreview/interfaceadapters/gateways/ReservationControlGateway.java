@@ -3,8 +3,8 @@ package com.restaurant.reservationreview.interfaceadapters.gateways;
 import com.restaurant.reservationreview.entities.ReservationControl;
 import com.restaurant.reservationreview.frameworks.db.ReservationControlRepository;
 import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,28 +12,32 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class ReservationControlGateway {
 
     @Resource
     private ReservationControlRepository reservationControlRepository;
 
-    public Optional<List<ReservationControl>> findReservationsByRestaurantAndDateNextDays(String id, LocalDateTime start, LocalDateTime finish) {
+    public Optional<List<ReservationControl>> findReservationsByRestaurantAndDateNextDays(String restaurant, LocalDateTime start, LocalDateTime finish) {
 
-        return reservationControlRepository.findByRestaurantIdAndDateAndTimeBetween(id, start, finish);
-
-    }
-
-    public Optional<List<ReservationControl>> findReservationsByRestaurantAndDate(String id, LocalDateTime start, LocalDateTime finish) {
-
-        return reservationControlRepository.findReservationsByRestaurantAndDate(id, start, finish);
+        return reservationControlRepository.findByRestaurantIdAndDateAndTimeBetween(restaurant, start, finish);
 
     }
 
-    public Optional<ReservationControl> findReservationsByDateAndHour(String id, LocalDateTime dateAndHour) {
+    public Optional<List<ReservationControl>> findReservationsByRestaurantAndDate(String restaurant, LocalDateTime start, LocalDateTime finish) {
 
-        return reservationControlRepository.findReservationsByDateAndHour(id, dateAndHour);
+        return reservationControlRepository.findReservationsByRestaurantAndDate(restaurant, start, finish);
+
+    }
+
+    public Optional<ReservationControl> findReservationsByDateAndHour(String restaurant, LocalDateTime dateAndHour) {
+
+        return reservationControlRepository.findReservationsByDateAndHour(restaurant, dateAndHour);
+
+    }
+
+    public Page<ReservationControl> findAllReservationControlByRestaurantAndDateBetween(String restaurant, LocalDateTime start, LocalDateTime finish, Pageable page) {
+
+        return reservationControlRepository.findByRestaurantIdAndDateAndTimeBetween(restaurant, start, finish, page);
 
     }
 

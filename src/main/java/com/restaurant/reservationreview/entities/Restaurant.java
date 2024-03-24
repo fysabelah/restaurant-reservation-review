@@ -31,6 +31,8 @@ public class Restaurant implements Serializable {
 
     private Integer capacity;
 
+    private Integer averageRating;
+
     public Restaurant(String restaurantId) {
     }
 }

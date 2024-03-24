@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,9 +48,9 @@ public class ReservationGateway {
 
     }
 
-    public Page<Reservation> findAll(String restaurant, Pageable page) throws ValidationsException{
+    public Page<Reservation> findAllReservationsByRestaurantAndDateBetween(String restaurant, LocalDateTime start, LocalDateTime finish, Pageable page){
 
-        return reservationRepository.findAllByRestaurantId(restaurant, page);
+        return reservationRepository.findAllReservationsByRestaurantAndDateBetween(restaurant, start, finish, page);
 
     }
 

@@ -27,7 +27,8 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
                         .map(business -> businessHoursPresenter.convert(business))
                         .collect(Collectors.toList()),
                 document.getFoodType(),
-                document.getCapacity()
+                document.getCapacity(),
+                document.getAverageRating()
         );
     }
 
@@ -41,7 +42,8 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
                         .map(businessDto -> businessHoursPresenter.convert(businessDto))
                         .collect(Collectors.toList()),
                 dto.getFoodType(),
-                dto.getCapacity()
+                dto.getCapacity(),
+                dto.getAverageRating()
         );
     }
 
