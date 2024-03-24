@@ -1,6 +1,7 @@
 package com.restaurant.reservationreview.usercase;
 
 import com.restaurant.reservationreview.entities.*;
+import com.restaurant.reservationreview.interfaceadapters.presenters.BusinessHoursPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.PersonPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
 import jakarta.annotation.Resource;
@@ -27,29 +28,18 @@ public class ReservationControlBusiness {
 
     public List<LocalDate> checkDateAvailability(Restaurant restaurant, List<ReservationControl> reservations, Integer table) {
 
-//        if (!reservations.isEmpty()) {
-
-            List<LocalDate> nextThirtyDays = nextDaysList();
+            List<LocalDate> nextThirtyDays = nextDaysList(restaurant);
             List<LocalDate> datesWithAvailability = new ArrayList<>();
-            List<BusinnessHours> businnessHours = restaurant.getBusinnessHours();
 
             for (LocalDate date : nextThirtyDays) {
 
                 DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
-                if (checkRestaurantBusinessDays(businnessHours, weekDayEnum)) {
-                    if (checkAvailableDates(reservations, date, table)) {
-                        datesWithAvailability.add(date);
-                    }
+                if (checkAvailableDates(reservations, restaurant, date, weekDayEnum, table)) {
+                    datesWithAvailability.add(date);
                 }
             }
 
             return datesWithAvailability;
-
-//        }else{
-//
-//            return nextDaysList();
-//
-//        }
 
     }
 
@@ -68,27 +58,31 @@ public class ReservationControlBusiness {
         return availableHours;
     }
 
-    public List<LocalDate> nextDaysList() {
+    public List<LocalDate> nextDaysList(Restaurant restaurant) {
 
-//      ajustar para retornar apenas datas de businesshours
+        List<LocalDate> businessDates = new ArrayList<>();
+        List<BusinnessHours> businnessHours = restaurant.getBusinnessHours();
 
-        List<LocalDate> nextThirtyDays = new ArrayList<>();
+        for (int i = 1; i <= PLUS_RESERVATION_DAYS; i++) {
 
-        LocalDate tomorrow = LocalDate.now().plusDays(PLUS_ONE_DAY);
+            LocalDate date = LocalDate.now().plusDays(i);
 
-        for (int i = 0; i <= PLUS_RESERVATION_DAYS; i++) {
+            DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
+            if (checkRestaurantBusinessDays(businnessHours, weekDayEnum)) {
 
-            nextThirtyDays.add(tomorrow.plusDays(i));
+                businessDates.add(date);
+
+            }
         }
 
-        return nextThirtyDays;
+        return businessDates;
 
     }
 
     private boolean checkRestaurantBusinessDays(List<BusinnessHours> businnessHours, DayOfWeek dayOfWeek) {
 
         for (BusinnessHours business : businnessHours) {
-            if (business.getDayOfWeek() == dayOfWeek) {
+            if (business.getDayOfWeek() == dayOfWeek && business.isAvailable()) {
                 return true;
             }
         }
@@ -114,52 +108,58 @@ public class ReservationControlBusiness {
 
     }
 
-    private boolean checkAvailableDates(List<ReservationControl> reservations, LocalDate date, Integer table) {
+    private boolean checkAvailableDates(List<ReservationControl> reservations, Restaurant restaurant, LocalDate date, DayOfWeek dayOfWeek, Integer table) {
 
         boolean dateHasReservation = false;
 
+        int dayOfYear = date.getDayOfYear();
+        int year = date.getYear();
+        List<LocalTime> bookableHours = checkAvailableHoursByDayOfWeek(restaurant, dayOfWeek);
+
         for (ReservationControl reservation : reservations) {
-            if (date.getDayOfYear() == reservation.getDateAndTime().getDayOfYear()) {
-                dateHasReservation = true;
-                int diponibility = reservation.getCapacity() - reservation.getTotalReservations();
-                if (diponibility > table) {
-                    return true;
+            for(LocalTime bookablehour : bookableHours){
+                int hours = bookablehour.getHour();
+                int minutes = bookablehour.getMinute();
+                LocalDateTime bookableDateAndHour = LocalDate.ofYearDay(year, dayOfYear).atStartOfDay().plusHours(hours).plusMinutes(minutes);
+                if(bookableDateAndHour.toString().equals(reservation.getDateAndTime().toString())){
+                    if (date.getDayOfYear() == reservation.getDateAndTime().getDayOfYear()) {
+                        dateHasReservation = true;
+                        int diponibility = reservation.getCapacity() - reservation.getTotalReservations();
+                        if (diponibility > table) {
+                            return true;
+                        }
+                    }
+                }else{
+                    checkHourAvailability(reservations, bookablehour, table);
                 }
             }
         }
 
         return !dateHasReservation;
-//        if (!dateHasReservation) {
-//            return true;
-//        }
-//
-//        return false;
 
     }
 
     private boolean checkHourAvailability(List<ReservationControl> reservations, LocalTime hour, Integer table) {
 
         boolean hourHasReservation = false;
-        String hourToCheck = String.format("%02d:%02d", hour.getHour(), hour.getMinute());
 
         for (ReservationControl reservation : reservations) {
             String bookedHour = String.format("%02d:%02d", reservation.getDateAndTime().getHour(),  reservation.getDateAndTime().getMinute());
 
-            if (hourToCheck.equals(bookedHour)) {
+            if (hour.toString().equals(bookedHour)) {
                 hourHasReservation = true;
-                int diponibility = reservation.getCapacity() - reservation.getTotalReservations();
-                if (diponibility > table) {
-                    return true;
+                if(reservation.isAvailable()) {
+                    int diponibility = reservation.getCapacity() - reservation.getTotalReservations();
+                    if (diponibility > table) {
+                        return true;
+                    }
                 }
+            }else{
+                return true;
             }
         }
 
         return !hourHasReservation;
-//        if (!hourHasReservation) {
-//            return true;
-//        }
-//
-//        return false;
 
     }
 
@@ -173,7 +173,6 @@ public class ReservationControlBusiness {
             available = true;
         }
 
-//      atribui os valores para o controle de reservas para a data e hora recebidas
         ReservationControl newReservationControl = new ReservationControl();
 
         newReservationControl.setRestaurant(restaurant);
@@ -186,25 +185,40 @@ public class ReservationControlBusiness {
         return newReservationControl;
     }
 
-    public ReservationControl updateReservationControl(ReservationControl reservationControl, Integer table) {
+    public ReservationControl updateReservationControlByNewReservation(ReservationControl reservationControl, Integer table) {
 
         boolean available = false;
 
         Integer capacity = reservationControl.getCapacity();
         Integer totalReservations = reservationControl.getTotalReservations();
-        Integer newTotalReservations = totalReservations + table;
+        totalReservations += table;
 
-        if(capacity > newTotalReservations){
+        if(capacity > totalReservations){
             available = true;
         }
 
-//      atribui os valores para o controle de reservas para a data e hora recebidas
-        ReservationControl updateReservationControl = reservationControl;
+        reservationControl.setTotalReservations(totalReservations);
+        reservationControl.setAvailable(available);
 
-        updateReservationControl.setTotalReservations(newTotalReservations);
-        updateReservationControl.setAvailable(available);
+        return reservationControl;
+    }
 
-        return updateReservationControl;
+    public ReservationControl updateReservationControlByReservationCancelation(ReservationControl reservationControl, Integer table) {
+
+        boolean available = false;
+
+        Integer capacity = reservationControl.getCapacity();
+        Integer totalReservations = reservationControl.getTotalReservations();
+        totalReservations -= table;
+
+        if(capacity > totalReservations){
+            available = true;
+        }
+
+        reservationControl.setTotalReservations(totalReservations);
+        reservationControl.setAvailable(available);
+
+        return reservationControl;
     }
 
     private Integer getCapacityByHour(Restaurant restaurant, DayOfWeek dayOfWeek, LocalTime hour) {
@@ -229,8 +243,6 @@ public class ReservationControlBusiness {
     public Reservation newReservation(Restaurant restaurant, Integer table, LocalDateTime dateAndHour, DayOfWeek weekDayEnum, ReservationDto dto) {
 
         Reservation newReservation = new Reservation();
-
-//      atribui os valores para o controle de reservas para a data e hora recebidas
 
         newReservation.setRestaurant(restaurant);
         newReservation.setPerson(personPresenter.convert(dto.getPersonDto()));

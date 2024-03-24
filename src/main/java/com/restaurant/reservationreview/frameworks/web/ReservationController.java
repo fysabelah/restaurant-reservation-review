@@ -9,8 +9,22 @@ import com.restaurant.reservationreview.interfaceadapters.gateways.RestaurantGat
 import com.restaurant.reservationreview.interfaceadapters.presenters.ReservationPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
 import com.restaurant.reservationreview.usercase.ReservationControlBusiness;
+import com.restaurant.reservationreview.util.MessageUtil;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
+import com.restaurant.reservationreview.util.pagination.PagedResponse;
+import com.restaurant.reservationreview.util.pagination.Pagination;
 import jakarta.annotation.Resource;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
@@ -22,12 +36,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
+
 @Component
 public class ReservationController {
 
     private final static Integer PLUS_ONE_DAY = 1;
 
     private final static Integer PLUS_RESERVATION_DAYS = 30;
+
+    private final MongoTemplate mongoTemplate;
+
+    @Autowired
+    public ReservationController(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
 
     @Resource
     private RestaurantGateway restaurantGateway;
@@ -52,13 +75,11 @@ public class ReservationController {
         LocalDateTime startDate = LocalDate.now().plusDays(PLUS_ONE_DAY).atStartOfDay();
         LocalDateTime finishDate = LocalDate.now().plusDays(PLUS_RESERVATION_DAYS).atStartOfDay();
 
-//      ajustar para consultar com o formato de datetime 2024-03-25T20:00:00.000+00:00
-//      ou para salvar no formado 2024-03-24T00:00
         Optional<List<ReservationControl>> reservations = reservationControlGateway.findReservationsByRestaurantAndDateNextDays(restaurantId, startDate, finishDate);
 
         if (reservations.get().isEmpty()) {
 
-            dates = reservationControlBusiness.nextDaysList();
+            dates = reservationControlBusiness.nextDaysList(restaurant);
 
         }else{
 
@@ -67,6 +88,35 @@ public class ReservationController {
         }
 
         return dates;
+
+    }
+
+//      deletar esse método
+    private Query reservarionControlList(String id, LocalDateTime start, LocalDateTime finish){
+
+        Query query = new Query();
+        query.addCriteria(
+                Criteria.where("restaurant.$id").is(id)
+                        .and("dateAndTime").gte(start).lte(finish)
+        );
+        return query;
+
+    }
+
+//      deletar esse método
+    private AggregationResults<ReservationControl> reservarionControlAggregation(String id, LocalDateTime start, LocalDateTime finish){
+
+        MatchOperation matchStage = Aggregation.match(
+                Criteria.where("restaurant").is(new ObjectId(id))
+                        .and("dateAndTime").gte(start).lte(finish)
+        );
+
+        Aggregation aggregation = newAggregation(matchStage);
+
+        AggregationResults<ReservationControl> reservations = mongoTemplate.aggregate(
+                aggregation, "reservationControl", ReservationControl.class);
+
+        return reservations;
 
     }
 
@@ -81,7 +131,7 @@ public class ReservationController {
         LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(PLUS_ONE_DAY).atStartOfDay();
         DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
 
-        Optional<List<ReservationControl>> reservations = reservationControlGateway.findReservationsByDate(restaurantId, startDate, finishDate);
+        Optional<List<ReservationControl>> reservations = reservationControlGateway.findReservationsByRestaurantAndDate(restaurantId, startDate, finishDate);
 
         if (reservations.get().isEmpty()) {
 
@@ -98,12 +148,6 @@ public class ReservationController {
     }
 
     public ReservationDto schedule(String restaurantId, Integer table, LocalDate date, LocalTime hour, ReservationDto dto) throws ValidationsException {
-
-//        tentar usa o codium pra ajudar aqui
-//        criar um atributo com a data e a hora recebidas, pra buscar em reservationControl
-//          se existir, atualiza a disponibilidade de mesas para o horário
-//          se não existir, criar registro para o dia e horário em reservationControl, pegando a quantidade de mesas disponíveis pelo restaurant.businessHours, de acordo com o dayOfWeek
-//        no final, criar o registro da reserva
 
         Restaurant restaurant = restaurantGateway.findById(restaurantId);
 
@@ -125,25 +169,60 @@ public class ReservationController {
 
         }else{
 
-            saveReservationControl = reservationControlBusiness.updateReservationControl(reservationControl.get(), table);
+            saveReservationControl = reservationControlBusiness.updateReservationControlByNewReservation(reservationControl.get(), table);
             reservationControlGateway.save(saveReservationControl);
 
         }
 
-//      atribui os valores da nova reserva para salvar
         Reservation reservation = reservationControlBusiness.newReservation(restaurant, table, dateAndHour, weekDayEnum, dto);
 
         return reservationPresenter.convert(reservationGateway.insert(reservation));
 
     }
 
-    public ReservationDto findByEmail(ReservationDto dto) throws ValidationsException{
-
-        String email = dto.getPersonDto().getEmail();
+    public ReservationDto findByEmail(String email) throws ValidationsException{
 
         Reservation reservation = reservationGateway.findByEmail(email);
 
         return reservationPresenter.convert(reservation);
 
     }
+
+    public void reservationCancelation(String id) throws ValidationsException{
+
+        Reservation reservation = reservationGateway.findById(id);
+
+        String restaurantId = reservation.getRestaurant().getId();
+        LocalDateTime reservationHour = reservation.getDateAndTime();
+        Integer tableAmount = reservation.getReservationAmount();
+
+        Optional<ReservationControl> reservationControl = reservationControlGateway.findReservationsByDateAndHour(restaurantId, reservationHour);
+
+        reservationGateway.delete(reservation);
+
+        ReservationControl updateReservationControl = reservationControlBusiness.updateReservationControlByReservationCancelation(reservationControl.get(), tableAmount);
+
+        reservationControlGateway.save(updateReservationControl);
+
+    }
+
+    public PagedResponse<ReservationDto> findAll(Pagination page, String restaurant) throws ValidationsException {
+        validateId(restaurant);
+
+        restaurantGateway.findById(restaurant);
+
+        Pageable pageable = PageRequest.of(page.getPage(), page.getPageSize());
+
+        Page<Reservation> reservation = reservationGateway.findAll(restaurant, pageable);
+
+        return reservationPresenter.convertDocuments(reservation);
+
+    }
+
+    private static void validateId(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0002"));
+        }
+    }
+
 }
