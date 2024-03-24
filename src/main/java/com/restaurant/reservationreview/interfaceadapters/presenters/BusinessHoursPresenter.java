@@ -1,17 +1,17 @@
-package com.restaurant.reservationreview.util.converter;
+package com.restaurant.reservationreview.interfaceadapters.presenters;
 
-import com.restaurant.reservationreview.model.documents.restaurant.BusinnessHours;
-import com.restaurant.reservationreview.util.dto.restaurant.BusinnessHoursDto;
+import com.restaurant.reservationreview.entities.BusinnessHours;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.BusinnessHoursDto;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
 @Component
-public class BusinessHoursConverter implements Converter<BusinnessHours, BusinnessHoursDto> {
+public class BusinessHoursPresenter implements Presenter<BusinnessHours, BusinnessHoursDto> {
 
     @Resource
-    private ReservationHoursConverter reservationHoursConverter;
+    private ReservationHoursPresenter reservationHoursPresenter;
 
     @Override
     public BusinnessHoursDto convert(BusinnessHours document){
@@ -22,7 +22,7 @@ public class BusinessHoursConverter implements Converter<BusinnessHours, Businne
                 document.getFinish(),
                 document.getReservationHours()
                         .stream()
-                        .map(reservationHours -> reservationHoursConverter.convert(reservationHours))
+                        .map(reservationHours -> reservationHoursPresenter.convert(reservationHours))
                         .collect(Collectors.toList()),
                 document.isAvailable()
         );
@@ -37,7 +37,7 @@ public class BusinessHoursConverter implements Converter<BusinnessHours, Businne
                 dto.getFinish(),
                 dto.getReservationHoursDto()
                         .stream()
-                        .map(reservationHoursDto -> reservationHoursConverter.convert(reservationHoursDto))
+                        .map(reservationHoursDto -> reservationHoursPresenter.convert(reservationHoursDto))
                         .collect(Collectors.toList()),
                 dto.isAvailable()
         );

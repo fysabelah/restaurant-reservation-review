@@ -48,4 +48,3 @@ public class RestaurantDto extends Dto implements Serializable {
         this.capacity = capacity;
     }
 }
-

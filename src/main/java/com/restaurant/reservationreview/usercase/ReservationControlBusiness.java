@@ -27,18 +27,18 @@ public class ReservationControlBusiness {
 
     public List<LocalDate> checkDateAvailability(Restaurant restaurant, List<ReservationControl> reservations, Integer table) {
 
-            List<LocalDate> nextThirtyDays = nextDaysList(restaurant);
-            List<LocalDate> datesWithAvailability = new ArrayList<>();
+        List<LocalDate> nextThirtyDays = nextDaysList(restaurant);
+        List<LocalDate> datesWithAvailability = new ArrayList<>();
 
-            for (LocalDate date : nextThirtyDays) {
+        for (LocalDate date : nextThirtyDays) {
 
-                DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
-                if (checkAvailableDates(reservations, restaurant, date, weekDayEnum, table)) {
-                    datesWithAvailability.add(date);
-                }
+            DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
+            if (checkAvailableDates(reservations, restaurant, date, weekDayEnum, table)) {
+                datesWithAvailability.add(date);
             }
+        }
 
-            return datesWithAvailability;
+        return datesWithAvailability;
 
     }
 
@@ -181,7 +181,7 @@ public class ReservationControlBusiness {
     public static void checkReservationAvailability(ReservationControl reservationControl) throws ValidationsException {
 
         if(!reservationControl.isAvailable()){
-                throw new IllegalArgumentException(MessageUtil.getMessage("0105"));
+            throw new IllegalArgumentException(MessageUtil.getMessage("0105"));
         }
 
     }

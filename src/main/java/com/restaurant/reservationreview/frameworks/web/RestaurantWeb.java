@@ -34,9 +34,9 @@ public class RestaurantWeb {
     @Operation(summary = "Consultar um restaurante por código")
     @GetMapping(value = "/{restaurant}")
     public ResponseEntity<RestaurantDto> findById(@Parameter(description = "Informe o ID do restaurante", example = "65fda06d0f8a6b46cd1b2eba")
-                                                  @RequestParam(required = true) String idRestaurant) throws ValidationsException {
+                                                  @RequestParam(required = true) String restaurant) throws ValidationsException {
 
-        return ResponseEntity.ok(this.restaurantController.findById(idRestaurant));
+        return ResponseEntity.ok(this.restaurantController.findById(restaurant));
 
     }
 

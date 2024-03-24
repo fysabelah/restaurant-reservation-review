@@ -1,4 +1,4 @@
-package com.restaurant.reservationreview.model.documents.restaurant;
+package com.restaurant.reservationreview.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

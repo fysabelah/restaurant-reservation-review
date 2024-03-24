@@ -1,7 +1,5 @@
-package com.restaurant.reservationreview.model.documents.reservation;
+package com.restaurant.reservationreview.entities;
 
-import com.restaurant.reservationreview.model.documents.Person;
-import com.restaurant.reservationreview.model.documents.restaurant.Restaurant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
