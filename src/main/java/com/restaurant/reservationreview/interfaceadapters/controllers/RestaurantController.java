@@ -106,7 +106,6 @@ public class RestaurantController {
 
         Restaurant restaurant = restaurantGateway.findById(id);
 
-        // TODO precisar validar isso aqui
         List<Reservation> reservations = reservationGateway.findAllByRestaurantIdAndDate(id, TimeUtils.now());
 
         business.disable(reservations);
