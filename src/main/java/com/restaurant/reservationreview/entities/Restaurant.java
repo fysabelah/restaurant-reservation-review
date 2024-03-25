@@ -25,7 +25,7 @@ public class Restaurant implements Serializable {
 
     private Adress adress;
 
-    private List<BusinnessHours> businnessHours;
+    private List<BusinessHours> businessHours;
 
     private FoodType foodType;
 

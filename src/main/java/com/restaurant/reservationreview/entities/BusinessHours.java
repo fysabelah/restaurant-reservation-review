@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class BusinnessHours implements Serializable {
+public class BusinessHours implements Serializable {
 
     private DayOfWeek dayOfWeek;
 

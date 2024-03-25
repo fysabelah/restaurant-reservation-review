@@ -22,7 +22,7 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
                 document.getId(),
                 document.getName(),
                 adressPresenter.convert(document.getAdress()),
-                document.getBusinnessHours()
+                document.getBusinessHours()
                         .stream()
                         .map(business -> businessHoursPresenter.convert(business))
                         .collect(Collectors.toList()),

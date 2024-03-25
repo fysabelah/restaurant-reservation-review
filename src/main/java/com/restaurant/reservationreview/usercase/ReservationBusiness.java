@@ -18,12 +18,16 @@ import java.util.List;
 import java.util.Locale;
 
 @Component
-public class ReservationControlBusiness {
+public class ReservationBusiness {
 
     @Resource
     private PersonPresenter personPresenter;
-
-    private final static Integer PLUS_RESERVATION_DAYS = 30;
+    public ReservationBusiness(PersonPresenter personPresenter) {
+        this.personPresenter = personPresenter;
+    }
+    public ReservationBusiness() {
+    }
+    private final static Integer PLUS_RESERVATION_DAYS = 15;
 
     public List<LocalDate> checkDateAvailability(Restaurant restaurant, List<ReservationControl> reservations, Integer table) {
 
@@ -60,14 +64,14 @@ public class ReservationControlBusiness {
     public List<LocalDate> nextDaysList(Restaurant restaurant) {
 
         List<LocalDate> businessDates = new ArrayList<>();
-        List<BusinnessHours> businnessHours = restaurant.getBusinnessHours();
+        List<BusinessHours> businessHours = restaurant.getBusinessHours();
 
         for (int i = 1; i <= PLUS_RESERVATION_DAYS; i++) {
 
             LocalDate date = LocalDate.now().plusDays(i);
 
             DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
-            if (checkRestaurantBusinessDays(businnessHours, weekDayEnum)) {
+            if (checkRestaurantBusinessDays(businessHours, weekDayEnum)) {
 
                 businessDates.add(date);
 
@@ -78,9 +82,9 @@ public class ReservationControlBusiness {
 
     }
 
-    private boolean checkRestaurantBusinessDays(List<BusinnessHours> businnessHours, DayOfWeek dayOfWeek) {
+    private boolean checkRestaurantBusinessDays(List<BusinessHours> businessHours, DayOfWeek dayOfWeek) {
 
-        for (BusinnessHours business : businnessHours) {
+        for (BusinessHours business : businessHours) {
             if (business.getDayOfWeek() == dayOfWeek && business.isAvailable()) {
                 return true;
             }
@@ -91,10 +95,10 @@ public class ReservationControlBusiness {
 
     public List<LocalTime> checkAvailableHoursByDayOfWeek(Restaurant restaurant, DayOfWeek dayOfWeek) {
 
-        List<BusinnessHours> businnessHours = restaurant.getBusinnessHours();
+        List<BusinessHours> businessHours = restaurant.getBusinessHours();
         List<LocalTime> availableHours = new ArrayList<>();
 
-        for (BusinnessHours business : businnessHours) {
+        for (BusinessHours business : businessHours) {
             if (business.getDayOfWeek() == dayOfWeek) {
                 List<ReservationHours> reservationHours = business.getReservationHours();
                 for (ReservationHours reservationHours1 : reservationHours) {
@@ -224,10 +228,10 @@ public class ReservationControlBusiness {
 
     private Integer getCapacityByHour(Restaurant restaurant, DayOfWeek dayOfWeek, LocalTime hour) {
 
-        List<BusinnessHours> businnessHours = restaurant.getBusinnessHours();
+        List<BusinessHours> businessHours = restaurant.getBusinessHours();
         Integer tableAmountAvaliable = 0;
 
-        for (BusinnessHours business : businnessHours) {
+        for (BusinessHours business : businessHours) {
             if (business.getDayOfWeek() == dayOfWeek) {
                 List<ReservationHours> reservationHours = business.getReservationHours();
                 for (ReservationHours reservationHours1 : reservationHours) {
