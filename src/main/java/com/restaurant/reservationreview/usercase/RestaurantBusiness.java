@@ -9,8 +9,9 @@ import java.util.Optional;
 @Component
 public class RestaurantBusiness {
 
-    public Restaurant create( Restaurant restaurant) throws ValidationsException{
-        if (! restaurant.getId().isEmpty() ) {
+    public Restaurant create( Restaurant restaurant, Restaurant restaurantNomeDuplicado) throws ValidationsException{
+
+        if (restaurantNomeDuplicado != null || ! restaurantNomeDuplicado.getId().isEmpty() ) {
             throw new ValidationsException("0200");
         }
 

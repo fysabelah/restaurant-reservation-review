@@ -20,7 +20,9 @@ public class RestaurantGateway {
     private RestaurantBusiness business;
 
     public Restaurant insert(Restaurant restaurant) throws ValidationsException {
-        restaurant = this.business.create(restaurant);
+        Restaurant restaurantNomeDuplicado = this.repository.findByNameEquals(restaurant.getName());
+
+        restaurant = this.business.create(restaurant, restaurantNomeDuplicado);
 
         return this.repository.insert(restaurant);
     }
