@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @NoArgsConstructor
@@ -31,10 +32,11 @@ public class RestaurantDto extends Dto implements Serializable {
     @Schema(example = "30")
     private Integer capacity;
 
+    private BigDecimal averageRating;
 
-    private Integer averageRating;
+    private boolean active;
 
-    public RestaurantDto(String id, String name, AdressDto adressDto, List<BusinnessHoursDto> businnessHoursDto, FoodType foodType, Integer capacity, Integer averageRating) {
+    public RestaurantDto(String id, String name, AdressDto adressDto, List<BusinnessHoursDto> businnessHoursDto, FoodType foodType, Integer capacity, BigDecimal averageRating, boolean active) {
         super(id);
         this.name = name;
         this.adressDto = adressDto;
@@ -42,6 +44,7 @@ public class RestaurantDto extends Dto implements Serializable {
         this.foodType = foodType;
         this.capacity = capacity;
         this.averageRating = averageRating;
+        this.active = active;
     }
 
     public RestaurantDto(String name, AdressDto adressDto, List<BusinnessHoursDto> businnessHoursDto, FoodType foodType, Integer capacity) {

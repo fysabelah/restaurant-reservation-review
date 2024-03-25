@@ -13,13 +13,29 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties({"id"})
 public class ReservationControlDto extends Dto implements Serializable {
+    public ReservationControlDto(String id, String restaurantId, String restaurantName, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer totalReservations, Integer capacity, boolean available) {
+        super(id);
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.dateAndTime = dateAndTime;
+        this.dayOfWeek = dayOfWeek;
+        this.totalReservations = totalReservations;
+        this.capacity = capacity;
+        this.available = available;
+    }
 
-    private String id;
+    public ReservationControlDto(String restaurantId, String restaurantName, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer totalReservations, Integer capacity, boolean available) {
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
+        this.dateAndTime = dateAndTime;
+        this.dayOfWeek = dayOfWeek;
+        this.totalReservations = totalReservations;
+        this.capacity = capacity;
+        this.available = available;
+    }
 
     private String restaurantId;
 

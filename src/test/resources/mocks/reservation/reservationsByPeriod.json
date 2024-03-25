@@ -1,7 +1,7 @@
 [
   {
     "id": "660056ae6f512a50e5a322a4",
-    "personDto": {
+    "person": {
       "name": "George",
       "email": "George@mail.com.br",
       "phone": "11980809090"
@@ -12,7 +12,7 @@
   },
   {
     "id": "660056ae6f512a50e5a322a5",
-    "personDto": {
+    "person": {
       "name": "Jose",
       "email": "jose@mail.com.br",
       "phone": "11980809091"
@@ -23,7 +23,7 @@
   },
   {
     "id": "660056ae6f512a50e5a322a6",
-    "personDto": {
+    "person": {
       "name": "Joao",
       "email": "joao@mail.com.br",
       "phone": "11980809092"
@@ -34,7 +34,7 @@
   },
   {
     "id": "660056ae6f512a50e5a322a7",
-    "personDto": {
+    "person": {
       "name": "Maria",
       "email": "maria@mail.com.br",
       "phone": "11980809093"
@@ -45,7 +45,7 @@
   },
   {
     "id": "660056ae6f512a50e5a322a8",
-    "personDto": {
+    "person": {
       "name": "Maria",
       "email": "maria@mail.com.br",
       "phone": "11980809094"
@@ -56,7 +56,7 @@
   },
   {
     "id": "660056ae6f512a50e5a322a9",
-    "personDto": {
+    "person": {
       "name": "Maria",
       "email": "maria@mail.com.br",
       "phone": "11980809095"

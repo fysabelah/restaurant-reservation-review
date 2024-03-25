@@ -28,7 +28,8 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
                         .collect(Collectors.toList()),
                 document.getFoodType(),
                 document.getCapacity(),
-                document.getAverageRating()
+                document.getAverageRating(),
+                document.isActive()
         );
     }
 
@@ -43,7 +44,8 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
                         .collect(Collectors.toList()),
                 dto.getFoodType(),
                 dto.getCapacity(),
-                dto.getAverageRating()
+                dto.getAverageRating(),
+                dto.isActive()
         );
     }
 

@@ -1,9 +1,11 @@
 package com.restaurant.reservationreview.usercase;
 
+import com.restaurant.reservationreview.util.enums.ReservationStatus;
 import com.restaurant.reservationreview.entities.*;
 import com.restaurant.reservationreview.interfaceadapters.presenters.PersonPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
 import com.restaurant.reservationreview.util.MessageUtil;
+import com.restaurant.reservationreview.util.constants.Constants;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -27,7 +29,7 @@ public class ReservationBusiness {
     }
     public ReservationBusiness() {
     }
-    private final static Integer PLUS_RESERVATION_DAYS = 15;
+    private Constants constants;
 
     public List<LocalDate> checkDateAvailability(Restaurant restaurant, List<ReservationControl> reservations, Integer table) {
 
@@ -66,7 +68,7 @@ public class ReservationBusiness {
         List<LocalDate> businessDates = new ArrayList<>();
         List<BusinessHours> businessHours = restaurant.getBusinessHours();
 
-        for (int i = 1; i <= PLUS_RESERVATION_DAYS; i++) {
+        for (int i = 1; i <= constants.PLUS_RESERVATION_DAYS; i++) {
 
             LocalDate date = LocalDate.now().plusDays(i);
 
@@ -172,6 +174,7 @@ public class ReservationBusiness {
 
         ReservationControl newReservationControl = new ReservationControl();
 
+
         newReservationControl.setRestaurant(restaurant);
         newReservationControl.setDateAndTime(dateAndHour);
         newReservationControl.setDayOfWeek(weekDayEnum);
@@ -185,7 +188,7 @@ public class ReservationBusiness {
     public static void checkReservationAvailability(ReservationControl reservationControl) throws ValidationsException {
 
         if(!reservationControl.isAvailable()){
-            throw new IllegalArgumentException(MessageUtil.getMessage("0106"));
+            throw new IllegalArgumentException(MessageUtil.getMessage("0301"));
         }
 
     }
@@ -249,15 +252,31 @@ public class ReservationBusiness {
 
         Reservation newReservation = new Reservation();
 
+        if(!dto.getName().isEmpty()){
+            throw new IllegalArgumentException(MessageUtil.getMessage("0302"));
+        }
+        if(!dto.getPhone().isEmpty()){
+            throw new IllegalArgumentException(MessageUtil.getMessage("0303"));
+        }
+        if(!dto.getEmail().isEmpty()){
+            throw new IllegalArgumentException(MessageUtil.getMessage("0304"));
+        }
+
         newReservation.setRestaurant(restaurant);
         newReservation.setPerson(personPresenter.convert(dto));
         newReservation.setDateAndTime(dateAndHour);
         newReservation.setDayOfWeek(weekDayEnum);
         newReservation.setReservationAmount(table);
+        newReservation.setReservationStatus(ReservationStatus.SCHEDULED);
 
         return newReservation;
     }
 
+    public Reservation updateReservationCanceled(Reservation reservation) {
 
+        reservation.setReservationStatus(ReservationStatus.CANCELED);
+
+        return reservation;
+    }
 
 }

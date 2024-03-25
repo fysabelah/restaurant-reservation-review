@@ -1,7 +1,6 @@
 package com.restaurant.reservationreview.interfaceadapters.presenters.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
+import com.restaurant.reservationreview.util.enums.ReservationStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,18 +22,22 @@ public class ReservationDto extends Dto implements Serializable {
 
     private Integer reservationAmount;
 
-    public ReservationDto(String id, PersonDto personDto, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount) {
+    private ReservationStatus reservationStatus;
+
+    public ReservationDto(String id, PersonDto personDto, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount, ReservationStatus reservationStatus) {
         super(id);
         this.personDto = personDto;
         this.dateAndTime = dateAndTime;
         this.dayOfWeek = dayOfWeek;
         this.reservationAmount = reservationAmount;
+        this.reservationStatus = reservationStatus;
     }
 
-    public ReservationDto(PersonDto personDto, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount) {
+    public ReservationDto(PersonDto personDto, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount, ReservationStatus reservationStatus) {
         this.personDto = personDto;
         this.dateAndTime = dateAndTime;
         this.dayOfWeek = dayOfWeek;
         this.reservationAmount = reservationAmount;
+        this.reservationStatus = reservationStatus;
     }
 }

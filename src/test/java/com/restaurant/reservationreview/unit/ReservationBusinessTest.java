@@ -1,12 +1,13 @@
 package com.restaurant.reservationreview.unit;
 
-import com.restaurant.reservationreview.TestUtils;
+import com.restaurant.reservationreview.utils.*;
 import com.restaurant.reservationreview.entities.*;
 import com.restaurant.reservationreview.interfaceadapters.presenters.PersonPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
 import com.restaurant.reservationreview.usercase.ReservationBusiness;
 import com.restaurant.reservationreview.util.enums.FoodType;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
+import com.restaurant.reservationreview.util.constants.Constants;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,18 +29,7 @@ class ReservationBusinessTest extends TestUtils {
     @Resource
     private PersonPresenter personPresenter;
 
-    private static final String RESTAURANT_ID = "NEW_RESTAURANT_ID";
-    private static final String RESTAURANT_NAME = "NEW_RESTAURANT";
-    private static final String RESTAURANT_ADRESS_STREET = "AV 5";
-    private static final String RESTAURANT_ADRESS_NUMBER = "5";
-    private static final String RESTAURANT_ADRESS_CITY = "SAO PAULO";
-    private static final String RESTAURANT_ADRESS_STATE = "SP";
-    private static final LocalTime RESTAURANT_BUSINESS_HOURS_START = LocalTime.parse("19:00");
-    private static final LocalTime RESTAURANT_BUSINESS_HOURS_FINISH = LocalTime.parse("23:00");
-    private static final DayOfWeek RESTAURANT_BUSINESS_HOURS_DAYOFWEEK = DayOfWeek.valueOf("FRIDAY");
-    private static final Integer TABLE_AMOUNT = 10;
-    private static final Integer TABLE_AMOUNT_AVAILABLE = 8;
-    private final static Integer PLUS_RESERVATION_DAYS = 15;
+    private Constants constants;
 
     @Test
     public void shouldReturnAvailableDates() {
@@ -92,7 +82,7 @@ class ReservationBusinessTest extends TestUtils {
         reservations = reservationControlList(restaurant);
         Integer table = 1;
 
-        List<LocalTime> availableHours = reservationBusiness.checkAvailableHours(restaurant, reservations, RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
+        List<LocalTime> availableHours = reservationBusiness.checkAvailableHours(restaurant, reservations, constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
 
         assertNotNull(availableHours);
 
@@ -107,7 +97,7 @@ class ReservationBusinessTest extends TestUtils {
         reservations = reservationControlUnavailable(restaurant);
         Integer table = 9;
 
-        List<LocalTime> availableHours = reservationBusiness.checkAvailableHours(restaurant, reservations, RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
+        List<LocalTime> availableHours = reservationBusiness.checkAvailableHours(restaurant, reservations, Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
 
         Assertions.assertTrue(availableHours.isEmpty());
 
@@ -119,7 +109,7 @@ class ReservationBusinessTest extends TestUtils {
         ReservationBusiness reservationBusiness = new ReservationBusiness();
         Restaurant restaurant = newRestaurant();
 
-        List<LocalTime> availableHours = reservationBusiness.checkAvailableHoursByDayOfWeek(restaurant, RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
+        List<LocalTime> availableHours = reservationBusiness.checkAvailableHoursByDayOfWeek(restaurant, Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
 
         assertNotNull(availableHours);
 
@@ -130,18 +120,16 @@ class ReservationBusinessTest extends TestUtils {
 
         ReservationBusiness reservationBusiness = new ReservationBusiness();
         Restaurant restaurant = newRestaurant();
-        DayOfWeek weekDayEnum = RESTAURANT_BUSINESS_HOURS_DAYOFWEEK;
-        LocalTime hour = RESTAURANT_BUSINESS_HOURS_START;
-        int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
-        int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
+        int hours = Constants.RESTAURANT_BUSINESS_HOURS_START.getHour();
+        int minutes = Constants.RESTAURANT_BUSINESS_HOURS_START.getMinute();
         LocalDateTime dateAndHour = LocalDate.now().atStartOfDay().plusHours(hours).plusMinutes(minutes);
         Integer table = 1;
 
-        ReservationControl result = reservationBusiness.newReservationControl(restaurant, dateAndHour, hour, RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
+        ReservationControl result = reservationBusiness.newReservationControl(restaurant, dateAndHour, Constants.RESTAURANT_BUSINESS_HOURS_START, Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
 
         assertEquals(restaurant, result.getRestaurant());
         assertEquals(dateAndHour, result.getDateAndTime());
-        assertEquals(weekDayEnum, result.getDayOfWeek());
+        assertEquals(Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, result.getDayOfWeek());
         assertEquals(table, result.getTotalReservations());
         assertNotNull(result.getCapacity());
         assertTrue(result.isAvailable());
@@ -153,15 +141,13 @@ class ReservationBusinessTest extends TestUtils {
 
         ReservationBusiness reservationBusiness = new ReservationBusiness();
         Restaurant restaurant = null;
-        DayOfWeek weekDayEnum = RESTAURANT_BUSINESS_HOURS_DAYOFWEEK;
-        LocalTime hour = RESTAURANT_BUSINESS_HOURS_START;
-        int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
-        int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
+        int hours = Constants.RESTAURANT_BUSINESS_HOURS_START.getHour();
+        int minutes = Constants.RESTAURANT_BUSINESS_HOURS_START.getMinute();
         LocalDateTime dateAndHour = LocalDate.now().atStartOfDay().plusHours(hours).plusMinutes(minutes);
         Integer table = 1;
 
         assertThrows(NullPointerException.class, () -> {
-            reservationBusiness.newReservationControl(restaurant, dateAndHour, hour, weekDayEnum, table);
+            reservationBusiness.newReservationControl(restaurant, dateAndHour, Constants.RESTAURANT_BUSINESS_HOURS_START, Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
         });
 
     }
@@ -219,10 +205,10 @@ class ReservationBusinessTest extends TestUtils {
         ReservationBusiness reservationBusiness = new ReservationBusiness(personPresenter);
         Restaurant restaurant = newRestaurant();
         Integer table = 2;
-        int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
-        int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
+        int hours = Constants.RESTAURANT_BUSINESS_HOURS_START.getHour();
+        int minutes = Constants.RESTAURANT_BUSINESS_HOURS_START.getMinute();
         LocalDateTime dateAndHour = LocalDate.now().atStartOfDay().plusHours(hours).plusMinutes(minutes);
-        DayOfWeek weekDayEnum = RESTAURANT_BUSINESS_HOURS_DAYOFWEEK;
+        DayOfWeek weekDayEnum = Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK;
         PersonDto dto = new PersonDto();
 
         dto.setName("George");
@@ -246,12 +232,12 @@ class ReservationBusinessTest extends TestUtils {
 
         Restaurant restaurant = new Restaurant();
 
-        restaurant.setId(RESTAURANT_ID);
-        restaurant.setName(RESTAURANT_NAME);
+        restaurant.setId(Constants.RESTAURANT_ID);
+        restaurant.setName(Constants.RESTAURANT_NAME);
         restaurant.setAdress(adress());
         restaurant.setBusinessHours(businessHours());
         restaurant.setFoodType(FoodType.BRAZILIAN);
-        restaurant.setCapacity(TABLE_AMOUNT);
+        restaurant.setCapacity(Constants.TABLE_AMOUNT);
 
         return restaurant;
     }
@@ -262,9 +248,9 @@ class ReservationBusinessTest extends TestUtils {
 
         BusinessHours businessHours = new BusinessHours();
 
-        businessHours.setStart(RESTAURANT_BUSINESS_HOURS_START);
-        businessHours.setFinish(RESTAURANT_BUSINESS_HOURS_FINISH);
-        businessHours.setDayOfWeek(RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
+        businessHours.setStart(Constants.RESTAURANT_BUSINESS_HOURS_START);
+        businessHours.setFinish(Constants.RESTAURANT_BUSINESS_HOURS_FINISH);
+        businessHours.setDayOfWeek(Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
         businessHours.setReservationHours(reservationHours());
         businessHours.setAvailable(true);
 
@@ -279,8 +265,8 @@ class ReservationBusinessTest extends TestUtils {
 
         ReservationHours reservationHours= new ReservationHours();
 
-        reservationHours.setHour(RESTAURANT_BUSINESS_HOURS_START);
-        reservationHours.setTableAmountAvailable(TABLE_AMOUNT_AVAILABLE);
+        reservationHours.setHour(Constants.RESTAURANT_BUSINESS_HOURS_START);
+        reservationHours.setTableAmountAvailable(Constants.TABLE_AMOUNT_AVAILABLE);
 
         reservationHoursList.add(reservationHours);
 
@@ -291,10 +277,10 @@ class ReservationBusinessTest extends TestUtils {
 
         Adress adress = new Adress();
 
-        adress.setStreet(RESTAURANT_ADRESS_STREET);
-        adress.setAdressNumber(RESTAURANT_ADRESS_NUMBER);
-        adress.setCity(RESTAURANT_ADRESS_CITY);
-        adress.setState(RESTAURANT_ADRESS_STATE);
+        adress.setStreet(Constants.RESTAURANT_ADRESS_STREET);
+        adress.setAdressNumber(Constants.RESTAURANT_ADRESS_NUMBER);
+        adress.setCity(Constants.RESTAURANT_ADRESS_CITY);
+        adress.setState(Constants.RESTAURANT_ADRESS_STATE);
 
         return adress;
     }
@@ -303,18 +289,18 @@ class ReservationBusinessTest extends TestUtils {
         List<ReservationControl> reservationControlList = new ArrayList<>();
         ReservationControl reservationControl = new ReservationControl();
 
-        int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
-        int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
+        int hours = Constants.RESTAURANT_BUSINESS_HOURS_START.getHour();
+        int minutes = Constants.RESTAURANT_BUSINESS_HOURS_START.getMinute();
 
-        for(int i = 1; i <= PLUS_RESERVATION_DAYS; i++){
+        for(int i = 1; i <= constants.PLUS_RESERVATION_DAYS; i++){
 
             LocalDateTime dateAndHour = LocalDate.now().plusDays(i).atStartOfDay().plusHours(hours).plusMinutes(minutes);
 
-            reservationControl.setId(RESTAURANT_ID);
+            reservationControl.setId(Constants.RESTAURANT_ID);
             reservationControl.setDateAndTime(dateAndHour);
-            reservationControl.setDayOfWeek(RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
-            reservationControl.setTotalReservations(TABLE_AMOUNT_AVAILABLE);
-            reservationControl.setCapacity(TABLE_AMOUNT);
+            reservationControl.setDayOfWeek(Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
+            reservationControl.setTotalReservations(Constants.TABLE_AMOUNT_AVAILABLE);
+            reservationControl.setCapacity(Constants.TABLE_AMOUNT);
             reservationControl.isAvailable();
 
             reservationControlList.add(reservationControl);
@@ -329,16 +315,16 @@ class ReservationBusinessTest extends TestUtils {
     private ReservationControl reservationControl(Restaurant restaurant){
         ReservationControl reservationControl = new ReservationControl();
 
-        int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
-        int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
+        int hours = Constants.RESTAURANT_BUSINESS_HOURS_START.getHour();
+        int minutes = Constants.RESTAURANT_BUSINESS_HOURS_START.getMinute();
 
         LocalDateTime dateAndHour = LocalDate.now().atStartOfDay().plusHours(hours).plusMinutes(minutes);
 
-        reservationControl.setId(RESTAURANT_ID);
+        reservationControl.setId(Constants.RESTAURANT_ID);
         reservationControl.setDateAndTime(dateAndHour);
-        reservationControl.setDayOfWeek(RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
-        reservationControl.setTotalReservations(TABLE_AMOUNT_AVAILABLE);
-        reservationControl.setCapacity(TABLE_AMOUNT);
+        reservationControl.setDayOfWeek(Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
+        reservationControl.setTotalReservations(Constants.TABLE_AMOUNT_AVAILABLE);
+        reservationControl.setCapacity(Constants.TABLE_AMOUNT);
         reservationControl.isAvailable();
 
         return reservationControl;
@@ -348,20 +334,20 @@ class ReservationBusinessTest extends TestUtils {
     private List<ReservationControl> reservationControlUnavailable(Restaurant restaurant){
         List<ReservationControl> reservationControlList = new ArrayList<>();
 
-        int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
-        int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
+        int hours = Constants.RESTAURANT_BUSINESS_HOURS_START.getHour();
+        int minutes = Constants.RESTAURANT_BUSINESS_HOURS_START.getMinute();
 
-        for(int i = 1; i <= PLUS_RESERVATION_DAYS; i++){
+        for(int i = 1; i <= constants.PLUS_RESERVATION_DAYS; i++){
 
             ReservationControl reservationControl = new ReservationControl();
 
             LocalDateTime dateAndHour = LocalDate.now().plusDays(i).atStartOfDay().plusHours(hours).plusMinutes(minutes);
 
-            reservationControl.setId(RESTAURANT_ID);
+            reservationControl.setId(Constants.RESTAURANT_ID);
             reservationControl.setDateAndTime(dateAndHour);
-            reservationControl.setDayOfWeek(RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
-            reservationControl.setTotalReservations(TABLE_AMOUNT);
-            reservationControl.setCapacity(TABLE_AMOUNT);
+            reservationControl.setDayOfWeek(Constants.RESTAURANT_BUSINESS_HOURS_DAYOFWEEK);
+            reservationControl.setTotalReservations(Constants.TABLE_AMOUNT);
+            reservationControl.setCapacity(Constants.TABLE_AMOUNT);
             reservationControl.setAvailable(false);
 
             reservationControlList.add(reservationControl);

@@ -1,6 +1,6 @@
 package com.restaurant.reservationreview.integration;
 
-import com.restaurant.reservationreview.TestUtils;
+import com.restaurant.reservationreview.utils.TestUtils;
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.frameworks.db.RestaurantRepository;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;

@@ -2,7 +2,6 @@ package com.restaurant.reservationreview.interfaceadapters.gateways;
 
 import com.restaurant.reservationreview.entities.Reservation;
 import com.restaurant.reservationreview.frameworks.db.ReservationRepository;
-import com.restaurant.reservationreview.frameworks.db.RestaurantRepository;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
@@ -18,9 +17,6 @@ public class ReservationGateway {
     @Resource
     private ReservationRepository reservationRepository;
 
-    @Resource
-    private RestaurantRepository restaurantRepository;
-
     public Reservation insert(Reservation reservation) throws ValidationsException{
 
         return reservationRepository.insert(reservation);
@@ -30,11 +26,7 @@ public class ReservationGateway {
         return reservationRepository.findAllByEmail(email, pageable);
 
     }
-    public List<Reservation> findAll() throws ValidationsException{
 
-        return reservationRepository.findAll();
-
-    }
     public Reservation findById(String id) throws ValidationsException{
 
         return reservationRepository.findById(id)
@@ -42,9 +34,9 @@ public class ReservationGateway {
 
     }
 
-    public void delete(Reservation reservation) throws ValidationsException{
+    public void save(Reservation reservation) throws ValidationsException{
 
-        reservationRepository.delete(reservation);
+        reservationRepository.save(reservation);
 
     }
 
