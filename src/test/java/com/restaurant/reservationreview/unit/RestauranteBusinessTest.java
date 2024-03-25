@@ -1,10 +1,8 @@
 package com.restaurant.reservationreview.unit;
 
-import com.restaurant.reservationreview.TestUtils;
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.entities.RestaurantBusinessHours;
 import com.restaurant.reservationreview.util.enums.FoodType;
-import com.restaurant.reservationreview.util.exception.ValidationsException;
 import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-class RestauranteBusinessTest extends TestUtils {
+class RestauranteBusinessTest {
     @Test
     void testCreateRestaurant(){
         String IdNew = new Random().toString();
@@ -41,6 +39,8 @@ class RestauranteBusinessTest extends TestUtils {
         }
 
         restaurant.setBusinessHours(listRestaurantBusinessHours);
+
+        System.out.println(restaurant);
     }
 
 }
