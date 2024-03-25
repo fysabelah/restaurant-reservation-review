@@ -18,7 +18,8 @@ public class ReservationPresenter implements Presenter<Reservation, ReservationD
                 personPresenter.convert(document.getPerson()),
                 document.getDateAndTime(),
                 document.getDayOfWeek(),
-                document.getReservationAmount());
+                document.getReservationAmount(),
+                document.getReservationStatus());
     }
 
     @Override
@@ -28,7 +29,8 @@ public class ReservationPresenter implements Presenter<Reservation, ReservationD
                 personPresenter.convert(dto.getPersonDto()),
                 dto.getDateAndTime(),
                 dto.getDayOfWeek(),
-                dto.getReservationAmount());
+                dto.getReservationAmount(),
+                dto.getReservationStatus());
 
     }
 

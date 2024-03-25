@@ -1,5 +1,6 @@
 package com.restaurant.reservationreview.entities;
 
+import com.restaurant.reservationreview.util.enums.ReservationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,15 @@ public class Reservation implements Serializable {
 
     private Integer reservationAmount;
 
-    public Reservation(String id, Person convert, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount) {
+    private ReservationStatus reservationStatus;
+
+    public Reservation(String id, Person person, LocalDateTime dateAndTime, DayOfWeek dayOfWeek, Integer reservationAmount, ReservationStatus reservationStatus) {
+        this.id = id;
+        this.person = person;
+        this.dateAndTime = dateAndTime;
+        this.dayOfWeek = dayOfWeek;
+        this.reservationAmount = reservationAmount;
+        this.reservationStatus = reservationStatus;
     }
+
 }

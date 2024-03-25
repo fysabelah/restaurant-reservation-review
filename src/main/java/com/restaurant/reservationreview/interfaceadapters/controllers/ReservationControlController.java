@@ -9,6 +9,7 @@ import com.restaurant.reservationreview.interfaceadapters.presenters.Reservation
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationControlDto;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
 import com.restaurant.reservationreview.util.MessageUtil;
+import com.restaurant.reservationreview.util.constants.Constants;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;
@@ -24,8 +25,7 @@ import java.time.LocalDateTime;
 @Component
 public class ReservationControlController {
 
-    private final static Integer PLUS_ONE_DAY = 1;
-
+    private Constants constants;
 
     @Resource
     private ReservationControlGateway reservationControlGateway;
@@ -55,7 +55,7 @@ public class ReservationControlController {
         dayOfYear = finish.getDayOfYear();
         year = finish.getYear();
 
-        LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(PLUS_ONE_DAY).atStartOfDay();
+        LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(constants.PLUS_ONE_DAY).atStartOfDay();
 
         Page<ReservationControl> reservationControl = reservationControlGateway.findAllReservationControlByRestaurantAndDateBetween(restaurant, startDate, finishDate, pageable);
 
@@ -79,7 +79,7 @@ public class ReservationControlController {
         dayOfYear = finish.getDayOfYear();
         year = finish.getYear();
 
-        LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(PLUS_ONE_DAY).atStartOfDay();
+        LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(constants.PLUS_ONE_DAY).atStartOfDay();
 
         Page<Reservation> reservations = reservationGateway.findAllReservationsByRestaurantAndDateBetween(restaurant, startDate, finishDate, pageable);
 

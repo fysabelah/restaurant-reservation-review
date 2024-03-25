@@ -1,5 +1,6 @@
 package com.restaurant.reservationreview.interfaceadapters.controllers;
 
+import com.restaurant.reservationreview.util.constants.Constants;
 import com.restaurant.reservationreview.entities.Reservation;
 import com.restaurant.reservationreview.entities.ReservationControl;
 import com.restaurant.reservationreview.entities.Restaurant;
@@ -31,9 +32,7 @@ import java.util.Optional;
 @Component
 public class ReservationController {
 
-    private final static Integer PLUS_ONE_DAY = 1;
-
-    private final static Integer PLUS_RESERVATION_DAYS = 30;
+    private Constants constants;
 
     @Resource
     private RestaurantGateway restaurantGateway;
@@ -55,8 +54,8 @@ public class ReservationController {
         Restaurant restaurant = restaurantGateway.findById(restaurantId);
 
         List<LocalDate> dates;
-        LocalDateTime startDate = LocalDate.now().plusDays(PLUS_ONE_DAY).atStartOfDay();
-        LocalDateTime finishDate = LocalDate.now().plusDays(PLUS_RESERVATION_DAYS).atStartOfDay();
+        LocalDateTime startDate = LocalDate.now().plusDays(constants.PLUS_ONE_DAY).atStartOfDay();
+        LocalDateTime finishDate = LocalDate.now().plusDays(constants.PLUS_RESERVATION_DAYS).atStartOfDay();
 
         Optional<List<ReservationControl>> reservations = reservationControlGateway.findReservationsByRestaurantAndDateNextDays(restaurantId, startDate, finishDate);
 
@@ -82,7 +81,7 @@ public class ReservationController {
         int dayOfYear = date.getDayOfYear();
         int year = date.getYear();
         LocalDateTime startDate = LocalDate.ofYearDay(year, dayOfYear).atStartOfDay();
-        LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(PLUS_ONE_DAY).atStartOfDay();
+        LocalDateTime finishDate = LocalDate.ofYearDay(year, dayOfYear).plusDays(constants.PLUS_ONE_DAY).atStartOfDay();
         DayOfWeek weekDayEnum = DayOfWeek.valueOf(date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.US).toUpperCase());
 
         Optional<List<ReservationControl>> reservations = reservationControlGateway.findReservationsByRestaurantAndDate(restaurantId, startDate, finishDate);
@@ -156,7 +155,9 @@ public class ReservationController {
 
         Optional<ReservationControl> reservationControl = reservationControlGateway.findReservationsByDateAndHour(restaurantId, reservationHour);
 
-        reservationGateway.delete(reservation);
+        reservation = reservationBusiness.updateReservationCanceled(reservation);
+
+        reservationGateway.save(reservation);
 
         ReservationControl updateReservationControl = reservationBusiness.updateReservationControlByReservationCancelation(reservationControl.get(), tableAmount);
 

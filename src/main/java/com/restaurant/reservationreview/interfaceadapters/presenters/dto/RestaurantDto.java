@@ -31,7 +31,6 @@ public class RestaurantDto extends Dto implements Serializable {
     @Schema(example = "30")
     private Integer capacity;
 
-
     private Integer averageRating;
 
     public RestaurantDto(String id, String name, AdressDto adressDto, List<BusinnessHoursDto> businnessHoursDto, FoodType foodType, Integer capacity, Integer averageRating) {

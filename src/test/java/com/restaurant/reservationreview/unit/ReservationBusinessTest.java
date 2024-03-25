@@ -5,6 +5,7 @@ import com.restaurant.reservationreview.entities.*;
 import com.restaurant.reservationreview.interfaceadapters.presenters.PersonPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
 import com.restaurant.reservationreview.usercase.ReservationBusiness;
+import com.restaurant.reservationreview.util.constants.Constants;
 import com.restaurant.reservationreview.util.enums.FoodType;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
@@ -39,7 +40,7 @@ class ReservationBusinessTest extends TestUtils {
     private static final DayOfWeek RESTAURANT_BUSINESS_HOURS_DAYOFWEEK = DayOfWeek.valueOf("FRIDAY");
     private static final Integer TABLE_AMOUNT = 10;
     private static final Integer TABLE_AMOUNT_AVAILABLE = 8;
-    private final static Integer PLUS_RESERVATION_DAYS = 15;
+    private Constants constants;
 
     @Test
     public void shouldReturnAvailableDates() {
@@ -130,18 +131,16 @@ class ReservationBusinessTest extends TestUtils {
 
         ReservationBusiness reservationBusiness = new ReservationBusiness();
         Restaurant restaurant = newRestaurant();
-        DayOfWeek weekDayEnum = RESTAURANT_BUSINESS_HOURS_DAYOFWEEK;
-        LocalTime hour = RESTAURANT_BUSINESS_HOURS_START;
         int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
         int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
         LocalDateTime dateAndHour = LocalDate.now().atStartOfDay().plusHours(hours).plusMinutes(minutes);
         Integer table = 1;
 
-        ReservationControl result = reservationBusiness.newReservationControl(restaurant, dateAndHour, hour, RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
+        ReservationControl result = reservationBusiness.newReservationControl(restaurant, dateAndHour, RESTAURANT_BUSINESS_HOURS_START, RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
 
         assertEquals(restaurant, result.getRestaurant());
         assertEquals(dateAndHour, result.getDateAndTime());
-        assertEquals(weekDayEnum, result.getDayOfWeek());
+        assertEquals(RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, result.getDayOfWeek());
         assertEquals(table, result.getTotalReservations());
         assertNotNull(result.getCapacity());
         assertTrue(result.isAvailable());
@@ -153,15 +152,13 @@ class ReservationBusinessTest extends TestUtils {
 
         ReservationBusiness reservationBusiness = new ReservationBusiness();
         Restaurant restaurant = null;
-        DayOfWeek weekDayEnum = RESTAURANT_BUSINESS_HOURS_DAYOFWEEK;
-        LocalTime hour = RESTAURANT_BUSINESS_HOURS_START;
         int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
         int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
         LocalDateTime dateAndHour = LocalDate.now().atStartOfDay().plusHours(hours).plusMinutes(minutes);
         Integer table = 1;
 
         assertThrows(NullPointerException.class, () -> {
-            reservationBusiness.newReservationControl(restaurant, dateAndHour, hour, weekDayEnum, table);
+            reservationBusiness.newReservationControl(restaurant, dateAndHour, RESTAURANT_BUSINESS_HOURS_START, RESTAURANT_BUSINESS_HOURS_DAYOFWEEK, table);
         });
 
     }
@@ -306,7 +303,7 @@ class ReservationBusinessTest extends TestUtils {
         int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
         int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
 
-        for(int i = 1; i <= PLUS_RESERVATION_DAYS; i++){
+        for(int i = 1; i <= constants.PLUS_RESERVATION_DAYS; i++){
 
             LocalDateTime dateAndHour = LocalDate.now().plusDays(i).atStartOfDay().plusHours(hours).plusMinutes(minutes);
 
@@ -351,7 +348,7 @@ class ReservationBusinessTest extends TestUtils {
         int hours = RESTAURANT_BUSINESS_HOURS_START.getHour();
         int minutes = RESTAURANT_BUSINESS_HOURS_START.getMinute();
 
-        for(int i = 1; i <= PLUS_RESERVATION_DAYS; i++){
+        for(int i = 1; i <= constants.PLUS_RESERVATION_DAYS; i++){
 
             ReservationControl reservationControl = new ReservationControl();
 

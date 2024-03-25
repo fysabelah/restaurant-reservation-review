@@ -1,9 +1,11 @@
 package com.restaurant.reservationreview.usercase;
 
+import com.restaurant.reservationreview.util.enums.ReservationStatus;
 import com.restaurant.reservationreview.entities.*;
 import com.restaurant.reservationreview.interfaceadapters.presenters.PersonPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
 import com.restaurant.reservationreview.util.MessageUtil;
+import com.restaurant.reservationreview.util.constants.Constants;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -27,7 +29,7 @@ public class ReservationBusiness {
     }
     public ReservationBusiness() {
     }
-    private final static Integer PLUS_RESERVATION_DAYS = 15;
+    private Constants constants;
 
     public List<LocalDate> checkDateAvailability(Restaurant restaurant, List<ReservationControl> reservations, Integer table) {
 
@@ -66,7 +68,7 @@ public class ReservationBusiness {
         List<LocalDate> businessDates = new ArrayList<>();
         List<BusinessHours> businessHours = restaurant.getBusinessHours();
 
-        for (int i = 1; i <= PLUS_RESERVATION_DAYS; i++) {
+        for (int i = 1; i <= constants.PLUS_RESERVATION_DAYS; i++) {
 
             LocalDate date = LocalDate.now().plusDays(i);
 
@@ -254,10 +256,16 @@ public class ReservationBusiness {
         newReservation.setDateAndTime(dateAndHour);
         newReservation.setDayOfWeek(weekDayEnum);
         newReservation.setReservationAmount(table);
+        newReservation.setReservationStatus(ReservationStatus.SCHEDULED);
 
         return newReservation;
     }
 
+    public Reservation updateReservationCanceled(Reservation reservation) {
 
+        reservation.setReservationStatus(ReservationStatus.CANCELED);
+
+        return reservation;
+    }
 
 }

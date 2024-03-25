@@ -3,11 +3,12 @@ package com.restaurant.reservationreview.integration;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.restaurant.reservationreview.TestUtils;
 import com.restaurant.reservationreview.entities.Reservation;
+import com.restaurant.reservationreview.entities.ReservationControl;
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.frameworks.db.ReservationControlRepository;
 import com.restaurant.reservationreview.frameworks.db.ReservationRepository;
 import com.restaurant.reservationreview.frameworks.db.RestaurantRepository;
-import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RatingDto;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationControlDto;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import org.junit.jupiter.api.AfterEach;
@@ -65,13 +66,13 @@ class ReservationControlWebTest extends TestUtils {
     @Test
     @DisplayName("Teste recuperar reservas por restaurante e período de datas em formato paginado")
     void findAllReservationsByRestaurantAndDateBetween() throws Exception {
-        
-        File mock = getFile("reservationControlByPeriod.json");
+
+        File mock = getFile("reservationsByPeriod.json");
         List<Reservation> reservations = objectMapper.readValue(mock, new TypeReference<List<Reservation>>() {
         });
         String start = LocalDate.now().toString();
         String finish = LocalDate.now().plusDays(1).toString();
-        reservations.forEach(rating -> rating.setRestaurant(restaurant));
+        reservations.forEach(reservation -> reservation.setRestaurant(restaurant));
 
         reservations = reservationRepository.saveAll(reservations);
 
@@ -86,6 +87,38 @@ class ReservationControlWebTest extends TestUtils {
                 .andReturn().getResponse();
 
         PagedResponse<ReservationDto> result = (PagedResponse<ReservationDto>) getResponseBody(response, PagedResponse.class);
+
+        assertEquals(0, result.getPage().getPage());
+        assertEquals(4, result.getPage().getPageSize());
+        assertEquals(2, result.getPage().getTotalPages());
+        assertEquals(4, result.getData().size());
+
+    }
+
+    @Test
+    @DisplayName("Teste recuperar reservas por restaurante e período de datas em formato paginado")
+    void findAllReservationControlByRestaurantIdAndDateBetween() throws Exception {
+
+        File mock = getFile("reservationControlByPeriod.json");
+        List<ReservationControl> reservationsControl = objectMapper.readValue(mock, new TypeReference<List<ReservationControl>>() {
+        });
+        String start = "2024-03-28";
+        String finish = "2024-03-29";
+        reservationsControl.forEach(reservationControl -> reservationControl.setRestaurant(restaurant));
+
+        reservationsControl = reservationControlRepository.saveAll(reservationsControl);
+
+        MockHttpServletResponse response = mockMvc.perform(
+                        get(REQUEST_MAPPING_ROOT + "/reservationControlByPeriod/" + restaurant.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .param("data-inicio", start)
+                                .param("data-fim", finish)
+                                .param("pageSize", "4")
+                                .param("initialPage", "0")
+                ).andExpect(status().isOk())
+                .andReturn().getResponse();
+
+        PagedResponse<ReservationControlDto> result = (PagedResponse<ReservationControlDto>) getResponseBody(response, PagedResponse.class);
 
         assertEquals(0, result.getPage().getPage());
         assertEquals(4, result.getPage().getPageSize());
