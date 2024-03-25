@@ -1,5 +1,6 @@
 package com.restaurant.reservationreview.entities;
 
+import com.restaurant.reservationreview.util.MessageUtil;
 import com.restaurant.reservationreview.util.enums.StatusReservation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,4 +37,35 @@ public class Reservation implements Serializable {
 
     private StatusReservation status;
 
+    public void setRestaurant(Restaurant restaurant) {
+        if (restaurant == null) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0300"));
+        }
+
+        this.restaurant = restaurant;
+    }
+
+    public void setPerson(Person person) {
+        if (person == null) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0301"));
+        }
+
+        this.person = person;
+    }
+
+    public void setDate(LocalDateTime date) {
+        if (date == null) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0302"));
+        }
+
+        this.date = date;
+    }
+
+    public void setTables(Integer tables) {
+        if (tables == null || tables <= 0) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0303"));
+        }
+
+        this.tables = tables;
+    }
 }

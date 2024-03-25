@@ -25,13 +25,15 @@ public class RestaurantGateway {
         return repository.insert(restaurant);
     }
 
-
     public Page<Restaurant> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
-
     public Restaurant findById(String id) throws ValidationsException {
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0305"));
+        }
+
         return repository.findById(id)
                 .orElseThrow(() -> new ValidationsException("0001", "restaurante", id));
     }
@@ -43,10 +45,6 @@ public class RestaurantGateway {
         }
 
         return repository.findByNameEquals(name);
-    }
-
-    public void delete(Restaurant restaurant) {
-        repository.delete(restaurant);
     }
 
     public Restaurant update(Restaurant restaurant) {

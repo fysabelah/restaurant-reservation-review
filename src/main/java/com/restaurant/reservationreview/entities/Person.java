@@ -1,5 +1,7 @@
 package com.restaurant.reservationreview.entities;
 
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
+import com.restaurant.reservationreview.util.MessageUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +21,17 @@ public class Person implements Serializable {
 
     private String phone;
 
+    public Person(PersonDto person) {
+        this.email = person.getEmail();
+        setName(person.getName());
+        this.phone = person.getPhone();
+    }
+
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0005"));
+        }
+
+        this.name = name;
+    }
 }

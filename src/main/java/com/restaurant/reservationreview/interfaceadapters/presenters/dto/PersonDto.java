@@ -1,6 +1,7 @@
 package com.restaurant.reservationreview.interfaceadapters.presenters.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.restaurant.reservationreview.entities.Person;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,9 @@ public class PersonDto extends Dto {
     @Schema(example = "11980809090")
     private String phone;
 
+    public PersonDto(Person person) {
+        this.phone = person.getPhone();
+        this.email = person.getEmail();
+        this.name = person.getName();
+    }
 }

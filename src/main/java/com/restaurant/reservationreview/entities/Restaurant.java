@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -75,5 +76,19 @@ public class Restaurant implements Serializable {
         }
 
         this.name = name;
+    }
+
+    public BusinessHours getBusinessHourOfDay(DayOfWeek dayOfWeek) {
+        if (this.businnessHours == null || this.businnessHours.isEmpty()) {
+            return null;
+        }
+
+        for (BusinessHours businessHour : this.businnessHours) {
+            if (businessHour.getDayOfWeek().equals(dayOfWeek)) {
+                return businessHour;
+            }
+        }
+
+        return null;
     }
 }
