@@ -4,7 +4,6 @@ import com.restaurant.reservationreview.entities.Reservation;
 import com.restaurant.reservationreview.entities.ReservationControl;
 import com.restaurant.reservationreview.interfaceadapters.gateways.ReservationControlGateway;
 import com.restaurant.reservationreview.interfaceadapters.gateways.ReservationGateway;
-import com.restaurant.reservationreview.interfaceadapters.gateways.RestaurantGateway;
 import com.restaurant.reservationreview.interfaceadapters.presenters.ReservationControlPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.ReservationPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationControlDto;
@@ -27,8 +26,6 @@ public class ReservationControlController {
 
     private final static Integer PLUS_ONE_DAY = 1;
 
-    @Resource
-    private RestaurantGateway restaurantGateway;
 
     @Resource
     private ReservationControlGateway reservationControlGateway;

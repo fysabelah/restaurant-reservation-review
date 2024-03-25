@@ -1,0 +1,29 @@
+[
+  {
+    "restaurantId": "65ff9b696bd33024b46d2530",
+    "restaurantName": "Paparoto Cucina",
+    "dateAndTime": "2024-03-28T17:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 4,
+    "capacity": 10,
+    "available": true
+  },
+  {
+    "restaurantId": "65ff9b696bd33024b46d2531",
+    "restaurantName": "Paparoto Cucina",
+    "dateAndTime": "2024-03-28T19:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 0,
+    "capacity": 10,
+    "available": true
+  },
+  {
+    "restaurantId": "65ff9b696bd33024b46d2532",
+    "restaurantName": "Paparoto Cucina",
+    "dateAndTime": "2024-03-28T21:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 10,
+    "capacity": 10,
+    "available": false
+  }
+]

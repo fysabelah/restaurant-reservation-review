@@ -9,7 +9,7 @@ import com.restaurant.reservationreview.interfaceadapters.gateways.RestaurantGat
 import com.restaurant.reservationreview.interfaceadapters.presenters.ReservationPresenter;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.PersonDto;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.ReservationDto;
-import com.restaurant.reservationreview.usercase.ReservationControlBusiness;
+import com.restaurant.reservationreview.usercase.ReservationBusiness;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import com.restaurant.reservationreview.util.pagination.PagedResponse;
 import com.restaurant.reservationreview.util.pagination.Pagination;
@@ -48,7 +48,7 @@ public class ReservationController {
     private ReservationPresenter reservationPresenter;
 
     @Resource
-    private ReservationControlBusiness reservationControlBusiness;
+    private ReservationBusiness reservationBusiness;
 
     public List<LocalDate> checkAvailableDates(String restaurantId, Integer table) throws ValidationsException {
 
@@ -62,11 +62,11 @@ public class ReservationController {
 
         if (reservations.get().isEmpty()) {
 
-            dates = reservationControlBusiness.nextDaysList(restaurant);
+            dates = reservationBusiness.nextDaysList(restaurant);
 
         }else{
 
-            dates = reservationControlBusiness.checkDateAvailability(restaurant, reservations.get(), table);
+            dates = reservationBusiness.checkDateAvailability(restaurant, reservations.get(), table);
 
         }
 
@@ -89,11 +89,11 @@ public class ReservationController {
 
         if (reservations.get().isEmpty()) {
 
-            availableHours =  reservationControlBusiness.checkAvailableHoursByDayOfWeek(restaurant, weekDayEnum);
+            availableHours =  reservationBusiness.checkAvailableHoursByDayOfWeek(restaurant, weekDayEnum);
 
         }else{
 
-            availableHours = reservationControlBusiness.checkAvailableHours(restaurant, reservations.get(), weekDayEnum, table);
+            availableHours = reservationBusiness.checkAvailableHours(restaurant, reservations.get(), weekDayEnum, table);
 
         }
 
@@ -118,19 +118,19 @@ public class ReservationController {
 
         if (reservationControl.isEmpty()) {
 
-            saveReservationControl = reservationControlBusiness.newReservationControl(restaurant, dateAndHour, hour, weekDayEnum, table);
+            saveReservationControl = reservationBusiness.newReservationControl(restaurant, dateAndHour, hour, weekDayEnum, table);
             reservationControlGateway.insert(saveReservationControl);
 
         }else{
 
-            reservationControlBusiness.checkReservationAvailability(reservationControl.get());
+            reservationBusiness.checkReservationAvailability(reservationControl.get());
 
-            saveReservationControl = reservationControlBusiness.updateReservationControlByNewReservation(reservationControl.get(), table);
+            saveReservationControl = reservationBusiness.updateReservationControlByNewReservation(reservationControl.get(), table);
             reservationControlGateway.save(saveReservationControl);
 
         }
 
-        Reservation reservation = reservationControlBusiness.newReservation(restaurant, table, dateAndHour, weekDayEnum, dto);
+        Reservation reservation = reservationBusiness.newReservation(restaurant, table, dateAndHour, weekDayEnum, dto);
 
         return reservationPresenter.convert(reservationGateway.insert(reservation));
 
@@ -158,7 +158,7 @@ public class ReservationController {
 
         reservationGateway.delete(reservation);
 
-        ReservationControl updateReservationControl = reservationControlBusiness.updateReservationControlByReservationCancelation(reservationControl.get(), tableAmount);
+        ReservationControl updateReservationControl = reservationBusiness.updateReservationControlByReservationCancelation(reservationControl.get(), tableAmount);
 
         reservationControlGateway.save(updateReservationControl);
 
