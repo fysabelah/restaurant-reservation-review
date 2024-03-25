@@ -7,7 +7,6 @@ import com.restaurant.reservationreview.usercase.RestaurantBusiness;
 import com.restaurant.reservationreview.util.MessageUtil;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import jakarta.annotation.Resource;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ class RestaurantBusinessTest extends TestUtils {
     }
 
     @Test
-     void testUpdateWithMismatchedIds() {
+    void testUpdateWithMismatchedIds() {
         Restaurant restaurantName = new Restaurant();
         restaurantName.setId("existing_id");
 
