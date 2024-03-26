@@ -11,8 +11,10 @@ public class RestaurantBusiness {
 
     public Restaurant create( Restaurant restaurant, Restaurant restaurantNomeDuplicado) throws ValidationsException{
 
-        if (restaurantNomeDuplicado != null || ! restaurantNomeDuplicado.getId().isEmpty() ) {
-            throw new ValidationsException("0200");
+        if (restaurantNomeDuplicado != null){
+            if (! restaurantNomeDuplicado.getId().isEmpty() ) {
+                throw new ValidationsException("0200");
+            }
         }
 
         return restaurant;
