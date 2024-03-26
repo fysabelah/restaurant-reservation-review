@@ -38,7 +38,7 @@ public class Rating implements Serializable {
 
     public void setName(String name) throws ValidationsException {
         if (name == null || name.trim().isEmpty()) {
-            throw new ValidationsException("0101");
+            throw new ValidationsException("0003");
         }
 
         this.name = name;

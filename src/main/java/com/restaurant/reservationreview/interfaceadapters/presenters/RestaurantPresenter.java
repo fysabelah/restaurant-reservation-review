@@ -23,7 +23,7 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
         dto.setName(document.getName());
         dto.setLocation(document.getLocation());
         dto.setFoodType(document.getFoodType());
-        dto.setActive(document.getActive());
+        dto.setActive(document.isActive());
         dto.setRating(document.getRating());
         dto.setQuantityTables(document.getQuantityTables());
 
@@ -43,7 +43,7 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
         restaurant.setName(dto.getName());
         restaurant.setLocation(dto.getLocation());
         restaurant.setFoodType(dto.getFoodType());
-        restaurant.setActive(dto.getActive());
+        restaurant.setActive(dto.isActive());
         restaurant.setRating(dto.getRating());
         restaurant.setQuantityTables(dto.getQuantityTables());
 
