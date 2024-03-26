@@ -14,7 +14,7 @@ public class RatingBusiness {
         rating.setDate(TimeUtils.now());
 
         if (restaurant == null || restaurant.getId() == null) {
-            throw new ValidationsException("0104");
+            throw new ValidationsException("0101");
         }
 
         rating.setRestaurant(restaurant);

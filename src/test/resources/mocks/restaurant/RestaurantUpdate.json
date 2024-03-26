@@ -1,0 +1,14 @@
+{
+  "name": "O Balde de lixo",
+  "location": "Fenda do bikine",
+  "foodType": "OTHER",
+  "active": true,
+  "quantityTables": 30,
+  "businessHoursDto": [
+    {
+      "dayOfWeek": "SUNDAY",
+      "startTime": "17:00",
+      "finishTime": "02:00"
+   }
+  ]
+}
