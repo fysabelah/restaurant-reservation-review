@@ -24,7 +24,7 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
         dto.setLocation(document.getLocation());
         dto.setFoodType(document.getFoodType());
         dto.setActive(document.getActive());
-        dto.setAverageRating(document.getAverageRating());
+        dto.setRating(document.getRating());
         dto.setQuantityTables(document.getQuantityTables());
 
         List<RestaurantBusinessHoursDto> businessHoursDtos = this.restaurantBusinessHoursConverter.convertDocuments(document.getBusinessHours());
@@ -44,7 +44,7 @@ public class RestaurantPresenter implements Presenter<Restaurant, RestaurantDto>
         restaurant.setLocation(dto.getLocation());
         restaurant.setFoodType(dto.getFoodType());
         restaurant.setActive(dto.getActive());
-        restaurant.setAverageRating(dto.getAverageRating());
+        restaurant.setRating(dto.getRating());
         restaurant.setQuantityTables(dto.getQuantityTables());
 
         List<RestaurantBusinessHours> businessHours = this.restaurantBusinessHoursConverter.convert(dto.getBusinessHoursDto());

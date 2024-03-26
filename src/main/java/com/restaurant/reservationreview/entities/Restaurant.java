@@ -9,6 +9,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Document(collection = "restaurants")
@@ -17,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Restaurant implements Serializable {
+
     @Id
     private String id;
 
@@ -28,12 +31,18 @@ public class Restaurant implements Serializable {
 
     private Boolean active;
 
-    private Integer averageRating;
+    private BigDecimal rating;
 
     private Integer quantityTables;
 
     private List<RestaurantBusinessHours> businessHours;
 
-    public Restaurant(String id) {
+    public void updateRating(BigDecimal newRating) {
+        if (this.rating == null || BigDecimal.ZERO.compareTo(this.rating) == 0) {
+            this.rating = newRating;
+        } else {
+            this.rating = (this.rating.add(newRating))
+                    .divide(new BigDecimal(2), 2, RoundingMode.HALF_EVEN);
+        }
     }
 }

@@ -17,6 +17,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class RatingController {
 
@@ -42,6 +44,10 @@ public class RatingController {
         rating = business.create(rating, restaurant);
 
         rating = gateway.insert(rating);
+
+        restaurant.updateRating(new BigDecimal(rating.getScore()));
+
+        restaurantGateway.update(restaurant);
 
         return converter.convert(rating);
     }
