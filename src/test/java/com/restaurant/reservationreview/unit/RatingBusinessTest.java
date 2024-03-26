@@ -44,7 +44,12 @@ class RatingBusinessTest extends TestUtils {
         rating.setDate(TimeUtils.now());
         rating.setZoneId(TimeUtils.getZoneId());
         rating.setComment("Eu sou um comentário");
-        rating.setRestaurant(new Restaurant(RESTAURANT_ID));
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(RESTAURANT_ID);
+
+        rating.setRestaurant(restaurant);
+
         return rating;
     }
 
@@ -55,9 +60,7 @@ class RatingBusinessTest extends TestUtils {
         AtomicReference<Rating> result = new AtomicReference<>();
         String newComment = "novo comentário";
 
-        assertDoesNotThrow(() -> {
-            result.set(business.update(rating, null, newComment));
-        });
+        assertDoesNotThrow(() -> result.set(business.update(rating, null, newComment)));
 
         assertEquals(newComment, result.get().getComment());
         assertEquals(rating.getScore(), result.get().getScore());

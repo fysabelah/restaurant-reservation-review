@@ -1,5 +1,7 @@
 package com.restaurant.reservationreview.interfaceadapters.presenters.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.restaurant.reservationreview.util.enums.FoodType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -8,18 +10,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@JsonIgnoreProperties(value = {"rating"}, allowGetters = true)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class RestaurantDto extends Dto {
-
-    public RestaurantDto(String id) {
-        super(id);
-    }
 
     @NotBlank(message = "O campo Nome é obrigatório")
     @Schema(example = "Restaurante Comida Gostosa é aqui")
@@ -35,7 +35,8 @@ public class RestaurantDto extends Dto {
 
     private Boolean active;
 
-    private Integer averageRating;
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+    private BigDecimal rating;
 
     @NotBlank(message = "O campo Quantidade de Mesas é obrigatório")
     @Schema(example = "20")
