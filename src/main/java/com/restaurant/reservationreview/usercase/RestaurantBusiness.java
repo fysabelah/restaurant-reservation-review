@@ -4,29 +4,26 @@ import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class RestaurantBusiness {
 
-    public Restaurant create( Restaurant restaurant, Restaurant restaurantNomeDuplicado) throws ValidationsException{
-
-        if (restaurantNomeDuplicado != null){
-            if (! restaurantNomeDuplicado.getId().isEmpty() ) {
-                throw new ValidationsException("0200");
-            }
+    public void create(Restaurant restaurantNomeDuplicado) throws ValidationsException {
+        if (restaurantNomeDuplicado != null) {
+            throw new ValidationsException("0200");
         }
-
-        return restaurant;
     }
 
-    public Restaurant update( Optional<Restaurant> restaurant ) throws  ValidationsException{
-        if (! restaurant.isPresent()){
-            throw new ValidationsException("0001");
+    public void update(Restaurant restaurant, Restaurant converted, Restaurant restaurantWithTheSameName) throws ValidationsException {
+        if (restaurantWithTheSameName != null && restaurant.getId().compareTo(restaurantWithTheSameName.getId()) != 0) {
+            throw new ValidationsException("0200");
         }
 
-        return restaurant.get();
+        // atribuímos no restaurante atual as novas informações
+        restaurant.setName(converted.getName());
+        restaurant.setLocation(converted.getLocation());
+        restaurant.setFoodType(converted.getFoodType());
+        restaurant.setActive(converted.isActive());
+        restaurant.setQuantityTables(converted.getQuantityTables());
+        restaurant.setBusinessHours(converted.getBusinessHours());
     }
-
-
 }

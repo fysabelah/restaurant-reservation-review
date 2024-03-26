@@ -33,7 +33,7 @@ public class RestaurantDto extends Dto {
     @Schema(example = "BRAZILIAN")
     private FoodType foodType;
 
-    private Boolean active;
+    private boolean active;
 
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private BigDecimal rating;

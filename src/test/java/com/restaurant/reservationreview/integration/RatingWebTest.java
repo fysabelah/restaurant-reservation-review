@@ -45,6 +45,8 @@ class RatingWebTest extends TestUtils {
 
     private static final String REQUEST_MAPPING_ROOT = "/rating";
 
+    private static final String MOCK_DIRECTORY = "rating/";
+
     private Restaurant restaurant;
 
     @BeforeEach
@@ -61,7 +63,7 @@ class RatingWebTest extends TestUtils {
     @Test
     @DisplayName("Teste salvar avaliação")
     void insert() throws Exception {
-        String body = getMock("insert.json", RatingDto.class);
+        String body = getMock(MOCK_DIRECTORY + "insert.json", RatingDto.class);
 
         mockMvc.perform(post(REQUEST_MAPPING_ROOT + "/" + restaurant.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +74,7 @@ class RatingWebTest extends TestUtils {
     @Test
     @DisplayName("Teste recuperar avaliações em formato paginado")
     void findAll() throws Exception {
-        File mock = getFile("findAll.json");
+        File mock = getFile(MOCK_DIRECTORY + "findAll.json");
         List<Rating> ratings = objectMapper.readValue(mock, new TypeReference<List<Rating>>() {
         });
 
@@ -161,7 +163,7 @@ class RatingWebTest extends TestUtils {
     }
 
     private Rating getRating() throws IOException {
-        File file = getFile("insert.json");
+        File file = getFile(MOCK_DIRECTORY + "insert.json");
 
         Rating rating = objectMapper.readValue(file, Rating.class);
         rating.setDate(TimeUtils.now());

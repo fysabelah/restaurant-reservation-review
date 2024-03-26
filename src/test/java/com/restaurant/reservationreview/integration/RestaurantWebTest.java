@@ -32,13 +32,13 @@ class RestaurantWebTest extends TestUtils {
     @Autowired
     private MockMvc mockMvc;
 
+    private static final String MOCK_DIRECTORY = "restaurant/";
+
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    //private Restaurant restaurant;
-
-    private Restaurant getRestaurant() throws IOException{
-        File file = getFile("RestaurantInsert.json");
+    private Restaurant getRestaurant() throws IOException {
+        File file = getFile(MOCK_DIRECTORY + "RestaurantInsert.json");
 
         Restaurant restaurant = objectMapper.readValue(file, Restaurant.class);
 
@@ -53,33 +53,27 @@ class RestaurantWebTest extends TestUtils {
     @Test
     @DisplayName("Teste para salvar informações de um restaurante")
     void insert() throws Exception {
-        String body = getMock("RestaurantInsert.json", RestaurantDto.class);
+        String body = getMock(MOCK_DIRECTORY + "RestaurantInsert.json", RestaurantDto.class);
 
         mockMvc.perform(
-                        post(REQUEST_MAPPING_ROOT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(body)
-                        ).andExpect(status().isOk());
+                post(REQUEST_MAPPING_ROOT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body)
+        ).andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("Teste não permitir nome em duplicidade de um restaurante")
     void insertDuplicate() throws Exception {
-        String body = getMock("RestaurantInsert.json", RestaurantDto.class);
+        String body = getMock(MOCK_DIRECTORY + "RestaurantInsert.json", RestaurantDto.class);
 
-        // primeira inclusão
-        mockMvc.perform(
-                        post(REQUEST_MAPPING_ROOT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(body)
-                        ).andExpect(status().isOk());
+        getRestaurant();
 
-        // segunda inclusão
         mockMvc.perform(
-                        post(REQUEST_MAPPING_ROOT)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(body)
-                        ).andExpect(status().is4xxClientError());
+                post(REQUEST_MAPPING_ROOT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body)
+        ).andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -88,17 +82,17 @@ class RestaurantWebTest extends TestUtils {
         Restaurant restaurant = getRestaurant();
 
         String pathUpdateJsonFile = "RestaurantUpdate.json";
-        File file = getFile(pathUpdateJsonFile);
+        File file = getFile(MOCK_DIRECTORY + pathUpdateJsonFile);
 
         Restaurant restaurantUpdate = objectMapper.readValue(file, Restaurant.class);
-        String updateBody = getMock(pathUpdateJsonFile, RestaurantDto.class);
+        String updateBody = getMock(MOCK_DIRECTORY + pathUpdateJsonFile, RestaurantDto.class);
 
         MockHttpServletResponse response = mockMvc.perform(
-                                                        put(REQUEST_MAPPING_ROOT + "/" + restaurant.getId())
-                                                            .contentType(MediaType.APPLICATION_JSON)
-                                                            .content(updateBody)
-                                                        ).andExpect(status().isOk())
-                                                        .andReturn().getResponse();
+                        put(REQUEST_MAPPING_ROOT + "/" + restaurant.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(updateBody)
+                ).andExpect(status().isOk())
+                .andReturn().getResponse();
 
         RestaurantDto result = (RestaurantDto) getResponseBody(response, RestaurantDto.class);
 
@@ -120,19 +114,5 @@ class RestaurantWebTest extends TestUtils {
 
         assertEquals(MessageUtil.getMessage("0001", "Restaurant", id), error.getMessage());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
