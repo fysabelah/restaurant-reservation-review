@@ -252,13 +252,13 @@ public class ReservationBusiness {
 
         Reservation newReservation = new Reservation();
 
-        if(!dto.getName().isEmpty()){
+        if(dto.getName().isEmpty()){
             throw new IllegalArgumentException(MessageUtil.getMessage("0302"));
         }
-        if(!dto.getPhone().isEmpty()){
+        if(dto.getPhone().isEmpty()){
             throw new IllegalArgumentException(MessageUtil.getMessage("0303"));
         }
-        if(!dto.getEmail().isEmpty()){
+        if(dto.getEmail().isEmpty()){
             throw new IllegalArgumentException(MessageUtil.getMessage("0304"));
         }
 

@@ -51,6 +51,8 @@ class ReservationWebTest extends TestUtils {
 
     private static final String REQUEST_MAPPING_ROOT = "/reservation";
 
+    private static final String MOCK_DIRECTORY = "reservation/";
+
     private Restaurant restaurant;
 
 
@@ -149,7 +151,7 @@ class ReservationWebTest extends TestUtils {
     void findAllReservationsByEmail() throws Exception {
 
         String email = "jose@mail.com.br";
-        File mock = getFile("reservationsByPeriod.json");
+        File mock = getFile(MOCK_DIRECTORY + "reservationsByPeriod.json");
         List<Reservation> reservations = objectMapper.readValue(mock, new TypeReference<List<Reservation>>() {
         });
         reservations.forEach(reservation -> reservation.setRestaurant(restaurant));
