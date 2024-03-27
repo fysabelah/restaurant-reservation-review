@@ -24,7 +24,7 @@ public class RestaurantGateway {
     }
 
     public Page<Restaurant> findAll(FoodType foodType, String location, Pageable pageable) {
-        return this.repository.findAllByFoodTypeAndLocationLike(foodType, location, pageable);
+        return this.repository.findAllByFoodTypeAndAdressCityLike(foodType, location, pageable);
     }
 
     public Page<Restaurant> findAll(FoodType foodType, Pageable pageable) {
@@ -32,7 +32,7 @@ public class RestaurantGateway {
     }
 
     public Page<Restaurant> findAll(String location, Pageable pageable) {
-        return this.repository.findAllByLocationLike(location, pageable);
+        return this.repository.findAllByAdressCityLike(location, pageable);
     }
 
     public Restaurant findById(String id) throws ValidationsException {

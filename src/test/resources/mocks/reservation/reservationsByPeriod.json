@@ -1,0 +1,68 @@
+[
+  {
+    "id": "660056ae6f512a50e5a322a4",
+    "person": {
+      "name": "George",
+      "email": "George@mail.com.br",
+      "phone": "11980809090"
+    },
+    "dateAndTime": "2024-03-28T17:00:00",
+    "dayOfWeek": "THURSDAY",
+    "reservationAmount": 4
+  },
+  {
+    "id": "660056ae6f512a50e5a322a5",
+    "person": {
+      "name": "Jose",
+      "email": "jose@mail.com.br",
+      "phone": "11980809091"
+    },
+    "dateAndTime": "2024-03-28T17:00:00",
+    "dayOfWeek": "THURSDAY",
+    "reservationAmount": 4
+  },
+  {
+    "id": "660056ae6f512a50e5a322a6",
+    "person": {
+      "name": "Joao",
+      "email": "joao@mail.com.br",
+      "phone": "11980809092"
+    },
+    "dateAndTime": "2024-03-28T19:00:00",
+    "dayOfWeek": "THURSDAY",
+    "reservationAmount": 4
+  },
+  {
+    "id": "660056ae6f512a50e5a322a7",
+    "person": {
+      "name": "Maria",
+      "email": "maria@mail.com.br",
+      "phone": "11980809093"
+    },
+    "dateAndTime": "2024-03-28T19:00:00",
+    "dayOfWeek": "THURSDAY",
+    "reservationAmount": 4
+  },
+  {
+    "id": "660056ae6f512a50e5a322a8",
+    "person": {
+      "name": "Maria",
+      "email": "maria@mail.com.br",
+      "phone": "11980809094"
+    },
+    "dateAndTime": "2024-03-28T21:00:00",
+    "dayOfWeek": "THURSDAY",
+    "reservationAmount": 4
+  },
+  {
+    "id": "660056ae6f512a50e5a322a9",
+    "person": {
+      "name": "Maria",
+      "email": "maria@mail.com.br",
+      "phone": "11980809095"
+    },
+    "dateAndTime": "2024-03-28T21:00:00",
+    "dayOfWeek": "THURSDAY",
+    "reservationAmount": 4
+  }
+]

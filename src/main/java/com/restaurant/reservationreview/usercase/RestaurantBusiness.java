@@ -20,10 +20,10 @@ public class RestaurantBusiness {
 
         // atribuímos no restaurante atual as novas informações
         restaurant.setName(converted.getName());
-        restaurant.setLocation(converted.getLocation());
+        restaurant.setAdress(converted.getAdress());
         restaurant.setFoodType(converted.getFoodType());
         restaurant.setActive(converted.isActive());
-        restaurant.setQuantityTables(converted.getQuantityTables());
+        restaurant.setCapacity(converted.getCapacity());
         restaurant.setBusinessHours(converted.getBusinessHours());
     }
 }

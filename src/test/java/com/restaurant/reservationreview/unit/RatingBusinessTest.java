@@ -1,6 +1,6 @@
 package com.restaurant.reservationreview.unit;
 
-import com.restaurant.reservationreview.TestUtils;
+import com.restaurant.reservationreview.utils.TestUtils;
 import com.restaurant.reservationreview.entities.Rating;
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.usercase.RatingBusiness;

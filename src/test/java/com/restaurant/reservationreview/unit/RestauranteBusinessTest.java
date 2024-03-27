@@ -1,6 +1,8 @@
 package com.restaurant.reservationreview.unit;
 
-import com.restaurant.reservationreview.TestUtils;
+import com.restaurant.reservationreview.util.constants.Constants;
+import com.restaurant.reservationreview.utils.TestUtils;
+import com.restaurant.reservationreview.entities.Adress;
 import com.restaurant.reservationreview.entities.Restaurant;
 import com.restaurant.reservationreview.usercase.RestaurantBusiness;
 import com.restaurant.reservationreview.util.MessageUtil;
@@ -58,30 +60,30 @@ class RestauranteBusinessTest extends TestUtils {
         Restaurant restaurant = new Restaurant();
         restaurant.setId("id");
         restaurant.setName("Nome antigo");
-        restaurant.setLocation("Aqui");
-        restaurant.setRating(new BigDecimal("8.9"));
+        restaurant.setAdress(adress());
+        restaurant.setAverageRating(new BigDecimal("8.9"));
         restaurant.setActive(true);
-        restaurant.setFoodType(FoodType.BRAZILIAN);
-        restaurant.setQuantityTables(10);
+        restaurant.setFoodType(FoodType.ITALIAN);
+        restaurant.setCapacity(10);
         restaurant.setBusinessHours(new ArrayList<>());
 
         Restaurant converted = new Restaurant();
         converted.setId("id");
         converted.setName("Nome novo");
-        converted.setLocation("Aqui");
-        converted.setRating(new BigDecimal("10"));
+        converted.setLocation(adress());
+        converted.setAverageRating(new BigDecimal("10"));
         converted.setActive(false);
-        converted.setFoodType(FoodType.FRENCH);
-        converted.setQuantityTables(70);
+        converted.setFoodType(FoodType.BRAZILIAN);
+        converted.setCapacity(70);
         converted.setBusinessHours(new ArrayList<>());
 
         assertDoesNotThrow(() -> business.update(restaurant, converted, null));
 
         assertEquals(converted.getName(), restaurant.getName());
-        assertEquals(new BigDecimal("8.9"), restaurant.getRating());
+        assertEquals(new BigDecimal("8.9"), restaurant.getAverageRating());
         assertEquals(converted.isActive(), restaurant.isActive());
-        assertEquals(FoodType.FRENCH, restaurant.getFoodType());
-        assertEquals(converted.getQuantityTables(), restaurant.getQuantityTables());
+        assertEquals(FoodType.BRAZILIAN, restaurant.getFoodType());
+        assertEquals(converted.getCapacity(), restaurant.getCapacity());
     }
 
     @Test
@@ -89,21 +91,21 @@ class RestauranteBusinessTest extends TestUtils {
         Restaurant restaurant = new Restaurant();
         restaurant.setId("id");
         restaurant.setName("Nome novo");
-        restaurant.setLocation("Aqui");
-        restaurant.setRating(new BigDecimal("8.9"));
+        restaurant.setLocation(adress());
+        restaurant.setAverageRating(new BigDecimal("8.9"));
         restaurant.setActive(true);
         restaurant.setFoodType(FoodType.BRAZILIAN);
-        restaurant.setQuantityTables(10);
+        restaurant.setCapacity(10);
         restaurant.setBusinessHours(new ArrayList<>());
 
         Restaurant converted = new Restaurant();
         converted.setId("id");
         converted.setName("Nome novo");
-        converted.setLocation("Aqui");
-        converted.setRating(new BigDecimal("10"));
+        converted.setLocation(adress());
+        converted.setAverageRating(new BigDecimal("10"));
         converted.setActive(false);
-        converted.setFoodType(FoodType.FRENCH);
-        converted.setQuantityTables(70);
+        converted.setFoodType(FoodType.ITALIAN);
+        converted.setCapacity(70);
         converted.setBusinessHours(new ArrayList<>());
 
         Restaurant restaurantWithTheSameName = new Restaurant();
@@ -112,10 +114,23 @@ class RestauranteBusinessTest extends TestUtils {
 
         assertDoesNotThrow(() -> business.update(restaurant, converted, null));
 
-        assertEquals(new BigDecimal("8.9"), restaurant.getRating());
+        assertEquals(new BigDecimal("8.9"), restaurant.getAverageRating());
         assertEquals(converted.isActive(), restaurant.isActive());
-        assertEquals(FoodType.FRENCH, restaurant.getFoodType());
-        assertEquals(converted.getQuantityTables(), restaurant.getQuantityTables());
+        assertEquals(FoodType.ITALIAN, restaurant.getFoodType());
+        assertEquals(converted.getCapacity(), restaurant.getCapacity());
+    }
+
+
+    private Adress adress(){
+
+        Adress adress = new Adress();
+
+        adress.setStreet(Constants.RESTAURANT_ADRESS_STREET);
+        adress.setAdressNumber(Constants.RESTAURANT_ADRESS_NUMBER);
+        adress.setCity(Constants.RESTAURANT_ADRESS_CITY);
+        adress.setState(Constants.RESTAURANT_ADRESS_STATE);
+
+        return adress;
     }
 
 }

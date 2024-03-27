@@ -1,38 +1,86 @@
 {
-  "name": "O Siri Cascudo",
-  "location": "Fenda do bikine",
-  "foodType": "OTHER",
-  "active": true,
-  "quantityTables": 50,
-  "businessHoursDto": [
-    {
-      "dayOfWeek": "SUNDAY",
-      "startTime": "17:00",
-      "finishTime": "02:00"
-    },
-    {
-      "dayOfWeek": "TUESDAY",
-      "startTime": "18:00",
-      "finishTime": "23:59"
-    },
-    {
-      "dayOfWeek": "WEDNESDAY",
-      "startTime": "18:00",
-      "finishTime": "23:59"
-    },
+  "name": "Paparoto Cucina",
+  "adressDto": {
+    "street": "Av Juscelino Kubitschek",
+    "adressNumber": "2041",
+    "city": "São Paulo",
+    "state": "SP"
+  },
+  "businnessHoursDto": [
     {
       "dayOfWeek": "THURSDAY",
-      "startTime": "18:00",
-      "finishTime": "23:59"
-    },{
+      "start": "17:00",
+      "finish": "23:00",
+      "reservationHoursDto": [
+        {
+          "hour": "17:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "19:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "21:00",
+          "tableAmountAvailable": 10
+        }
+      ],
+      "available": true
+    },
+    {
       "dayOfWeek": "FRIDAY",
-      "startTime": "17:00",
-      "finishTime": "23:59"
+      "start": "17:00",
+      "finish": "23:00",
+      "reservationHoursDto": [
+        {
+          "hour": "17:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "19:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "21:00",
+          "tableAmountAvailable": 10
+        }
+      ],
+      "available": true
     },
     {
       "dayOfWeek": "SATURDAY",
-      "startTime": "15:00",
-      "finishTime": "23:59"
+      "start": "17:00",
+      "finish": "23:00",
+      "reservationHoursDto": [
+        {
+          "hour": "17:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "19:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "21:00",
+          "tableAmountAvailable": 10
+        }
+      ],
+      "available": true
+    },
+    {
+      "dayOfWeek": "SUNDAY",
+      "start": "17:00",
+      "finish": "23:00",
+      "reservationHoursDto": [
+        {
+          "hour": "17:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "19:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "21:00",
+          "tableAmountAvailable": 10
+        }
+      ],
+      "available": false
     }
-  ]
+  ],
+  "foodType": "BRAZILIAN",
+  "capacity": 30,
+  "active": true
 }

@@ -11,11 +11,11 @@ public interface RestaurantRepository extends MongoRepository<Restaurant, String
 
     Restaurant findByNameEquals(String restaurantName);
 
-    @Query(value = "{'foodType': ?0, 'location': {$regex: '(?i)?1'}}")
-    Page<Restaurant> findAllByFoodTypeAndLocationLike(FoodType foodType, String location, Pageable pageable);
+    @Query(value = "{ $and: [ {'foodType': {$eq: ?0}}, '{'address': {'city': {$regex: ?1}, $options: 'i'}}]}")
+    Page<Restaurant> findAllByFoodTypeAndAdressCityLike(FoodType foodType, String location, Pageable pageable);
 
     Page<Restaurant> findAllByFoodType(FoodType foodType, Pageable pageable);
 
-    @Query(value = "{'location': {$regex: '(?i)?0'}}")
-    Page<Restaurant> findAllByLocationLike(String location, Pageable pageable);
+    @Query(value = "{'adress.city': {$regex: ?0, $options: 'i'}}")
+    Page<Restaurant> findAllByAdressCityLike(String location, Pageable pageable);
 }

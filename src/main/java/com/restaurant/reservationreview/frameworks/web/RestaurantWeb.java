@@ -1,6 +1,7 @@
 package com.restaurant.reservationreview.frameworks.web;
 
 import com.restaurant.reservationreview.interfaceadapters.controllers.RestaurantController;
+import com.restaurant.reservationreview.interfaceadapters.presenters.dto.AdressDto;
 import com.restaurant.reservationreview.interfaceadapters.presenters.dto.RestaurantDto;
 import com.restaurant.reservationreview.util.enums.FoodType;
 import com.restaurant.reservationreview.util.exception.ValidationsException;
@@ -26,7 +27,7 @@ public class RestaurantWeb {
     public ResponseEntity<PagedResponse<RestaurantDto>> findAll(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
                                                                 @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage,
                                                                 @Parameter(description = "Tipo de cozinha", example = "OTHER") @RequestParam(required = false) FoodType foodType,
-                                                                @Parameter(description = "Localização", example = "Sul") @RequestParam(required = false) String location) {
+                                                                @Parameter(description = "Localização", example = "Sao Paulo") @RequestParam(required = false) String location) {
 
         Pagination page = new Pagination(initialPage, pageSize);
 
