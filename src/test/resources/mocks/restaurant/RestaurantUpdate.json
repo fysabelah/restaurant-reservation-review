@@ -1,14 +1,86 @@
 {
-  "name": "O Balde de lixo",
-  "location": "Fenda do bikine",
-  "foodType": "OTHER",
-  "active": true,
-  "quantityTables": 30,
-  "businessHoursDto": [
+  "name": "Paparoto Cucina",
+  "adressDto": {
+    "street": "Av Juscelino Kubitschek",
+    "adressNumber": "2041",
+    "city": "São Paulo",
+    "state": "SP"
+  },
+  "businnessHoursDto": [
+    {
+      "dayOfWeek": "THURSDAY",
+      "start": "17:00",
+      "finish": "23:00",
+      "reservationHoursDto": [
+        {
+          "hour": "17:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "19:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "21:00",
+          "tableAmountAvailable": 10
+        }
+      ],
+      "available": true
+    },
+    {
+      "dayOfWeek": "FRIDAY",
+      "start": "17:00",
+      "finish": "23:00",
+      "reservationHoursDto": [
+        {
+          "hour": "17:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "19:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "21:00",
+          "tableAmountAvailable": 10
+        }
+      ],
+      "available": true
+    },
+    {
+      "dayOfWeek": "SATURDAY",
+      "start": "17:00",
+      "finish": "23:00",
+      "reservationHoursDto": [
+        {
+          "hour": "17:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "19:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "21:00",
+          "tableAmountAvailable": 10
+        }
+      ],
+      "available": true
+    },
     {
       "dayOfWeek": "SUNDAY",
-      "startTime": "17:00",
-      "finishTime": "02:00"
-   }
-  ]
+      "start": "17:00",
+      "finish": "23:00",
+      "reservationHoursDto": [
+        {
+          "hour": "17:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "19:00",
+          "tableAmountAvailable": 10
+        },        {
+          "hour": "21:00",
+          "tableAmountAvailable": 10
+        }
+      ],
+      "available": false
+    }
+  ],
+  "foodType": "BRAZILIAN",
+  "capacity": 30,
+  "active": true
 }

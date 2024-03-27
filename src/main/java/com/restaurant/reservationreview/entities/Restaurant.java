@@ -1,24 +1,24 @@
 package com.restaurant.reservationreview.entities;
 
 import com.restaurant.reservationreview.util.MessageUtil;
-import com.restaurant.reservationreview.util.enums.FoodType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.restaurant.reservationreview.util.enums.FoodType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-@Document(collection = "restaurants")
+@Document("restaurants")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Restaurant implements Serializable {
 
     @Id
@@ -26,23 +26,23 @@ public class Restaurant implements Serializable {
 
     private String name;
 
-    private String location;
+    private Adress adress;
+
+    private List<BusinessHours> businessHours;
 
     private FoodType foodType;
 
+    private Integer capacity;
+
+    private BigDecimal averageRating;
+
     private boolean active;
 
-    private BigDecimal rating;
-
-    private Integer quantityTables;
-
-    private List<RestaurantBusinessHours> businessHours;
-
     public void updateRating(BigDecimal newRating) {
-        if (this.rating == null || BigDecimal.ZERO.compareTo(this.rating) == 0) {
-            this.rating = newRating;
+        if (this.averageRating == null || BigDecimal.ZERO.compareTo(this.averageRating) == 0) {
+            this.averageRating = newRating;
         } else {
-            this.rating = (this.rating.add(newRating))
+            this.averageRating = (this.averageRating.add(newRating))
                     .divide(new BigDecimal(2), 2, RoundingMode.HALF_EVEN);
         }
     }
@@ -55,12 +55,12 @@ public class Restaurant implements Serializable {
         this.name = name;
     }
 
-    public void setLocation(String location) {
-        if (location == null || location.trim().isEmpty()) {
+    public void setLocation(Adress adress) {
+        if (adress == null || adress.getCity().trim().isEmpty()) {
             throw new IllegalArgumentException(MessageUtil.getMessage("0201"));
         }
 
-        this.location = location;
+        this.adress = adress;
     }
 
     public void setFoodType(FoodType foodType) {
@@ -70,4 +70,5 @@ public class Restaurant implements Serializable {
 
         this.foodType = foodType;
     }
+
 }

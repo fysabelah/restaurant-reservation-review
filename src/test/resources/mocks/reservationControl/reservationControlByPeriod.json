@@ -1,0 +1,50 @@
+[
+  {
+    "id": "6600f7c5155fcb542b4f7430",
+    "dateAndTime": "2024-03-28T17:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 4,
+    "capacity": 10,
+    "available": true
+  },
+  {
+    "id": "6600f7c5155fcb542b4f7431",
+    "dateAndTime": "2024-03-28T19:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 0,
+    "capacity": 10,
+    "available": true
+  },
+  {
+    "id": "6600f7c5155fcb542b4f7432",
+    "dateAndTime": "2024-03-28T21:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 10,
+    "capacity": 10,
+    "available": false
+  },
+  {
+    "id": "6600f7c5155fcb542b4f7433",
+    "dateAndTime": "2024-03-28T17:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 4,
+    "capacity": 10,
+    "available": true
+  },
+  {
+    "id": "6600f7c5155fcb542b4f7434",
+    "dateAndTime": "2024-03-28T19:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 0,
+    "capacity": 10,
+    "available": true
+  },
+  {
+    "id": "6600f7c5155fcb542b4f7435",
+    "dateAndTime": "2024-03-28T21:00:00",
+    "dayOfWeek": "THURSDAY",
+    "totalReservations": 10,
+    "capacity": 10,
+    "available": false
+  }
+]

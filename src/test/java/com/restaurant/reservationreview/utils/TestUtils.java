@@ -1,7 +1,8 @@
-package com.restaurant.reservationreview;
+package com.restaurant.reservationreview.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restaurant.reservationreview.ReservationReviewApplication;
 import jakarta.annotation.Resource;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

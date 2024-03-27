@@ -9,15 +9,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @JsonIgnoreProperties({"id"})
-
-public class RestaurantBusinessHoursDto extends Dto {
+public class BusinnessHoursDto extends Dto implements Serializable {
 
     @NotBlank(message = "O dia da semana é obrigatório")
     @Schema(example = "MONDAY")
@@ -26,11 +28,15 @@ public class RestaurantBusinessHoursDto extends Dto {
     @Pattern(regexp = "[0-9]{2}:[0-9]{2}")
     @Schema(example = "17:00")
     @NotBlank(message = "O horário de funcionamento inicial é obrigatório (HH:MM)")
-    private String startTime;
+    private LocalTime start;
 
     @Pattern(regexp = "[0-9]{2}:[0-9]{2}")
     @Schema(example = "23:00")
     @NotBlank(message = "O horário de funcionamento Final é obrigatório (HH:MM)")
-    private String finishTime;
+    private LocalTime finish;
+
+    private List<ReservationHoursDto> reservationHoursDto;
+
+    private boolean available;
 
 }
