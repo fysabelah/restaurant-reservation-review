@@ -48,6 +48,8 @@ class ReservationControlWebTest extends TestUtils {
 
     private static final String REQUEST_MAPPING_ROOT = "/reservationControl";
 
+    private static final String MOCK_DIRECTORY = "reservationControl/";
+
     private Restaurant restaurant;
 
 
@@ -67,7 +69,7 @@ class ReservationControlWebTest extends TestUtils {
     @DisplayName("Teste recuperar reservas por restaurante e período de datas em formato paginado")
     void findAllReservationsByRestaurantAndDateBetween() throws Exception {
 
-        File mock = getFile("reservationsByPeriod.json");
+        File mock = getFile(MOCK_DIRECTORY + "reservationsByPeriod.json");
         List<Reservation> reservations = objectMapper.readValue(mock, new TypeReference<List<Reservation>>() {
         });
         String start = LocalDate.now().toString();
@@ -99,7 +101,7 @@ class ReservationControlWebTest extends TestUtils {
     @DisplayName("Teste recuperar reservas por restaurante e período de datas em formato paginado")
     void findAllReservationControlByRestaurantIdAndDateBetween() throws Exception {
 
-        File mock = getFile("reservationControlByPeriod.json");
+        File mock = getFile(MOCK_DIRECTORY + "reservationControlByPeriod.json");
         List<ReservationControl> reservationsControl = objectMapper.readValue(mock, new TypeReference<List<ReservationControl>>() {
         });
         String start = "2024-03-28";
