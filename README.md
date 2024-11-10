@@ -60,3 +60,5 @@ Considerando que tudo deu certo, será possível acessar os _links_ abaixo.
 ### Deploy em Nuvem
 A aplicação possui um ambiente de deploy continuo junto a Azure, a fim de manter o projeto sempre atualizado. O ambiente em nuvem pode ser acessado através do seguinte link:
 * [Interface Web para o projeto](https://tech-challenger-3.azurewebsites.net/swagger-ui/index.html#/)
+
+    Após entrega do projeto, o ambiente de deploy foi desabilitado.
